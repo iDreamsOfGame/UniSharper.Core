@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "com.github.cosmos53076.newtonsoft.json": "https://github.com/cosmos53076/Newtonsoft.Json.git#upm",
+    "com.github.cosmos53076.newtonsoft.json": "https://github.com/cosmos53076/Newtonsoft.Json.git#1.0.0",
     "com.github.cosmos53076.resharp.core": "https://github.com/cosmos53076/ReSharp.Core.git#upm",
     "com.unity.package-manager-ui": "2.0.8",
     "com.unity.modules.ai": "1.0.0",
@@ -36,8 +36,8 @@
   },
   "lock": {
     "com.github.cosmos53076.newtonsoft.json": {
-      "revision": "upm",
-      "hash": "4dad696791f0fd9ed50c0358f93ac1500ddeac38"
+      "revision": "1.0.0",
+      "hash": "e6f3e465c361c6bb526cb8bb80eb18e81f779ef0"
     },
     "com.github.cosmos53076.resharp.core": {
       "revision": "upm",
