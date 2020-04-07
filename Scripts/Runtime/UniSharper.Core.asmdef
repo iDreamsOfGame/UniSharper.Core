@@ -1,8 +1,6 @@
 {
     "name": "UniSharper.Core",
-    "references": [
-        "ReSharp.Core"
-    ],
+    "references": [],
     "optionalUnityReferences": [],
     "includePlatforms": [],
     "excludePlatforms": [],

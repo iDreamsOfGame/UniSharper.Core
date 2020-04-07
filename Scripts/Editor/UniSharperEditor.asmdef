@@ -1,7 +1,6 @@
 {
     "name": "UniSharperEditor",
     "references": [
-        "ReSharp.Core",
         "UniSharper.Core"
     ],
     "optionalUnityReferences": [],
