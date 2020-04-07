@@ -2,12 +2,12 @@
 	"name": "com.github.cosmos53076.unisharper.core",
 	"displayName": "UniSharper.Core",
 	"description": "UniSharper.Core is a unity package that contains scripts, plugins and assets for general unity application development.",
-	"version": "1.0.3",
+	"version": "1.0.4",
 	"unity": "2018.3",
 	"license": "MIT",
 	"dependencies": 
 	{
 		"com.github.cosmos53076.newtonsoft.json": "1.0.0",
-		"com.github.cosmos53076.resharp.core": "https://github.com/cosmos53076/ReSharp.Core.git#upm"
+		"com.github.cosmos53076.resharp.core": "1.0.0"
 	}
 }
