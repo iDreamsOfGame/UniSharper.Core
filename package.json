@@ -7,7 +7,7 @@
 	"license": "MIT",
 	"dependencies": 
 	{
-		"com.github.cosmos53076.newtonsoft.json": "https://github.com/cosmos53076/Newtonsoft.Json.git#upm",
+		"com.github.cosmos53076.newtonsoft.json": "https://github.com/cosmos53076/Newtonsoft.Json.git#1.0.0",
 		"com.github.cosmos53076.resharp.core": "https://github.com/cosmos53076/ReSharp.Core.git#upm"
 	}
 }
