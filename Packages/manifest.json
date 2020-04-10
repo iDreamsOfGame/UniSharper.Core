@@ -1,7 +1,5 @@
 {
   "dependencies": {
-    "com.github.cosmos53076.newtonsoft.json": "https://github.com/cosmos53076/Newtonsoft.Json.git#1.0.0",
-    "com.github.cosmos53076.resharp.core": "https://github.com/cosmos53076/ReSharp.Core.git#1.0.1",
     "com.unity.package-manager-ui": "2.0.8",
     "com.unity.modules.ai": "1.0.0",
     "com.unity.modules.animation": "1.0.0",
@@ -32,16 +30,19 @@
     "com.unity.modules.video": "1.0.0",
     "com.unity.modules.vr": "1.0.0",
     "com.unity.modules.wind": "1.0.0",
-    "com.unity.modules.xr": "1.0.0"
+    "com.unity.modules.xr": "1.0.0",
+    "com.github.cosmos53076.resharp.core": "1.0.1",
+    "com.github.cosmos53076.newtonsoft.json": "1.0.0"
   },
-  "lock": {
-    "com.github.cosmos53076.newtonsoft.json": {
-      "revision": "1.0.0",
-      "hash": "e6f3e465c361c6bb526cb8bb80eb18e81f779ef0"
-    },
-    "com.github.cosmos53076.resharp.core": {
-      "revision": "1.0.1",
-      "hash": "f15830530e380fd4fb8c2063cc8e9eeb4b5fe8b3"
+  "scopedRegistries": [
+    {
+      "name": "package.openupm.com",
+      "url": "https://package.openupm.com",
+      "scopes": [
+        "com.github.cosmos53076.newtonsoft.json",
+        "com.github.cosmos53076.resharp.core",
+        "com.openupm"
+      ]
     }
-  }
+  ]
 }
