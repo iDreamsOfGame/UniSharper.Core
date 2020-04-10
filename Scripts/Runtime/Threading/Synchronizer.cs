@@ -1,5 +1,5 @@
-﻿// Copyright (c) Jerry Lee. All rights reserved. Licensed under the MIT License. See LICENSE in the
-// project root for license information.
+﻿// Copyright (c) Jerry Lee. All rights reserved. Licensed under the MIT License.
+// See LICENSE in the project root for license information.
 
 using System.Collections;
 using System.Collections.Generic;
@@ -117,10 +117,7 @@ namespace UniSharper.Threading
         /// </param>
         public void CopyTo(ISynchronizedObject[] array, int arrayIndex)
         {
-            if (synchronizedObjects != null)
-            {
-                synchronizedObjects.CopyTo(array, arrayIndex);
-            }
+            synchronizedObjects?.CopyTo(array, arrayIndex);
         }
 
         /// <summary>
@@ -129,12 +126,7 @@ namespace UniSharper.Threading
         /// <returns>An enumerator that can be used to iterate through the collection.</returns>
         public IEnumerator<ISynchronizedObject> GetEnumerator()
         {
-            if (synchronizedObjects != null)
-            {
-                return synchronizedObjects.GetEnumerator();
-            }
-
-            return null;
+            return synchronizedObjects?.GetEnumerator();
         }
 
         /// <summary>
@@ -175,7 +167,7 @@ namespace UniSharper.Threading
             {
                 while (addedObjects.Count > 0)
                 {
-                    ISynchronizedObject obj = addedObjects.Dequeue();
+                    var obj = addedObjects.Dequeue();
                     synchronizedObjects.Add(obj);
                 }
 

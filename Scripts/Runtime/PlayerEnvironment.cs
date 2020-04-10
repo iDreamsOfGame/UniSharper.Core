@@ -1,5 +1,5 @@
-﻿// Copyright (c) Jerry Lee. All rights reserved. Licensed under the MIT License. See LICENSE in the
-// project root for license information.
+﻿// Copyright (c) Jerry Lee. All rights reserved. Licensed under the MIT License.
+// See LICENSE in the project root for license information.
 
 using ReSharp.Security.Cryptography;
 using UnityEngine;
@@ -81,7 +81,7 @@ namespace UniSharper
 
         private static string GetAndroidDeviceIdentifier()
         {
-            using (var deviceInfo = new AndroidJavaClass("com.github.repositories.unisharper.core.DeviceInfo"))
+            using (var deviceInfo = new AndroidJavaClass("com.github.cosmos53076.unisharper.core.DeviceInfo"))
             {
                 var uniqueDeviceIdentifier = deviceInfo.CallStatic<string>("getUniqueDeviceIdentifier");
                 return CryptoUtility.Md5HashEncrypt(uniqueDeviceIdentifier);
