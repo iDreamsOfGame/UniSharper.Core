@@ -1,0 +1,4 @@
+[submodule "Assets/UniSharper.Core"]
+	path = Assets/UniSharper.Core
+	url = https://github.com/cosmos53076/UniSharper.Core.git
+	branch = upm
