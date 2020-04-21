@@ -31,17 +31,17 @@
     "com.unity.modules.vr": "1.0.0",
     "com.unity.modules.wind": "1.0.0",
     "com.unity.modules.xr": "1.0.0",
-    "com.github.cosmos53076.resharp.core": "1.0.1",
-    "com.github.cosmos53076.newtonsoft.json": "1.0.0"
+    "io.github.idreamsofgame.resharp.core": "1.0.0",
+    "com.github.jillejr.newtonsoft.json.unity": "12.0.301"
   },
   "scopedRegistries": [
     {
       "name": "package.openupm.com",
       "url": "https://package.openupm.com",
       "scopes": [
-        "com.github.cosmos53076.newtonsoft.json",
-        "com.github.cosmos53076.resharp.core",
-        "com.openupm"
+        "com.github.jillejr.newtonsoft.json.unity",
+        "com.openupm",
+        "io.github.idreamsofgame.resharp.core"
       ]
     }
   ]
