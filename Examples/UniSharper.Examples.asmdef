@@ -3,10 +3,10 @@
     "references": [
         "UniSharper.Core"
     ],
-    "optionalUnityReferences": [],
-    "includePlatforms": [
-        "Editor"
+    "optionalUnityReferences": [
+        "TestAssemblies"
     ],
+    "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
