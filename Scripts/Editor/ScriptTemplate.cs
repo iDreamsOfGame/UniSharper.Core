@@ -2,7 +2,7 @@
 // project root for license information.
 
 using System;
-using System.IO;
+using System.IO;
 using UnityEngine;
 
 namespace UniSharperEditor
