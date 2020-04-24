@@ -1,6 +1,10 @@
 ﻿// Copyright (c) Jerry Lee. All rights reserved. Licensed under the MIT License. See LICENSE in the
 // project root for license information.
 
+using System;
+using System.IO;
+using UnityEngine;
+
 namespace UniSharperEditor
 {
     /// <summary>
@@ -8,6 +12,53 @@ namespace UniSharperEditor
     /// </summary>
     public static class ScriptTemplate
     {
+        #region Methods
+
+        /// <summary>
+        /// Load script template file.
+        /// </summary>
+        /// <param name="fileName">The file name of script template. </param>
+        /// <param name="packageName">The package name of script template. </param>
+        /// <returns>The text content of script template file. </returns>
+        public static string LoadScriptTemplateFile(string fileName, string packageName)
+        {
+            if (fileName == null)
+                throw new ArgumentNullException(nameof(fileName));
+
+            if (packageName == null)
+                throw new ArgumentNullException(nameof(packageName));
+
+            // Search file in project folder.
+            var fileNameWithoutExtensions = Path.GetFileNameWithoutExtension(fileName);
+            var list = AssetDatabaseUtility.LoadEditorResources<TextAsset>(fileNameWithoutExtensions);
+
+            if (list != null && list.Length > 0)
+            {
+                return list[0].text;
+            }
+            else
+            {
+                // Search file in package directory.
+                var rootPath = Path.Combine(Directory.GetCurrentDirectory(), "Library", "PackageCache");
+                var searchDirResults = Directory.GetDirectories(rootPath, $"{packageName}*", SearchOption.TopDirectoryOnly);
+
+                if (searchDirResults.Length > 0)
+                {
+                    var dirPath = searchDirResults[0];
+                    var searchFileResults = Directory.GetFiles(dirPath, fileName, SearchOption.AllDirectories);
+
+                    if (searchFileResults.Length > 0)
+                    {
+                        return File.ReadAllText(searchFileResults[0]);
+                    }
+                }
+            }
+
+            return string.Empty;
+        }
+
+        #endregion Methods
+
         #region Classes
 
         /// <summary>

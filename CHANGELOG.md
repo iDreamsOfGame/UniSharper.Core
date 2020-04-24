@@ -1,6 +1,19 @@
-## [1.1.0] - 2020-04-23
+
+
+## [1.1.1] - 2020-04-24
+
 ### Added
-- AudioPlayer to play audio source.
+
+- Adds **ScriptTemplate.LoadScriptTemplateFile** method to load script template file.
+
+
+
+## [1.1.0] - 2020-04-23
+
+### Added
+- Adds class **AudioPlayer** to play audio source.
+
+  
 
 ## [1.0.0] - 2020-04-21
  - Initial unity project and adnroid plugin project for package distribution.
