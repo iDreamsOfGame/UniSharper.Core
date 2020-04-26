@@ -1,6 +1,8 @@
 {
   "dependencies": {
+    "com.github.jillejr.newtonsoft.json.unity": "12.0.301",
     "com.unity.package-manager-ui": "2.0.8",
+    "io.github.idreamsofgame.resharp.core": "1.0.0",
     "com.unity.modules.ai": "1.0.0",
     "com.unity.modules.animation": "1.0.0",
     "com.unity.modules.assetbundle": "1.0.0",
@@ -30,9 +32,7 @@
     "com.unity.modules.video": "1.0.0",
     "com.unity.modules.vr": "1.0.0",
     "com.unity.modules.wind": "1.0.0",
-    "com.unity.modules.xr": "1.0.0",
-    "io.github.idreamsofgame.resharp.core": "1.0.0",
-    "com.github.jillejr.newtonsoft.json.unity": "12.0.301"
+    "com.unity.modules.xr": "1.0.0"
   },
   "scopedRegistries": [
     {
