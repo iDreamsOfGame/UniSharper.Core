@@ -15,6 +15,7 @@ namespace UniSharper.Patterns
         #region Fields
 
         private static bool destroyed = false;
+        
         private static T instance = null;
 
         private static bool instantiated = false;
@@ -37,33 +38,32 @@ namespace UniSharper.Patterns
                     return null;
                 }
 
-                if (!instantiated || instance == null)
+                if (instantiated && instance != null) 
+                    return instance;
+                
+                var foundObjects = FindObjectsOfType<T>();
+
+                if (foundObjects.Length > 0)
                 {
-                    T[] foundObjects = FindObjectsOfType<T>();
+                    // Found instances already have.
+                    Instance = foundObjects[0];
 
-                    if (foundObjects.Length > 0)
+                    if (foundObjects.Length == 1) 
+                        return instance;
+                    
+                    Debug.LogWarningFormat("There are more than one instance of MonoBehaviourSingleton of type \"{0}\". Keeping the first. Destroying the others.", typeof(T).ToString());
+
+                    for (int i = 1, length = foundObjects.Length; i < length; ++i)
                     {
-                        // Found instances already have.
-                        Instance = foundObjects[0];
-
-                        if (foundObjects.Length > 1)
-                        {
-                            Debug.LogWarningFormat("There are more than one instance of MonoBehaviourSingleton of type \"{0}\". Keeping the first. Destroying the others.", typeof(T).ToString());
-
-                            for (int i = 1, length = foundObjects.Length; i < length; ++i)
-                            {
-                                T behaviour = foundObjects[i];
-                                Destroy(behaviour.gameObject);
-                            }
-                        }
+                        var behaviour = foundObjects[i];
+                        Destroy(behaviour.gameObject);
                     }
-                    else
-                    {
-                        // Make new one.
-                        GameObject targetGameObject = new GameObject();
-                        targetGameObject.name = typeof(T).Name;
-                        Instance = targetGameObject.AddComponent<T>();
-                    }
+                }
+                else
+                {
+                    // Make new one.
+                    var targetGameObject = new GameObject { name = typeof(T).Name };
+                    Instance = targetGameObject.AddComponent<T>();
                 }
 
                 return instance;
