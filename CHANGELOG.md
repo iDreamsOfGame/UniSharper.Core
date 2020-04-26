@@ -1,8 +1,14 @@
+## [1.2.0] - 2020-04-26
+
+### Added
+
+- Adds **UnityCrossThreadInvoker** to invoke methods in other threads.
+
 
 
 ## [1.1.1] - 2020-04-24
 
-### Added
+### Changed
 
 - Adds **ScriptTemplate.LoadScriptTemplateFile** method to load script template file.
 
