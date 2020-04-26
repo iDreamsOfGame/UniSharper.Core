@@ -10,8 +10,8 @@ namespace UniSharper.Threading.Events
     /// event listeners, checks whether specific types of event listeners are registered, and
     /// dispatches events for child thread.
     /// </summary>
-    /// <seealso cref="ISynchronizedObject"/>
-    public interface IThreadEventDispatcher : ISynchronizedObject
+    /// <seealso cref="IThreadSynchronizedObject"/>
+    public interface IThreadEventDispatcher : IThreadSynchronizedObject
     {
         #region Methods
 
