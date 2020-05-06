@@ -14,23 +14,34 @@ namespace UniSharper.Effect
         /// <summary>
         /// Invoked immediately after Play is called.
         /// </summary>
-        UnityEvent Started { get; }
+        ParticleEffectEvent Started { get; }
 
         /// <summary>
         /// Invoked immediately after Pause is called.
         /// </summary>
-        UnityEvent Paused { get; }
-        
+        ParticleEffectEvent Paused { get; }
+
+        /// <summary>
+        /// Invoked immediately after Resume is called.
+        /// </summary>
+        ParticleEffectEvent Resumed { get; }
+
         /// <summary>
         /// Invoked when the time of <see cref="UnityEngine.ParticleSystem"/> reaches the duration.
         /// </summary>
-        UnityEvent LoopPointReached { get; }
+        ParticleEffectEvent LoopPointReached { get; }
 
         /// <summary>
         /// Get the root component of <see cref="UnityEngine.ParticleSystem"/>.
         /// </summary>
         /// <value>The root component of <see cref="UnityEngine.ParticleSystem"/>. </value>
         ParticleSystem ParticleSystemRoot { get; }
+
+        /// <summary>
+        /// Get the the <see cref="UnityEngine.Transform"/> attached to this <see cref="IParticleEffectController"/>.
+        /// </summary>
+        /// <value>The the <see cref="UnityEngine.Transform"/> attached to this <see cref="IParticleEffectController"/>. </value>
+        Transform Transform { get; }
 
         /// <summary>
         /// Get the playback position of the <see cref="UnityEngine.ParticleSystem"/> in seconds.

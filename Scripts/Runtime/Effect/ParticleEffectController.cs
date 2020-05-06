@@ -2,7 +2,6 @@
 // See LICENSE in the project root for license information.
 
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace UniSharper.Effect
 {
@@ -14,11 +13,13 @@ namespace UniSharper.Effect
     {
         private ParticleSystem particleSystemRoot = null;
 
-        public UnityEvent Started { get; private set; }
+        public ParticleEffectEvent Started { get; private set; }
         
-        public UnityEvent Paused { get; private set; }
+        public ParticleEffectEvent Paused { get; private set; }
         
-        public UnityEvent LoopPointReached { get; private set; }
+        public ParticleEffectEvent Resumed { get; private set; }
+        
+        public ParticleEffectEvent LoopPointReached { get; private set; }
 
         public ParticleSystem ParticleSystemRoot
         {
@@ -38,6 +39,8 @@ namespace UniSharper.Effect
             }
         }
 
+        public Transform Transform => transform;
+
         public float Time => particleSystemRoot.time;
 
         public float Duration => particleSystemRoot.main.duration;
@@ -51,7 +54,7 @@ namespace UniSharper.Effect
             if (ParticleSystemRoot.isStopped)
             {
                 ParticleSystemRoot.Play();
-                Started?.Invoke();
+                FireEventStarted();
             }
             else
             {
@@ -64,7 +67,7 @@ namespace UniSharper.Effect
             if (ParticleSystemRoot.isPlaying)
             {
                 ParticleSystemRoot.Pause();
-                Paused?.Invoke();
+                FireEventPaused();
             }
             else
             {
@@ -75,7 +78,14 @@ namespace UniSharper.Effect
         public void Resume()
         {
             if (ParticleSystemRoot.isPaused)
+            {
                 ParticleSystemRoot.Play();
+                FireEventResumed();
+            }
+            else
+            {
+                Debug.LogWarning("Can not resume particle effect, cause the state of ParticleSystem is not paused!");
+            }
         }
 
         public void Stop()
@@ -100,27 +110,30 @@ namespace UniSharper.Effect
                 var deltaTime = ParticleSystemRoot.main.useUnscaledTime
                     ? UnityEngine.Time.unscaledDeltaTime
                     : UnityEngine.Time.deltaTime;
-                
-                if(Duration - Time <= deltaTime)
-                    LoopPointReached?.Invoke();
+
+                if (Duration - Time <= deltaTime)
+                    FireEventLoopPointReached();
             }
             else
             {
                 if (Time >= Duration)
-                    LoopPointReached?.Invoke(); 
+                    FireEventLoopPointReached();
             }
         }
 
         private void InitializeEvents()
         {
             if (Started == null)
-                Started = new UnityEvent();
+                Started = new ParticleEffectEvent();
             
             if(Paused == null)
-                Paused = new UnityEvent();
+                Paused = new ParticleEffectEvent();
+            
+            if(Resumed == null)
+                Resumed = new ParticleEffectEvent();
             
             if(LoopPointReached == null)
-                LoopPointReached = new UnityEvent();
+                LoopPointReached = new ParticleEffectEvent();
         }
 
         private void DestroyEvents()
@@ -134,6 +147,26 @@ namespace UniSharper.Effect
         {
             if (ParticleSystemRoot.isPlaying)
                 ParticleSystemRoot.Stop();
+        }
+
+        private void FireEventStarted()
+        {
+            Started?.Invoke(this);
+        }
+
+        private void FireEventPaused()
+        {
+            Paused?.Invoke(this);
+        }
+
+        private void FireEventResumed()
+        {
+            Resumed?.Invoke(this);
+        }
+
+        private void FireEventLoopPointReached()
+        {
+            LoopPointReached?.Invoke(this);
         }
     }
 }
