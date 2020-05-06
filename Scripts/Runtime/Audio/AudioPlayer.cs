@@ -8,6 +8,7 @@ namespace UniSharper.Audio
     /// <summary>
     /// Implementation for playing audio source.
     /// </summary>
+    [DisallowMultipleComponent]
     [RequireComponent(typeof(AudioSource))]
     public class AudioPlayer : MonoBehaviour, IAudioPlayer
     {

@@ -9,6 +9,7 @@ namespace UniSharper.Effect
     /// <summary>
     /// Implementation for controlling particle effect.
     /// </summary>
+    [DisallowMultipleComponent]
     public class ParticleEffectController : MonoBehaviour, IParticleEffectController
     {
         private ParticleSystem particleSystemRoot = null;
