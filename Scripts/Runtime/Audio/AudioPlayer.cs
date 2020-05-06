@@ -41,8 +41,6 @@ namespace UniSharper.Audio
             }
         }
 
-        public Transform Transform => transform;
-
         public AudioSource AudioSource
         {
             get

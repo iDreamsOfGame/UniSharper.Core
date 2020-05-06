@@ -1,3 +1,11 @@
+## [1.3.0] - 2020-05-06
+
+### Added
+
+- Adds **ParticleEffectController** to control visual effect of particle system.
+
+
+
 ## [1.2.0] - 2020-04-26
 
 ### Added
