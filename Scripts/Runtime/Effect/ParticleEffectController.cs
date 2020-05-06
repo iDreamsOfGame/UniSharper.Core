@@ -41,11 +41,13 @@ namespace UniSharper.Effect
 
         public Transform Transform => transform;
 
-        public float Time => particleSystemRoot.time;
+        public float Time => ParticleSystemRoot.time;
 
-        public float Duration => particleSystemRoot.main.duration;
+        public float Duration => ParticleSystemRoot.main.duration;
 
-        public bool IsLoop => particleSystemRoot.main.loop;
+        public bool IsLoop => ParticleSystemRoot.main.loop;
+
+        public bool RemoveAllEventListenersOnDisable { get; set; } = true;
 
         public void Play()
         {
@@ -96,6 +98,12 @@ namespace UniSharper.Effect
         protected virtual void Awake()
         {
             InitializeEvents();
+        }
+
+        protected void OnDisable()
+        {
+            if (RemoveAllEventListenersOnDisable)
+                DestroyEvents();
         }
 
         protected void OnDestroy()

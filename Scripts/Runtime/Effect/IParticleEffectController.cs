@@ -62,6 +62,12 @@ namespace UniSharper.Effect
         bool IsLoop { get; }
 
         /// <summary>
+        /// Get or set the indicator that the <see cref="UniSharper.Effect.IParticleEffectController"/> remove all event listeners on disable. 
+        /// </summary>
+        /// <value>The indicator that the <see cref="UniSharper.Effect.IParticleEffectController"/> remove all event listeners on disable or not. </value>
+        bool RemoveAllEventListenersOnDisable { get; set; }
+
+        /// <summary>
         /// Starts the particle effect.
         /// </summary>
         void Play();
