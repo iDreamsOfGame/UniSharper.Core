@@ -1,13 +1,15 @@
 ﻿using UnityEngine;
 
+#pragma warning disable 0649
+
 namespace UniSharper.Examples.Attributes
 {
-    public class ReadOnlyFieldAttributeExample : MonoBehaviour
+    internal class ReadOnlyFieldAttributeExample : MonoBehaviour
     {
         #region Fields
 
         [ReadOnlyField]
-        public int PublicReadonlyField;
+        public int ReadonlyField;
 
         [ReadOnlyField]
         [SerializeField]

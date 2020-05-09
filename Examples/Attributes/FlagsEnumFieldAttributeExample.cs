@@ -3,12 +3,12 @@ using UnityEngine;
 
 namespace UniSharper.Examples.Attributes
 {
-    public class FlagsEnumFieldAttributeExample : MonoBehaviour
+    internal class FlagsEnumFieldAttributeExample : MonoBehaviour
     {
         #region Fields
 
         [FlagsEnumField]
-        public EnumFlagsTest enumFlagsField;
+        public EnumFlagsTest enumFlagsField = EnumFlagsTest.None;
 
         #endregion Fields
 

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace UniSharper.Examples.Effect
 {
-    public class ParticleEffectControllerExample : MonoBehaviour
+    internal class ParticleEffectControllerExample : MonoBehaviour
     {
         [SerializeField]
         private ParticleEffectController effectController = null;
