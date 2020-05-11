@@ -11,12 +11,6 @@ namespace UniSharper.Miscs
     /// <seealso cref="MonoBehaviour"/>
     public sealed class DontDestroyOnLoad : MonoBehaviour
     {
-        #region Fields
-
-        private bool initialized;
-
-        #endregion Fields
-
         #region Methods
 
         /// <summary>
@@ -24,11 +18,7 @@ namespace UniSharper.Miscs
         /// </summary>
         private void Awake()
         {
-            if (!initialized)
-            {
-                DontDestroyOnLoad(gameObject);
-                initialized = true;
-            }
+            DontDestroyOnLoad(gameObject);
         }
 
         #endregion Methods

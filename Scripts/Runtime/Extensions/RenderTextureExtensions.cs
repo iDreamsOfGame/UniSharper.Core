@@ -14,7 +14,7 @@ namespace UnityEngine
         /// <param name="renderTexture">The <see cref="UnityEngine.RenderTexture"/> object as source to be converted to <see cref="UnityEngine.Texture2D"/>. </param>
         /// <param name="rect">Rectangular region of the view to read from. </param>
         /// <param name="textureFormat">The format of output texture. </param>
-        /// <returns></returns>
+        /// <returns>The texture that draw in <see cref="UnityEngine.RenderTexture"/>. </returns>
         public static Texture2D ToTexture(this RenderTexture renderTexture, Rect rect, TextureFormat textureFormat = TextureFormat.RGBA32)
         {
             var originalActiveRenderTexture = RenderTexture.active;

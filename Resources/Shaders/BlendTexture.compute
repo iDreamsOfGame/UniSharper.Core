@@ -1,0 +1,19 @@
+﻿// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel BlendTexture
+
+// Create a RenderTexture with enableRandomWrite flag and set it
+// with cs.SetTexture
+RWTexture2D<float4> result;
+Texture2D backgroundTexture;
+Texture2D foregroundTexture;
+int2 foregroundTexturePosition;
+
+[numthreads(8,8,1)]
+void BlendTexture (uint3 id : SV_DispatchThreadID)
+{
+    float r = backgroundTexture[id.xy].r + foregroundTexture[id.xy - foregroundTexturePosition.xy].r;
+    float g = backgroundTexture[id.xy].g + foregroundTexture[id.xy - foregroundTexturePosition.xy].g;
+    float b = backgroundTexture[id.xy].b + foregroundTexture[id.xy - foregroundTexturePosition.xy].b;
+    float a = backgroundTexture[id.xy].a + foregroundTexture[id.xy - foregroundTexturePosition.xy].a;
+    result[id.xy] = float4(r, g, b, a);
+}

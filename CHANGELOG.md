@@ -1,3 +1,17 @@
+## [1.4.1] - 2020-05-11
+
+### Added
+
+- Adds **CameraExtensions.CaptureScreenshotTexture** to capture screenshot of the camera view.
+- Adds **RenderTextureExtensions.ToTexture** to convert **RenderTexture** to **Texture2D**.
+- Adds **Texture2DExtensions.BlendTexture** to composite background texture and foreground texture.
+
+### Changed
+
+- Change dependency of **Json.NET for Unity** to **jillejr.newtonsoft.json-for-unity**.
+
+
+
 ## [1.3.0] - 2020-05-06
 
 ### Added
