@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "com.github.jillejr.newtonsoft.json.unity": "12.0.301",
     "com.unity.package-manager-ui": "2.0.8",
     "io.github.idreamsofgame.resharp.core": "1.0.0",
     "com.unity.modules.ai": "1.0.0",
@@ -32,16 +31,17 @@
     "com.unity.modules.video": "1.0.0",
     "com.unity.modules.vr": "1.0.0",
     "com.unity.modules.wind": "1.0.0",
-    "com.unity.modules.xr": "1.0.0"
+    "com.unity.modules.xr": "1.0.0",
+    "jillejr.newtonsoft.json-for-unity": "12.0.301"
   },
   "scopedRegistries": [
     {
       "name": "package.openupm.com",
       "url": "https://package.openupm.com",
       "scopes": [
-        "com.github.jillejr.newtonsoft.json.unity",
         "com.openupm",
-        "io.github.idreamsofgame.resharp.core"
+        "io.github.idreamsofgame.resharp.core",
+        "jillejr.newtonsoft.json-for-unity"
       ]
     }
   ]
