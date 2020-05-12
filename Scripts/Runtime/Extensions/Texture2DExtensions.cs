@@ -47,7 +47,6 @@ namespace UnityEngine
                 Debug.LogWarning($"The platform {Application.platform.ToString()} do not support compute shader, so blend texture will use CPU to process!");
                 var output = new Texture2D(source.width, source.height, TextureFormat.RGBA32, false)
                 {
-                    alphaIsTransparency = true, 
                     wrapMode = TextureWrapMode.Clamp
                 };
 
