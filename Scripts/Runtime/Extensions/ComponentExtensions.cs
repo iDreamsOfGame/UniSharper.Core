@@ -7,7 +7,7 @@ using System.Reflection;
 namespace UnityEngine
 {
     /// <summary>
-    /// Extension methods collection of <see cref="Component"/>.
+    /// Extension methods collection of <see cref="UnityEngine.Component"/>.
     /// </summary>
     public static class ComponentExtensions
     {

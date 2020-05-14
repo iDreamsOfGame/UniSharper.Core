@@ -4,7 +4,7 @@
 namespace UnityEngine
 {
     /// <summary>
-    /// Extension methods collection of <see cref="Vector3"/>.
+    /// Extension methods collection of <see cref="UnityEngine.Vector3"/>.
     /// </summary>
     public static class Vector3Extensions
     {

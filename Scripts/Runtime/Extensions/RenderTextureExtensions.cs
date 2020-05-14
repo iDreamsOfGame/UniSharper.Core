@@ -4,7 +4,7 @@
 namespace UnityEngine
 {
     /// <summary>
-    /// Extension methods collection of <see cref="UnityEnigne.RenderTexture"/>.
+    /// Extension methods collection of <see cref="UnityEngine.RenderTexture"/>.
     /// </summary>
     public static class RenderTextureExtensions
     {

@@ -6,7 +6,7 @@ using System;
 namespace UnityEngine
 {
     /// <summary>
-    /// Extension methods collection of <see cref="GameObject"/>.
+    /// Extension methods collection of <see cref="UnityEngine.GameObject"/>.
     /// </summary>
     public static class GameObjectExtensions
     {

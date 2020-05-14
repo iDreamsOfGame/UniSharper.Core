@@ -4,7 +4,7 @@
 namespace UnityEngine
 {
     /// <summary>
-    /// Extension methods collection of <see cref="UnityEnigne.Camera"/>.
+    /// Extension methods collection of <see cref="UnityEngine.Camera"/>.
     /// </summary>
     public static class CameraExtensions
     {

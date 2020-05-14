@@ -4,7 +4,7 @@
 namespace UnityEngine
 {
     /// <summary>
-    /// Extension methods collection of <see cref="Vector2"/>.
+    /// Extension methods collection of <see cref="UnityEngine.Vector2"/>.
     /// </summary>
     public static class Vector2Extensions
     {

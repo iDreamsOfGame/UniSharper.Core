@@ -4,7 +4,7 @@
 namespace UnityEngine
 {
     /// <summary>
-    /// Extension methods collection of <see cref="Transform"/>.
+    /// Extension methods collection of <see cref="UnityEngine.Transform"/>.
     /// </summary>
     public static class TransformExtensions
     {

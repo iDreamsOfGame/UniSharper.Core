@@ -4,7 +4,7 @@
 namespace UnityEngine
 {
     /// <summary>
-    /// Extension methods collection of <see cref="Quaternion"/>.
+    /// Extension methods collection of <see cref="UnityEngine.Quaternion"/>.
     /// </summary>
     public static class QuaternionExtensions
     {

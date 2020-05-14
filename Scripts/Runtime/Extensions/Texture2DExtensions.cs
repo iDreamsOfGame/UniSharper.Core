@@ -6,7 +6,7 @@ using System;
 namespace UnityEngine
 {
     /// <summary>
-    /// Extension methods collection of <see cref="UnityEnigne.Texture2D"/>.
+    /// Extension methods collection of <see cref="UnityEngine.Texture2D"/>.
     /// </summary>
     public static class Texture2DExtensions
     {

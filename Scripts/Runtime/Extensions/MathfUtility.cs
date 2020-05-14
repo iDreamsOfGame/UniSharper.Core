@@ -4,7 +4,7 @@
 namespace UnityEngine
 {
     /// <summary>
-    /// This class provides some useful <see cref="Mathf"/> utilities.
+    /// This class provides some useful <see cref="UnityEngine.Mathf"/> utilities.
     /// </summary>
     public static class MathfUtility
     {
