@@ -25,6 +25,14 @@ namespace UnityEngine
             return Mathf.Pow(f, 3) * p0 + 3 * t * Mathf.Pow(f, 2) * p1 + 3 * f * Mathf.Pow(t, 2) * p2 + Mathf.Pow(t, 3) * p3;
         }
 
+        /// <summary>
+        /// Generates quadratic bezier points.
+        /// </summary>
+        /// <param name="startPoint">The position of start point. </param>
+        /// <param name="controlPoint">The position of control point. </param>
+        /// <param name="endPoint">The position of end point. </param>
+        /// <param name="segmentCount">The points count to be generated. </param>
+        /// <returns>The <see cref="System.Array"/> of position that quadratic bezier points located. </returns>
         public static Vector3[] GenerateQuadraticBezierPoints(Vector3 startPoint, Vector3 controlPoint, Vector3 endPoint, int segmentCount)
         {
             var points = new Vector3[segmentCount];
@@ -39,6 +47,15 @@ namespace UnityEngine
             return points;
         }
         
+        /// <summary>
+        /// Generates cubic bezier points.
+        /// </summary>
+        /// <param name="startPoint">The position of start point. </param>
+        /// <param name="controlPoint1">The position of the first control point. </param>
+        /// <param name="controlPoint2">The position of the second control point. </param>
+        /// <param name="endPoint">The position of end point. </param>
+        /// <param name="segmentCount">The points count to be generated. </param>
+        /// <returns>The <see cref="System.Array"/> of position that cubic bezier points located. </returns>
         public static Vector3[] GenerateCubicBezierPoints(Vector3 startPoint, Vector3 controlPoint1, Vector3 controlPoint2, Vector3 endPoint, int segmentCount)
         {
             var points = new Vector3[segmentCount];
