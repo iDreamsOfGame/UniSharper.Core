@@ -1,3 +1,12 @@
+## [1.5.0] - 2020-05-19
+
+### Added
+
+- Adds **Vector3Utility.GenerateQuadraticBezierPoints** to generate quadratic bezier points.
+- Adds **Vector3Utility.GenerateCubicBezierPoints** to generate cubic bezier points.
+
+
+
 ## [1.4.1] - 2020-05-11
 
 ### Added
