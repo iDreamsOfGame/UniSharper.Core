@@ -69,5 +69,64 @@ namespace UnityEngine
             
             return points;
         }
+
+        /// <summary>
+        /// Generates points of Achimedean Spiral.
+        /// </summary>
+        /// <param name="centerPoint">The position of center point. </param>
+        /// <param name="cycles">The cycles of spiral drawing. </param>
+        /// <param name="a">The formula parameter a. This parameter will effect the shape of spiral. </param>
+        /// <param name="b">The formula parameter b. This parameter control the space between spiral lines. </param>
+        /// <param name="pointsCount">The count of points need to be generated. </param>
+        /// <returns>The <see cref="System.Array"/> of position that Achimedean Spiral located. </returns>
+        public static Vector3[] GenerateAchimedeanSpiralPoints(Vector3 centerPoint, float cycles, float a, float b, int pointsCount) 
+        {
+            var points = new Vector3[pointsCount];
+            var theta = 2f * Mathf.PI / pointsCount * cycles;
+
+            for (var i = 0; i < points.Length; i++)
+            {
+                var radius = a + b * theta;
+                var x = radius * Mathf.Cos(theta) + centerPoint.x;
+                var y = radius * Mathf.Sin(theta) + centerPoint.y;
+                points[i] = new Vector3(x, y, 0f);
+                theta += 2f * Mathf.PI / pointsCount * cycles;
+            }
+            
+            return points;
+        }
+
+        /// <summary>
+        /// Generates points of Logarithmic Spiral.
+        /// </summary>
+        /// <param name="centerPoint">The position of center point. </param>
+        /// <param name="cycles">The cycles of spiral drawing. </param>
+        /// <param name="a">The formula parameter a. This parameter will effect the shape of spiral. </param>
+        /// <param name="b">The formula parameter b. This parameter control the space between spiral lines. </param>
+        /// <param name="pointsCount">The count of points need to be generated. </param>
+        /// <returns>The <see cref="System.Array"/> of position that Logarithmic Spiral located. </returns>
+        public static Vector3[] GenerateLogarithmicSpiralPoints(
+            Vector3 centerPoint,
+            float cycles,
+            float a,
+            float b,
+            int pointsCount)
+        {
+            var points = new Vector3[pointsCount];
+            var theta = 2f * Mathf.PI / pointsCount * cycles;
+
+            for (var i = 0; i < points.Length; i++)
+            {
+                var radius= a * Mathf.Exp(b * theta);
+                var x = radius * Mathf.Cos(theta) + centerPoint.x;
+                var y = radius * Mathf.Sin(theta) + centerPoint.y;
+                points[i] = new Vector3(x, y, 0f);
+                theta += 2f * Mathf.PI / pointsCount * cycles;
+            }
+
+            
+            
+            return points;
+        }
     }
 }

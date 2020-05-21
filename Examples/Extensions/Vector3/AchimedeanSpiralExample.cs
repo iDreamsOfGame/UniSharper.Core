@@ -1,19 +1,15 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 namespace UniSharper.Examples.Extensions.Vector3
 {
-    /// <summary>
-    /// Quadratic Bezier examples
-    /// </summary>
-    internal class QuadraticBezierExample : MonoBehaviour
+    internal class AchimedeanSpiralExample : MonoBehaviour
     {
         [SerializeField]
         private LineRenderer lineRenderer = null;
 
         private void Start()
         {
-            var points = Vector3Utility.GenerateQuadraticBezierPoints(UnityEngine.Vector3.zero, new UnityEngine.Vector3(0.5f, 0.5f), 
-                new UnityEngine.Vector3(1, 0, 0), 50);
+            var points = Vector3Utility.GenerateAchimedeanSpiralPoints(UnityEngine.Vector3.zero, 5f, 1, 0.5f, 150);
 
             for (var i = 1; i < points.Length; i++)
             {
