@@ -42,9 +42,17 @@ namespace UniSharper.Audio
         /// <summary>
         /// Plays the audio.
         /// </summary>
+        /// <param name="delay">Delay time specified in seconds. </param>
         /// <param name="muted">Whether mutes the audio. </param>
         /// <param name="isLoop">Whether replays after the audio finishes. </param>
-        void Play(bool muted = false, bool isLoop = false);
+        void Play(float delay = 0f, bool muted = false, bool isLoop = false);
+
+        /// <summary>
+        /// Plays the audio once.
+        /// </summary>
+        /// <param name="delay">Delay time specified in seconds. </param>
+        /// <param name="muted">Whether mutes the audio. </param>
+        void PlayOneShot(float delay = 0f, bool muted = false);
 
         /// <summary>
         /// Resumes playing.

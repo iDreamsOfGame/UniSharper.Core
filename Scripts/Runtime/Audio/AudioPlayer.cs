@@ -1,6 +1,7 @@
 // Copyright (c) Jerry Lee. All rights reserved. Licensed under the MIT License.
 // See LICENSE in the project root for license information.
 
+using System.Collections;
 using UnityEngine;
 
 namespace UniSharper.Audio
@@ -38,7 +39,8 @@ namespace UniSharper.Audio
             get => AudioSource && AudioSource.loop;
             set
             {
-                if (AudioSource) AudioSource.loop = value;
+                if (AudioSource) 
+                    AudioSource.loop = value;
             }
         }
 
@@ -46,7 +48,9 @@ namespace UniSharper.Audio
         {
             get
             {
-                if (!audioSource) audioSource = GetComponent<AudioSource>();
+                if (!audioSource) 
+                    audioSource = GetComponent<AudioSource>();
+                
                 return audioSource;
             }
         }
@@ -60,11 +64,26 @@ namespace UniSharper.Audio
             AudioSource.Pause();
         }
 
-        public void Play(bool muted = false, bool isLoop = false)
+        public void Play(float delay = 0f, bool muted = false, bool isLoop = false)
         {
             IsLoop = isLoop;
             AudioSource.mute = muted;
-            AudioSource.Play();
+            
+            if(!AudioSource || !AudioSource.clip)
+                return;
+            
+            AudioSource.PlayDelayed(delay);
+        }
+
+        public void PlayOneShot(float delay = 0f, bool muted = false)
+        {
+            IsLoop = false;
+            AudioSource.mute = muted;
+            
+            if(!AudioSource || !AudioSource.clip)
+                return;
+            
+            StartCoroutine(PlayOneShotDelayed(delay));
         }
 
         public void Resume()
@@ -75,6 +94,12 @@ namespace UniSharper.Audio
         public void Stop()
         {
             AudioSource.Stop();
+        }
+
+        private IEnumerator PlayOneShotDelayed(float delay)
+        {
+            yield return new WaitForSeconds(delay);
+            AudioSource.PlayOneShot(AudioSource.clip);
         }
 
         #endregion Methods
