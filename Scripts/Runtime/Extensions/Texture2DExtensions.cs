@@ -26,7 +26,7 @@ namespace UnityEngine
             if(!foregroundTexture)
                 throw new ArgumentNullException(nameof(foregroundTexture));
             
-            if (SystemInfo.supportsComputeShaders)
+            if (SystemInfo.supportsComputeShaders) 
             {
                 var renderTexture = new RenderTexture(source.width, source.height, 24) { enableRandomWrite = true };
                 renderTexture.Create();
@@ -35,8 +35,9 @@ namespace UnityEngine
                 var kernel = shader.FindKernel("BlendTexture");
                 shader.SetTexture(kernel, "backgroundTexture", source);
                 shader.SetTexture(kernel, "foregroundTexture", foregroundTexture);
+                shader.SetInts("foregroundTextureDimensions", foregroundTexture.width, foregroundTexture.height);
                 shader.SetInts("foregroundTexturePosition", foregroundTexturePosition.x, foregroundTexturePosition.y);
-                shader.SetTexture(kernel, "result", renderTexture);
+                shader.SetTexture(kernel, "output", renderTexture);
                 shader.Dispatch(kernel, source.width, source.height, 1);
                 var output = renderTexture.ToTexture(new Rect(0, 0, renderTexture.width, renderTexture.height));
                 Object.Destroy(renderTexture);
@@ -56,12 +57,13 @@ namespace UnityEngine
                     {
                         var color1 = source.GetPixel(x, y);
                         var color2 = Color.clear;
+                        var position = new Vector2Int(x - foregroundTexturePosition.x, y - foregroundTexturePosition.y);
 
-                        if (x - foregroundTexturePosition.x >= 0 && y - foregroundTexturePosition.y >= 0)
+                        if (0 <= position.x && position.x <= foregroundTexture.width && 0 <= position.y && position.y <= foregroundTexture.height)
                         {
-                            color2 = foregroundTexture.GetPixel(x - foregroundTexturePosition.x, y - foregroundTexturePosition.y);
+                            color2 = foregroundTexture.GetPixel(position.x, position.y);
                         }
-                        
+
                         output.SetPixel(x, y, color1 + color2);
                     }
                 }

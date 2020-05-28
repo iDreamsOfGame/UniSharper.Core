@@ -3,17 +3,23 @@
 
 // Create a RenderTexture with enableRandomWrite flag and set it
 // with cs.SetTexture
-RWTexture2D<float4> result;
+RWTexture2D<float4> output;
 Texture2D backgroundTexture;
 Texture2D foregroundTexture;
-int2 foregroundTexturePosition;
+uint2 foregroundTextureDimensions;
+uint2 foregroundTexturePosition;
 
 [numthreads(8,8,1)]
-void BlendTexture (uint3 id : SV_DispatchThreadID)
+void BlendTexture(uint3 id : SV_DispatchThreadID)
 {
-    float r = backgroundTexture[id.xy].r + foregroundTexture[id.xy - foregroundTexturePosition.xy].r;
-    float g = backgroundTexture[id.xy].g + foregroundTexture[id.xy - foregroundTexturePosition.xy].g;
-    float b = backgroundTexture[id.xy].b + foregroundTexture[id.xy - foregroundTexturePosition.xy].b;
-    float a = backgroundTexture[id.xy].a + foregroundTexture[id.xy - foregroundTexturePosition.xy].a;
-    result[id.xy] = float4(r, g, b, a);
+    float4 background = backgroundTexture[id.xy].rgba;
+    uint2 pixelPosition = id.xy - foregroundTexturePosition.xy;
+    float4 foreground = float4(0, 0, 0, 0);
+
+    if(0 <= pixelPosition.x && pixelPosition.x <= foregroundTextureDimensions.x && 0 <= pixelPosition.y && pixelPosition.y <= foregroundTextureDimensions.y) 
+    {
+        foreground = foregroundTexture[pixelPosition];
+    }
+
+    output[id.xy] = background + foreground;
 }
