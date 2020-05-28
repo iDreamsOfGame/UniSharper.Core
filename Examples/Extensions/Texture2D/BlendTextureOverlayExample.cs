@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 namespace UniSharper.Examples.Extensions.Texture2D
 {
-    internal class BlendTextureExample : MonoBehaviour
+    internal class BlendTextureOverlayExample : MonoBehaviour
     {
         [SerializeField]
         private UnityEngine.Camera mainCamera = null;
@@ -37,7 +37,7 @@ namespace UniSharper.Examples.Extensions.Texture2D
             if (!texture1 || !texture2)
                 return;
 
-            rawImage3.texture = texture1.BlendTexture(texture2, new Vector2Int(100, 150));
+            rawImage3.texture = texture1.BlendTextureOverlay(texture2, new Vector2Int(100, 150));
         }
     }
 }

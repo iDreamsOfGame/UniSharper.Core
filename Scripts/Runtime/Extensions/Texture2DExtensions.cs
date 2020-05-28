@@ -11,32 +11,32 @@ namespace UnityEngine
     public static class Texture2DExtensions
     {
         /// <summary>
-        /// Blend this texture as background with other texture which will be foreground.
+        /// Blend other texture as overlay.
         /// </summary>
-        /// <param name="source">The texture will be background. </param>
-        /// <param name="foregroundTexture">The texture will be foreground. </param>
-        /// <param name="foregroundTexturePosition">The position that foreground texture will be in background texture. </param>
-        /// <returns>The composite texture which blended background texture and foreground texture.</returns>
-        /// <exception cref="ArgumentNullException"><c>foregroundTexture</c> is <c>null</c>. </exception>
-        public static Texture2D BlendTexture(
+        /// <param name="source">The texture background. </param>
+        /// <param name="overlay">The texture overlay. </param>
+        /// <param name="overlayPosition">The position that overlay texture will be blended in background texture. </param>
+        /// <returns>The texture that has blended background texture and overlay texture.</returns>
+        /// <exception cref="ArgumentNullException"><c>overlay</c> is <c>null</c>. </exception>
+        public static Texture2D BlendTextureOverlay(
             this Texture2D source,
-            Texture2D foregroundTexture,
-            Vector2Int foregroundTexturePosition)
+            Texture2D overlay,
+            Vector2Int overlayPosition)
         {
-            if(!foregroundTexture)
-                throw new ArgumentNullException(nameof(foregroundTexture));
+            if(!overlay)
+                throw new ArgumentNullException(nameof(overlay));
             
             if (SystemInfo.supportsComputeShaders) 
             {
                 var renderTexture = new RenderTexture(source.width, source.height, 24) { enableRandomWrite = true };
                 renderTexture.Create();
 
-                var shader = Resources.Load<ComputeShader>("Shaders/BlendTexture");
-                var kernel = shader.FindKernel("BlendTexture");
-                shader.SetTexture(kernel, "backgroundTexture", source);
-                shader.SetTexture(kernel, "foregroundTexture", foregroundTexture);
-                shader.SetInts("foregroundTextureDimensions", foregroundTexture.width, foregroundTexture.height);
-                shader.SetInts("foregroundTexturePosition", foregroundTexturePosition.x, foregroundTexturePosition.y);
+                var shader = Resources.Load<ComputeShader>("Shaders/BlendTextureOverlay");
+                var kernel = shader.FindKernel("blendTextureOverlay");
+                shader.SetTexture(kernel, "source", source);
+                shader.SetTexture(kernel, "overlay", overlay);
+                shader.SetInts("overlayDimensions", overlay.width, overlay.height);
+                shader.SetInts("overlayPosition", overlayPosition.x, overlayPosition.y);
                 shader.SetTexture(kernel, "output", renderTexture);
                 shader.Dispatch(kernel, source.width, source.height, 1);
                 var output = renderTexture.ToTexture(new Rect(0, 0, renderTexture.width, renderTexture.height));
@@ -57,11 +57,11 @@ namespace UnityEngine
                     {
                         var color1 = source.GetPixel(x, y);
                         var color2 = Color.clear;
-                        var position = new Vector2Int(x - foregroundTexturePosition.x, y - foregroundTexturePosition.y);
+                        var position = new Vector2Int(x - overlayPosition.x, y - overlayPosition.y);
 
-                        if (0 <= position.x && position.x <= foregroundTexture.width && 0 <= position.y && position.y <= foregroundTexture.height)
+                        if (0 <= position.x && position.x <= overlay.width && 0 <= position.y && position.y <= overlay.height)
                         {
-                            color2 = foregroundTexture.GetPixel(position.x, position.y);
+                            color2 = overlay.GetPixel(position.x, position.y);
                         }
 
                         output.SetPixel(x, y, color1 + color2);
