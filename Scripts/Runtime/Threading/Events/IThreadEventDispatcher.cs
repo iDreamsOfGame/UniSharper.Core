@@ -21,18 +21,16 @@ namespace UniSharper.Threading.Events
         /// <param name="eventType">The type of event.</param>
         /// <param name="listener">The delegate to handle the event.</param>
         /// <exception cref="ArgumentNullException">
-        /// <para><c>eventType</c> is <c>null</c> or <c>empty</c>.</para>
-        /// - or -
-        /// <para><c>listener</c> is <c>null</c>.</para>
+        /// <c>listener</c> is <c>null</c>.
         /// </exception>
-        void AddEventListener(string eventType, Action<Event> listener);
+        void AddEventListener(Enum eventType, Action<ThreadEvent> listener);
 
         /// <summary>
-        /// Dispatches en <see cref="Event"/>.
+        /// Dispatches en <see cref="ThreadEvent"/>.
         /// </summary>
-        /// <param name="e">The <see cref="Event"/> object.</param>
+        /// <param name="e">The <see cref="ThreadEvent"/> object.</param>
         /// <exception cref="ArgumentNullException"><c>e</c> is <c>null</c>.</exception>
-        void DispatchEvent(Event e);
+        void DispatchEvent(ThreadEvent e);
 
         /// <summary>
         /// Checks whether this <see cref="IThreadEventDispatcher"/> has the delegate listener
@@ -44,11 +42,9 @@ namespace UniSharper.Threading.Events
         /// <c>true</c> if a listener of the specified type of event is registered; <c>false</c> otherwise.
         /// </returns>
         /// <exception cref="ArgumentNullException">
-        /// <para><c>eventType</c> is <c>null</c> or <c>empty</c>.</para>
-        /// - or -
-        /// <para><c>listener</c> is <c>null</c>.</para>
+        /// <c>listener</c> is <c>null</c>.
         /// </exception>
-        bool HasEventListener(string eventType, Action<Event> listener);
+        bool HasEventListener(Enum eventType, Action<ThreadEvent> listener);
 
         /// <summary>
         /// Checks whether this <see cref="IThreadEventDispatcher"/> has listeners registered for a
@@ -58,8 +54,7 @@ namespace UniSharper.Threading.Events
         /// <returns>
         /// <c>true</c> if listeners of the specified type of event are registered; <c>false</c> otherwise.
         /// </returns>
-        /// <exception cref="ArgumentNullException"><c>eventType</c> is <c>null</c> or <c>empty</c>.</exception>
-        bool HasEventListeners(string eventType);
+        bool HasEventListeners(Enum eventType);
 
         /// <summary>
         /// Removes all event listeners of this <see cref="IThreadEventDispatcher"/>.
@@ -72,18 +67,15 @@ namespace UniSharper.Threading.Events
         /// <param name="eventType">The type of event.</param>
         /// <param name="listener">The delegate to be removed.</param>
         /// <exception cref="ArgumentNullException">
-        /// <para><c>eventType</c> is <c>null</c> or <c>empty</c>.</para>
-        /// - or -
-        /// <para><c>listener</c> is <c>null</c>.</para>
+        /// <c>listener</c> is <c>null</c>.
         /// </exception>
-        void RemoveEventListener(string eventType, Action<Event> listener);
+        void RemoveEventListener(Enum eventType, Action<ThreadEvent> listener);
 
         /// <summary>
         /// Removes the event listeners registered for the specific type of event.
         /// </summary>
         /// <param name="eventType">The type of event.</param>
-        /// <exception cref="ArgumentNullException"><c>eventType</c> is <c>null</c> or <c>empty</c>.</exception>
-        void RemoveEventListeners(string eventType);
+        void RemoveEventListeners(Enum eventType);
 
         #endregion Methods
     }

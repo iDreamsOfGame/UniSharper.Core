@@ -16,12 +16,12 @@ namespace UniSharper.Threading.Events
         #region Fields
 
         private readonly object syncRoot = new object();
-        private Queue<Event> eventQueue;
+        private Queue<ThreadEvent> eventQueue;
         private bool isPending = false;
-        private Dictionary<string, List<Action<Event>>> listeners = null;
-        private Queue<Event> pendingEventQueue;
-        private Dictionary<string, List<Action<Event>>> pendingListeners = null;
-        private Dictionary<string, List<Action<Event>>> pendingRemovedListeners = null;
+        private Dictionary<Enum, List<Action<ThreadEvent>>> listeners = null;
+        private Queue<ThreadEvent> pendingEventQueue;
+        private Dictionary<Enum, List<Action<ThreadEvent>>> pendingListeners = null;
+        private Dictionary<Enum, List<Action<ThreadEvent>>> pendingRemovedListeners = null;
 
         #endregion Fields
 
@@ -32,12 +32,12 @@ namespace UniSharper.Threading.Events
         /// </summary>
         public ThreadEventDispatcher()
         {
-            listeners = new Dictionary<string, List<Action<Event>>>();
-            pendingListeners = new Dictionary<string, List<Action<Event>>>();
-            pendingRemovedListeners = new Dictionary<string, List<Action<Event>>>();
+            listeners = new Dictionary<Enum, List<Action<ThreadEvent>>>();
+            pendingListeners = new Dictionary<Enum, List<Action<ThreadEvent>>>();
+            pendingRemovedListeners = new Dictionary<Enum, List<Action<ThreadEvent>>>();
 
-            eventQueue = new Queue<Event>();
-            pendingEventQueue = new Queue<Event>();
+            eventQueue = new Queue<ThreadEvent>();
+            pendingEventQueue = new Queue<ThreadEvent>();
 
             if (UnityThreadSynchronizer.Instance != null)
             {
@@ -76,17 +76,10 @@ namespace UniSharper.Threading.Events
         /// <param name="eventType">The type of event.</param>
         /// <param name="listener">The delegate to handle the event.</param>
         /// <exception cref="ArgumentNullException">
-        /// <para><c>eventType</c> is <c>null</c> or <c>empty</c>.</para>
-        /// - or -
-        /// <para><c>listener</c> is <c>null</c>.</para>
+        /// <c>listener</c> is <c>null</c>.
         /// </exception>
-        public void AddEventListener(string eventType, Action<Event> listener)
+        public void AddEventListener(Enum eventType, Action<ThreadEvent> listener)
         {
-            if (string.IsNullOrEmpty(eventType))
-            {
-                throw new ArgumentNullException(nameof(eventType));
-            }
-
             if (listener == null)
             {
                 throw new ArgumentNullException(nameof(listener));
@@ -106,11 +99,11 @@ namespace UniSharper.Threading.Events
         }
 
         /// <summary>
-        /// Dispatches en <see cref="Event"/>.
+        /// Dispatches en <see cref="ThreadEvent"/>.
         /// </summary>
-        /// <param name="e">The <see cref="Event"/> object.</param>
+        /// <param name="e">The <see cref="ThreadEvent"/> object.</param>
         /// <exception cref="ArgumentNullException"><c>e</c> is <c>null</c>.</exception>
-        public void DispatchEvent(Event e)
+        public void DispatchEvent(ThreadEvent e)
         {
             if (e == null)
             {
@@ -145,17 +138,10 @@ namespace UniSharper.Threading.Events
         /// <c>true</c> if a listener of the specified type of event is registered; <c>false</c> otherwise.
         /// </returns>
         /// <exception cref="ArgumentNullException">
-        /// <para><c>eventType</c> is <c>null</c> or <c>empty</c>.</para>
-        /// - or -
-        /// <para><c>listener</c> is <c>null</c>.</para>
+        /// <c>listener</c> is <c>null</c>.
         /// </exception>
-        public bool HasEventListener(string eventType, Action<Event> listener)
+        public bool HasEventListener(Enum eventType, Action<ThreadEvent> listener)
         {
-            if (string.IsNullOrEmpty(eventType))
-            {
-                throw new ArgumentNullException(nameof(eventType));
-            }
-
             if (listener == null)
             {
                 throw new ArgumentNullException(nameof(listener));
@@ -173,16 +159,10 @@ namespace UniSharper.Threading.Events
         /// <returns>
         /// <c>true</c> if listeners of the specified type of event are registered; <c>false</c> otherwise.
         /// </returns>
-        /// <exception cref="ArgumentNullException"><c>eventType</c> is <c>null</c> or <c>empty</c>.</exception>
-        public bool HasEventListeners(string eventType)
+        public bool HasEventListeners(Enum eventType)
         {
-            if (string.IsNullOrEmpty(eventType))
-            {
-                throw new ArgumentNullException(nameof(eventType));
-            }
-
             return (listeners.ContainsKey(eventType) && listeners[eventType].Count > 0)
-                || (pendingListeners.ContainsKey(eventType) && pendingListeners[eventType].Count > 0);
+                   || (pendingListeners.ContainsKey(eventType) && pendingListeners[eventType].Count > 0);
         }
 
         /// <summary>
@@ -199,7 +179,7 @@ namespace UniSharper.Threading.Events
             {
                 if (isPending)
                 {
-                    pendingListeners = new Dictionary<string, List<Action<Event>>>(listeners);
+                    pendingListeners = new Dictionary<Enum, List<Action<ThreadEvent>>>(listeners);
                 }
                 else
                 {
@@ -214,17 +194,10 @@ namespace UniSharper.Threading.Events
         /// <param name="eventType">The type of event.</param>
         /// <param name="listener">The delegate to be removed.</param>
         /// <exception cref="ArgumentNullException">
-        /// <para><c>eventType</c> is <c>null</c> or <c>empty</c>.</para>
-        /// - or -
-        /// <para><c>listener</c> is <c>null</c>.</para>
+        /// <c>listener</c> is <c>null</c>.
         /// </exception>
-        public void RemoveEventListener(string eventType, Action<Event> listener)
+        public void RemoveEventListener(Enum eventType, Action<ThreadEvent> listener)
         {
-            if (string.IsNullOrEmpty(eventType))
-            {
-                throw new ArgumentNullException(nameof(eventType));
-            }
-
             if (listener == null)
             {
                 throw new ArgumentNullException(nameof(listener));
@@ -236,7 +209,7 @@ namespace UniSharper.Threading.Events
                 {
                     if (!pendingListeners.ContainsKey(eventType) || !pendingListeners[eventType].Contains(listener))
                     {
-                        pendingListeners.AddUnique(eventType, new List<Action<Event>>());
+                        pendingListeners.AddUnique(eventType, new List<Action<ThreadEvent>>());
                         pendingListeners[eventType].AddUnique(listener);
                     }
                 }
@@ -251,27 +224,21 @@ namespace UniSharper.Threading.Events
         /// Removes the event listeners registered for the specific type of event.
         /// </summary>
         /// <param name="eventType">The type of event.</param>
-        /// <exception cref="ArgumentNullException"><c>eventType</c> is <c>null</c> or <c>empty</c>.</exception>
-        public void RemoveEventListeners(string eventType)
+        public void RemoveEventListeners(Enum eventType)
         {
-            if (string.IsNullOrEmpty(eventType))
-            {
-                throw new ArgumentNullException(nameof(eventType));
-            }
-
             lock (syncRoot)
             {
                 if (isPending)
                 {
-                    if (listeners.ContainsKey(eventType))
+                    if (!listeners.ContainsKey(eventType))
+                        return;
+                    
+                    if (pendingListeners.ContainsKey(eventType))
                     {
-                        if (pendingListeners.ContainsKey(eventType))
-                        {
-                            pendingListeners.Remove(eventType);
-                        }
-
-                        pendingListeners.AddUnique(eventType, listeners[eventType]);
+                        pendingListeners.Remove(eventType);
                     }
+
+                    pendingListeners.AddUnique(eventType, listeners[eventType]);
                 }
                 else
                 {
@@ -295,70 +262,69 @@ namespace UniSharper.Threading.Events
 
                 while (eventQueue.Count > 0)
                 {
-                    Event e = eventQueue.Dequeue();
+                    var e = eventQueue.Dequeue();
+                    if (!listeners.ContainsKey(e.EventType)) 
+                        continue;
+                    
+                    var handlers = listeners[e.EventType];
 
-                    if (listeners.ContainsKey(e.EventType))
+                    handlers.ForEach(listener =>
                     {
-                        List<Action<Event>> handlers = listeners[e.EventType];
-
-                        handlers.ForEach(listener =>
-                        {
-                            listener.Invoke(e);
-                        });
-                    }
+                        listener.Invoke(e);
+                    });
                 }
 
                 isPending = false;
             }
         }
 
-        private void AddNormalEventListener(string eventType, Action<Event> listener)
+        private void AddNormalEventListener(Enum eventType, Action<ThreadEvent> listener)
         {
-            if (listeners != null)
-            {
-                listeners.AddUnique(eventType, new List<Action<Event>>());
-                listeners[eventType].AddUnique(listener);
-            }
+            if (listeners == null) 
+                return;
+            
+            listeners.AddUnique(eventType, new List<Action<ThreadEvent>>());
+            listeners[eventType].AddUnique(listener);
         }
 
-        private void AddPendingEventListener(string eventType, Action<Event> listener)
+        private void AddPendingEventListener(Enum eventType, Action<ThreadEvent> listener)
         {
-            if (pendingListeners != null)
-            {
-                pendingListeners.AddUnique(eventType, new List<Action<Event>>());
-                pendingListeners[eventType].AddUnique(listener);
-            }
+            if (pendingListeners == null) 
+                return;
+            
+            pendingListeners.AddUnique(eventType, new List<Action<ThreadEvent>>());
+            pendingListeners[eventType].AddUnique(listener);
         }
 
         private void AddPendingEvents()
         {
             while (pendingEventQueue.Count > 0)
             {
-                Event e = pendingEventQueue.Dequeue();
+                var e = pendingEventQueue.Dequeue();
                 eventQueue.Enqueue(e);
             }
         }
 
         private void HandlePendingRemovedEventListeners()
         {
-            if (pendingRemovedListeners != null && pendingRemovedListeners.Count > 0)
+            if (pendingRemovedListeners == null || pendingRemovedListeners.Count == 0) 
+                return;
+            
+            foreach (var kvp in pendingRemovedListeners)
             {
-                foreach (KeyValuePair<string, List<Action<Event>>> kvp in pendingRemovedListeners)
+                var eventType = kvp.Key;
+                var listeners = kvp.Value;
+
+                if (listeners == null || listeners.Count == 0) 
+                    continue;
+                    
+                foreach (var listener in listeners)
                 {
-                    string eventType = kvp.Key;
-                    List<Action<Event>> listeners = kvp.Value;
-
-                    if (listeners != null && listeners.Count > 0)
-                    {
-                        foreach (Action<Event> listener in listeners)
-                        {
-                            RemoveNormalEventListener(eventType, listener);
-                        }
-                    }
+                    RemoveNormalEventListener(eventType, listener);
                 }
-
-                pendingRemovedListeners.Clear();
             }
+
+            pendingRemovedListeners.Clear();
         }
 
         private bool HasEventListeners()
@@ -368,33 +334,33 @@ namespace UniSharper.Threading.Events
 
         private void MergePendingEventListeners()
         {
-            if (pendingListeners != null && pendingListeners.Count > 0)
+            if (pendingListeners == null || pendingListeners.Count == 0) 
+                return;
+            
+            foreach (var kvp in pendingListeners)
             {
-                foreach (KeyValuePair<string, List<Action<Event>>> kvp in pendingListeners)
+                var eventType = kvp.Key;
+                var listeners = kvp.Value;
+
+                if (listeners == null || listeners.Count == 0)
+                    continue;
+                    
+                foreach (var listener in listeners)
                 {
-                    string eventType = kvp.Key;
-                    List<Action<Event>> listeners = kvp.Value;
-
-                    if (listeners != null && listeners.Count > 0)
-                    {
-                        foreach (Action<Event> listener in listeners)
-                        {
-                            AddNormalEventListener(eventType, listener);
-                        }
-                    }
+                    AddNormalEventListener(eventType, listener);
                 }
-
-                pendingListeners.Clear();
             }
+
+            pendingListeners.Clear();
         }
 
-        private void RemoveNormalEventListener(string eventType, Action<Event> listener)
+        private void RemoveNormalEventListener(Enum eventType, Action<ThreadEvent> listener)
         {
-            if (listeners.ContainsKey(eventType))
-            {
-                List<Action<Event>> list = listeners[eventType];
-                list.Remove(listener);
-            }
+            if (!listeners.ContainsKey(eventType))
+                return;
+            
+            var list = listeners[eventType];
+            list.Remove(listener);
         }
 
         #endregion Methods

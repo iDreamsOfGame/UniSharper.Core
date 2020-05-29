@@ -6,26 +6,20 @@ using System;
 namespace UniSharper.Threading.Events
 {
     /// <summary>
-    /// The Event class is used as the base class for the creation of Event objects, which are
+    /// The ThreadEvent class is used as the base class for the creation of Event objects, which are
     /// passed as parameters to event listeners when an event occurs.
     /// </summary>
-    public class Event
+    public class ThreadEvent
     {
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Event"/> class.
+        /// Initializes a new instance of the <see cref="ThreadEvent"/> class.
         /// </summary>
         /// <param name="eventType">The type of event.</param>
         /// <param name="context">The context object.</param>
-        /// <exception cref="ArgumentNullException"><c>eventType</c> is <c>null</c> or <c>empty</c>.</exception>
-        public Event(string eventType, object context = null)
+        public ThreadEvent(Enum eventType, object context = null)
         {
-            if (string.IsNullOrEmpty(eventType))
-            {
-                throw new ArgumentNullException(nameof(eventType));
-            }
-
             EventType = eventType;
             Context = context;
         }
@@ -48,7 +42,7 @@ namespace UniSharper.Threading.Events
         /// The type of event.
         /// </summary>
         /// <value>The type of event.</value>
-        public string EventType
+        public Enum EventType
         {
             get;
             set;
