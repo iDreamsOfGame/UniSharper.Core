@@ -65,6 +65,23 @@ namespace UnityEngine
         {
             return Mathf.Acos(Vector3.Dot(a.normalized, b.normalized)) * Mathf.Rad2Deg;
         }
+        
+        /// <summary>
+        /// Gets the angle between <see cref="Vector3"/> a and b when the z value of a and b are zero.
+        /// </summary>
+        /// <param name="a">The <see cref="Vector3"/> a.</param>
+        /// <param name="b">The <see cref="Vector3"/> b.</param>
+        /// <returns>The angle between <see cref="Vector3"/> a and b.</returns>
+        public static float Get2DAngle(Vector3 a, Vector3 b)
+        {
+            var isRight = Vector3.Cross(a, b).z < 0;
+            var angle = Vector3.Angle(a, b);
+
+            if (isRight)
+                angle = -angle;
+
+            return angle;
+        }
 
         /// <summary>
         /// Normalizes the angle.
