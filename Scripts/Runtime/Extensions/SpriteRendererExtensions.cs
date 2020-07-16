@@ -16,7 +16,7 @@ namespace UnityEngine
         public static void SetAlpha(this SpriteRenderer spriteRenderer, float alpha)
         {
             var color = spriteRenderer.color;
-            spriteRenderer.color = new Color(alpha, color.g, color.b, color.a);
+            spriteRenderer.color = new Color(color.r, color.g, color.b, alpha);
         }
     }
 }
