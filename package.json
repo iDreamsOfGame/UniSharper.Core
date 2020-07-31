@@ -12,6 +12,6 @@
 	"dependencies": 
 	{
 		"jillejr.newtonsoft.json-for-unity": "12.0.301",
-		"io.github.idreamsofgame.resharp.core": "1.0.0"
+		"io.github.idreamsofgame.resharp.core": "1.0.1"
 	}
 }
