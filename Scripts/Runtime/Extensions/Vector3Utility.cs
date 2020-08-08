@@ -7,22 +7,32 @@ namespace UnityEngine
     /// </summary>
     public static class Vector3Utility
     {
-        private static Vector3 CalculateQuadraticBezierPoint(float t, Vector3 p0, Vector3 p1, Vector3 p2)
+        /// <summary>
+        /// Gets the angle between <see cref="Vector3"/> a and b.
+        /// </summary>
+        /// <param name="a">The <see cref="Vector3"/> a.</param>
+        /// <param name="b">The <see cref="Vector3"/> b.</param>
+        /// <returns>The angle between <see cref="Vector3"/> a and b.</returns>
+        public static float GetAngle(Vector3 a, Vector3 b)
         {
-            if(t < 0 || t > 1)
-                throw new ArgumentOutOfRangeException(nameof(t));
-
-            var f = 1 - t;
-            return Mathf.Pow(f, 2) * p0 + 2 * t * f * p1 + Mathf.Pow(t, 2) * p2;
+            return Mathf.Acos(Vector3.Dot(a.normalized, b.normalized)) * Mathf.Rad2Deg;
         }
         
-        private static Vector3 CalculateCubicBezierPoint(float t, Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3)
+        /// <summary>
+        /// Gets the angle between <see cref="Vector3"/> a and b when the z value of a and b are zero.
+        /// </summary>
+        /// <param name="a">The <see cref="Vector3"/> a.</param>
+        /// <param name="b">The <see cref="Vector3"/> b.</param>
+        /// <returns>The angle between <see cref="Vector3"/> a and b.</returns>
+        public static float Get2DAngle(Vector3 a, Vector3 b)
         {
-            if(t < 0 || t > 1)
-                throw new ArgumentOutOfRangeException(nameof(t));
+            var isRight = Vector3.Cross(a, b).z < 0;
+            var angle = Vector3.Angle(a, b);
 
-            var f = 1 - t;
-            return Mathf.Pow(f, 3) * p0 + 3 * t * Mathf.Pow(f, 2) * p1 + 3 * f * Mathf.Pow(t, 2) * p2 + Mathf.Pow(t, 3) * p3;
+            if (isRight)
+                angle = -angle;
+
+            return angle;
         }
 
         /// <summary>
@@ -89,7 +99,7 @@ namespace UnityEngine
                 var radius = a + b * theta;
                 var x = radius * Mathf.Cos(theta) + centerPoint.x;
                 var y = radius * Mathf.Sin(theta) + centerPoint.y;
-                points[i] = new Vector3(x, y, 0f);
+                points[i] = new Vector3(x, y, centerPoint.z);
                 theta += 2f * Mathf.PI / pointsCount * cycles;
             }
             
@@ -120,13 +130,29 @@ namespace UnityEngine
                 var radius= a * Mathf.Exp(b * theta);
                 var x = radius * Mathf.Cos(theta) + centerPoint.x;
                 var y = radius * Mathf.Sin(theta) + centerPoint.y;
-                points[i] = new Vector3(x, y, 0f);
+                points[i] = new Vector3(x, y, centerPoint.z);
                 theta += 2f * Mathf.PI / pointsCount * cycles;
             }
-
-            
             
             return points;
+        }
+        
+        private static Vector3 CalculateQuadraticBezierPoint(float t, Vector3 p0, Vector3 p1, Vector3 p2)
+        {
+            if(t < 0 || t > 1)
+                throw new ArgumentOutOfRangeException(nameof(t));
+
+            var f = 1 - t;
+            return Mathf.Pow(f, 2) * p0 + 2 * t * f * p1 + Mathf.Pow(t, 2) * p2;
+        }
+        
+        private static Vector3 CalculateCubicBezierPoint(float t, Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3)
+        {
+            if(t < 0 || t > 1)
+                throw new ArgumentOutOfRangeException(nameof(t));
+
+            var f = 1 - t;
+            return Mathf.Pow(f, 3) * p0 + 3 * t * Mathf.Pow(f, 2) * p1 + 3 * f * Mathf.Pow(t, 2) * p2 + Mathf.Pow(t, 3) * p3;
         }
     }
 }

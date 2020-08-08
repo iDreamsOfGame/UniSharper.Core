@@ -1,15 +1,21 @@
+## [1.7.0] - 2020-08-08
+
+### Added
+
+- Adds **Vector2Utility.GenerateAchimedeanSpiralPoints** to generate points of Achimedean Spiral.
+- Adds **Vector2Utility.GenerateLogarithmicSpiralPoints** to generate points of Logarithmic Spiral.
+
+- Adds **Vector2Utility.GenerateQuadraticBezierPoints** to generate points of quadratic bezier.
+- Adds **Vector2Utility.GenerateCubicBezierPoints** to generate points of cubic bezier.
+
+
+
 ## [1.6.0] - 2020-05-21
 
 ### Added
 
 - Adds **Vector3Utility.GenerateAchimedeanSpiralPoints** to generate points of Achimedean Spiral.
 - Adds **Vector3Utility.GenerateLogarithmicSpiralPoints** to generate points of Logarithmic Spiral.
-
-
-
-## [1.5.0] - 2020-05-19
-
-### Added
 
 - Adds **Vector3Utility.GenerateQuadraticBezierPoints** to generate points of quadratic bezier.
 - Adds **Vector3Utility.GenerateCubicBezierPoints** to generate points of cubic bezier.
