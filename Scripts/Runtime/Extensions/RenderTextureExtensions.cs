@@ -19,7 +19,7 @@ namespace UnityEngine
         {
             var originalActiveRenderTexture = RenderTexture.active;
             RenderTexture.active = renderTexture;
-            var output = new Texture2D((int)rect.width, (int)rect.height, textureFormat, false);
+            var output = new Texture2D((int)rect.width, (int)rect.height, textureFormat, false, true);
             output.wrapMode = TextureWrapMode.Clamp;
             output.ReadPixels(rect, 0, 0);
             output.Apply();
