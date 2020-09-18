@@ -1,3 +1,17 @@
+## [1.8.0] - 2020-09-18
+
+### Changed
+
+- Refactor plugin folder structures follow the [Unity Manual](https://docs.unity3d.com/Manual/cus-layout.html).
+
+
+
+### Added
+
+- Adds class **CameraShake** to implement camera shake post processing effect.
+
+
+
 ## [1.7.0] - 2020-08-08
 
 ### Added
