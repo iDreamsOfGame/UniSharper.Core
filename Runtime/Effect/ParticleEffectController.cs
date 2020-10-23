@@ -11,7 +11,7 @@ namespace UniSharper.Effect
     [DisallowMultipleComponent]
     public class ParticleEffectController : MonoBehaviour, IParticleEffectController
     {
-        private ParticleSystem particleSystemRoot = null;
+        private ParticleSystem particleSystemRoot;
 
         public ParticleEffectEvent Started { get; private set; }
         
@@ -41,17 +41,20 @@ namespace UniSharper.Effect
 
         public Transform Transform => transform;
 
-        public float Time => ParticleSystemRoot.time;
+        public float Time => ParticleSystemRoot?.time ?? 0f;
 
-        public float Duration => ParticleSystemRoot.main.duration;
+        public float Duration => ParticleSystemRoot?.main.duration ?? 0f;
 
-        public bool IsLoop => ParticleSystemRoot.main.loop;
+        public bool IsLoop => ParticleSystemRoot?.main.loop ?? false;
 
         public bool RemoveAllEventListenersOnDisable { get; set; } = true;
 
         public void Play()
         {
             InternalStop();
+
+            if (!ParticleSystemRoot)
+                return;
 
             if (ParticleSystemRoot.isStopped)
             {
@@ -66,6 +69,9 @@ namespace UniSharper.Effect
 
         public void Pause()
         {
+            if (!ParticleSystemRoot)
+                return;
+            
             if (ParticleSystemRoot.isPlaying)
             {
                 ParticleSystemRoot.Pause();
@@ -79,6 +85,9 @@ namespace UniSharper.Effect
 
         public void Resume()
         {
+            if (!ParticleSystemRoot)
+                return;
+            
             if (ParticleSystemRoot.isPaused)
             {
                 ParticleSystemRoot.Play();
@@ -113,6 +122,9 @@ namespace UniSharper.Effect
 
         private void Update()
         {
+            if (!ParticleSystemRoot)
+                return;
+            
             if (IsLoop)
             {
                 var deltaTime = ParticleSystemRoot.main.useUnscaledTime
@@ -153,6 +165,9 @@ namespace UniSharper.Effect
 
         private void InternalStop()
         {
+            if (!ParticleSystemRoot)
+                return;
+            
             if (ParticleSystemRoot.isPlaying)
                 ParticleSystemRoot.Stop();
         }
