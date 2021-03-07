@@ -3,7 +3,7 @@
 
 // Create a RenderTexture with enableRandomWrite flag and set it
 // with cs.SetTexture
-RWTexture2D<float4> output;
+RWTexture2D<float4> canvas;
 Texture2D source;
 Texture2D overlay;
 uint2 overlayDimensions;
@@ -21,5 +21,5 @@ void blendTextureOverlay(uint3 threadID : SV_DispatchThreadID)
         overlayColor = overlay[overlayPixelPosition];
     }
 
-    output[threadID.xy] = source[threadID.xy].rgba + overlayColor;
+    canvas[threadID.xy] = source[threadID.xy].rgba + overlayColor;
 }

@@ -16,19 +16,23 @@ namespace UnityEngine
         /// <param name="source">The texture background. </param>
         /// <param name="overlay">The texture overlay. </param>
         /// <param name="overlayPosition">The position that overlay texture will be blended in background texture. </param>
+        /// <param name="depth">Number of bits in depth buffer (0, 16 or 24). Note that only 24 bit depth has stencil buffer.</param>
+        /// <param name="canvasRenderTextureFormat">The texture format of canvas render texture. </param>
         /// <returns>The texture that has blended background texture and overlay texture.</returns>
         /// <exception cref="ArgumentNullException"><c>overlay</c> is <c>null</c>. </exception>
         public static Texture2D BlendTextureOverlay(
             this Texture2D source,
             Texture2D overlay,
-            Vector2Int overlayPosition)
+            Vector2Int overlayPosition,
+            int depth = 0,
+            RenderTextureFormat canvasRenderTextureFormat = RenderTextureFormat.ARGB32)
         {
             if(!overlay)
                 throw new ArgumentNullException(nameof(overlay));
             
             if (SystemInfo.supportsComputeShaders) 
             {
-                var renderTexture = new RenderTexture(source.width, source.height, 24) { enableRandomWrite = true };
+                var renderTexture = new RenderTexture(source.width, source.height, depth, canvasRenderTextureFormat) { enableRandomWrite = true };
                 renderTexture.Create();
 
                 var shader = Resources.Load<ComputeShader>("Shaders/BlendTextureOverlay");
@@ -37,7 +41,7 @@ namespace UnityEngine
                 shader.SetTexture(kernel, "overlay", overlay);
                 shader.SetInts("overlayDimensions", overlay.width, overlay.height);
                 shader.SetInts("overlayPosition", overlayPosition.x, overlayPosition.y);
-                shader.SetTexture(kernel, "output", renderTexture);
+                shader.SetTexture(kernel, "canvas", renderTexture);
                 shader.Dispatch(kernel, source.width, source.height, 1);
                 var output = renderTexture.ToTexture(new Rect(0, 0, renderTexture.width, renderTexture.height));
                 Object.Destroy(renderTexture);

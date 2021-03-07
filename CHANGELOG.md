@@ -1,3 +1,21 @@
+## [1.9.0] - 2021-03-07
+
+### Added
+
+- Adds class **NetworkUtility**.
+
+### Changed
+
+- Use Java source file to replace aar file.
+- Change asmdef file naming as [Unity User Manual](https://docs.unity3d.com/2019.4/Documentation/Manual/cus-layout.html).
+
+### Fixed
+
+- Fixed some bugs.
+
+
+
+
 ## [1.8.0] - 2020-09-18
 
 ### Changed

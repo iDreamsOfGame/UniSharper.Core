@@ -71,12 +71,19 @@ namespace UniSharper.Patterns
 
             private set
             {
+                if (!Application.isPlaying || !value) 
+                    return;
+                
                 instance = value;
-                instantiated = value != null;
+                instantiated = value;
 
-                if (Application.isPlaying && value != null)
+                if (!instance.transform.parent)
                 {
                     DontDestroyOnLoad(instance.gameObject);
+                }
+                else
+                {
+                    DontDestroyOnLoad(instance.transform.root);
                 }
             }
         }

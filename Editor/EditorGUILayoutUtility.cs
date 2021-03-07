@@ -59,16 +59,16 @@ namespace UniSharperEditor
         /// <returns>The path of the folder.</returns>
         public static string FolderField(GUIContent label, string filePath, string title, string folder = "", string defaultName = "", float labelWidth = 0f)
         {
-            string text = filePath;
+            var text = filePath;
 
             using (new EditorGUIFieldScope(labelWidth))
             {
                 EditorGUILayout.LabelField(label, new GUIContent(text), Styles.PathFieldStyle);
-                bool buttonClicked = GUILayout.Button("Browse...", Styles.BrowseButtonStyle);
+                var buttonClicked = GUILayout.Button("Browse...", Styles.BrowseButtonStyle);
 
                 if (buttonClicked)
                 {
-                    string newPath = UnityEditorUtility.OpenFolderPanel(title, folder, defaultName);
+                    var newPath = UnityEditorUtility.OpenFolderPanel(title, folder, defaultName);
 
                     if (!string.IsNullOrEmpty(newPath))
                     {
@@ -87,7 +87,7 @@ namespace UniSharperEditor
         /// <summary>
         /// The collection of GUI styles.
         /// </summary>
-        private class Styles
+        private static class Styles
         {
             #region Fields
 
@@ -97,7 +97,7 @@ namespace UniSharperEditor
             public static readonly GUIStyle BrowseButtonStyle = new GUIStyle(EditorStyles.miniButton)
             {
                 fixedWidth = 75,
-                fixedHeight = EditorStyles.miniButton.fixedHeight + 16
+                fixedHeight = EditorStyles.miniButtonRight.fixedHeight
             };
 
             /// <summary>

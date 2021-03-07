@@ -44,6 +44,8 @@ namespace UniSharper.Rendering.PostProcessing
             }
         }
 
+        public bool IsShaking => isShaking;
+
         /// <summary>
         /// The original position.
         /// </summary>

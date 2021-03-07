@@ -12,6 +12,12 @@ namespace UniSharper
     /// </summary>
     public static class PlayerEnvironment
     {
+        /// <summary>
+        /// Gets the newline string defined for windows.
+        /// </summary>
+        /// <value>The newline string defined for windows.</value>
+        public const string WindowsNewLine = "\r\n";
+        
         #region Properties
 
         /// <summary>
@@ -68,12 +74,32 @@ namespace UniSharper
                 }
             }
         }
-
+        
         /// <summary>
-        /// Gets the newline string defined for windows.
+        /// Gets the SDK version of the software currently running on Android.
         /// </summary>
-        /// <value>The newline string defined for windows.</value>
-        public static string WindowsNewLine => "\r\n";
+        public static int AndroidSdkInt
+        {
+            get
+            {
+#if !UNITY_EDITOR && UNITY_ANDROID
+                var os = SystemInfo.operatingSystem;
+                var sections = os.Split(' ');
+
+                foreach (var section in sections)
+                {
+                    var stringArray = section.Split('-');
+                    if (stringArray.Length <= 1 || stringArray[0] != "API") 
+                        continue;
+                    
+                    int.TryParse(stringArray[1], out var sdkInt);
+                    return sdkInt;
+                }
+#endif
+                
+                return 0;
+            }
+        }
 
         #endregion Properties
 
@@ -81,7 +107,7 @@ namespace UniSharper
 
         private static string GetAndroidDeviceIdentifier()
         {
-            using (var deviceInfo = new AndroidJavaClass("com.github.cosmos53076.unisharper.core.DeviceInfo"))
+            using (var deviceInfo = new AndroidJavaClass("io.github.idreamsofgame.unisharper.core.DeviceInfo"))
             {
                 var uniqueDeviceIdentifier = deviceInfo.CallStatic<string>("getUniqueDeviceIdentifier");
                 return CryptoUtility.Md5HashEncrypt(uniqueDeviceIdentifier);

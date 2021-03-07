@@ -2,7 +2,6 @@
 // See LICENSE in the project root for license information.
 
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace UniSharper.Effect
 {
@@ -25,9 +24,14 @@ namespace UniSharper.Effect
         /// Invoked immediately after Resume is called.
         /// </summary>
         ParticleEffectEvent Resumed { get; }
+        
+        /// <summary>
+        /// Invoked when the time of <see cref="UnityEngine.ParticleSystem"/> stopped.
+        /// </summary>
+        ParticleEffectEvent Stopped { get; }
 
         /// <summary>
-        /// Invoked when the time of <see cref="UnityEngine.ParticleSystem"/> reaches the duration.
+        /// Invoked when the time of <see cref="UnityEngine.ParticleSystem"/> reaches the playback time.
         /// </summary>
         ParticleEffectEvent LoopPointReached { get; }
 
@@ -41,31 +45,25 @@ namespace UniSharper.Effect
         /// Get the the <see cref="UnityEngine.Transform"/> attached to this <see cref="IParticleEffectController"/>.
         /// </summary>
         /// <value>The the <see cref="UnityEngine.Transform"/> attached to this <see cref="IParticleEffectController"/>. </value>
-        Transform Transform { get; }
+        Transform CachedTransform { get; }
 
         /// <summary>
         /// Get the playback position of the <see cref="UnityEngine.ParticleSystem"/> in seconds.
         /// </summary>
         /// <value>The playback position of the <see cref="UnityEngine.ParticleSystem"/> in seconds. </value>
-        float Time { get; }
+        float PlaybackTime { get; }
 
         /// <summary>
         /// Get the duration of the <see cref="UnityEngine.ParticleSystem"/> in seconds.
         /// </summary>
         /// <value>The duration of the <see cref="UnityEngine.ParticleSystem"/> in seconds. </value>
         float Duration { get; }
-        
+
         /// <summary>
         /// Is the particle effect looping.
         /// </summary>
         /// <value>The indicator that the <see cref="UnityEngine.ParticleSystem"/> replays after it finishes or not. </value>
         bool IsLoop { get; }
-
-        /// <summary>
-        /// Get or set the indicator that the <see cref="UniSharper.Effect.IParticleEffectController"/> remove all event listeners on disable. 
-        /// </summary>
-        /// <value>The indicator that the <see cref="UniSharper.Effect.IParticleEffectController"/> remove all event listeners on disable or not. </value>
-        bool RemoveAllEventListenersOnDisable { get; set; }
 
         /// <summary>
         /// Starts the particle effect.

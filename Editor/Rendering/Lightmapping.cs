@@ -21,7 +21,11 @@ namespace UniSharperEditor.Rendering
         /// </summary>
         static Lightmapping()
         {
+#if UNITY_2019_4_OR_NEWER
+            UnityEditor.Lightmapping.bakeCompleted += OnLightmappingCompleted;
+#else
             UnityEditor.Lightmapping.completed += OnLightmappingCompleted;
+#endif
         }
 
         #endregion Constructors
@@ -149,9 +153,9 @@ namespace UniSharperEditor.Rendering
 
                         if (excludedRenderer == null)
                         {
-                            if (!GameObjectUtility.AreStaticEditorFlagsSet(gameObject, StaticEditorFlags.LightmapStatic))
+                            if (!GameObjectUtility.AreStaticEditorFlagsSet(gameObject, StaticEditorFlags.ContributeGI))
                             {
-                                GameObjectUtility.SetStaticEditorFlags(gameObject, StaticEditorFlags.LightmapStatic);
+                                GameObjectUtility.SetStaticEditorFlags(gameObject, StaticEditorFlags.ContributeGI);
                             }
                         }
                     }
