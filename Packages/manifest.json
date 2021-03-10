@@ -28,8 +28,8 @@
   },
   "scopedRegistries": [
     {
-      "name": "package.openupm.com",
-      "url": "https://package.openupm.com",
+      "name": "package.openupm.cn",
+      "url": "https://package.openupm.cn",
       "scopes": [
         "com.openupm",
         "io.github.idreamsofgame.resharp.core",
