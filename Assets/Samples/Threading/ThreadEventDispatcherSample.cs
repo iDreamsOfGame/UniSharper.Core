@@ -1,5 +1,5 @@
 using System.Threading;
-using UniSharper.Threading.Events;
+using UniSharper.Threading.Event;
 using UnityEngine;
 using UnityEngine.UI;
 

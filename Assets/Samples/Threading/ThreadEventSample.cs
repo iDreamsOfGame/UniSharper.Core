@@ -1,4 +1,4 @@
-using UniSharper.Threading.Events;
+using UniSharper.Threading.Event;
 
 namespace UniSharper.Samples
 {
