@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEditorUtility = UnityEditor.EditorUtility;
 
 namespace UniSharperEditor.Rendering
@@ -19,6 +18,7 @@ namespace UniSharperEditor.Rendering
         #region Fields
 
         private List<SceneAsset> scenes = new List<SceneAsset>();
+
         private Vector2 scrollPosition;
 
         #endregion Fields
@@ -28,18 +28,18 @@ namespace UniSharperEditor.Rendering
         [MenuItem("UniSharper/Rendering/Generate Lighting for Scenes", false, 1)]
         public static void ShowWindow()
         {
-            //Show existing window instance. If one doesn't exist, make one.
-            LightingGenerationWindow window = GetWindow<LightingGenerationWindow>(true, "Lighting Generation", true);
-            window.position = new Rect(200, 200, 500, 500);
+            const string title = "Lighting Generation";
+            GetWindowWithRect<LightingGenerationWindow>(new Rect(200, 200, 500, 500), true, title, true);
         }
 
         private void GenerateLighting()
         {
-            List<string> scenePaths = new List<string>();
+            const string progressBarTitle = "Baking...";
+            var scenePaths = new List<string>();
 
             foreach (var sceneAsset in scenes)
             {
-                string scenePath = AssetDatabase.GetAssetPath(sceneAsset);
+                var scenePath = AssetDatabase.GetAssetPath(sceneAsset);
 
                 if (!string.IsNullOrEmpty(scenePath))
                 {
@@ -49,9 +49,9 @@ namespace UniSharperEditor.Rendering
 
             for (int i = 0, length = scenePaths.Count; i < length; i++)
             {
-                string scenePath = scenePaths[i];
-                Scene scene = EditorSceneManager.OpenScene(scenePath, OpenSceneMode.Single);
-                UnityEditorUtility.DisplayProgressBar("Baking...", string.Format("Baking the scene {0}... {1}/{2}", scene.name, i + 1, length), (float)(i + 1) / length);
+                var scenePath = scenePaths[i];
+                var scene = EditorSceneManager.OpenScene(scenePath, OpenSceneMode.Single);
+                UnityEditorUtility.DisplayProgressBar(progressBarTitle, $"Baking the scene {scene.name}... {i + 1}/{length}", (float)(i + 1) / length);
                 UnityEditor.Lightmapping.Bake();
                 EditorSceneManager.SaveScene(scene);
             }
@@ -61,20 +61,24 @@ namespace UniSharperEditor.Rendering
 
         private void OnGUI()
         {
+            const string labelText = "Scenes to generate lighting:";
+            const string addButtonText = "Add";
+            const string generateButtonText = "Generate Lighting for Scenes";
+
             scrollPosition = GUILayout.BeginScrollView(scrollPosition);
-            GUILayout.Label("Scenes to generate lighting:", EditorStyles.boldLabel);
-            for (int i = 0; i < scenes.Count; ++i)
+            GUILayout.Label(labelText, EditorStyles.boldLabel);
+            for (var i = 0; i < scenes.Count; ++i)
             {
                 scenes[i] = (SceneAsset)EditorGUILayout.ObjectField(scenes[i], typeof(SceneAsset), false);
             }
-            if (GUILayout.Button("Add"))
+            if (GUILayout.Button(addButtonText))
             {
                 scenes.Add(null);
             }
 
             GUILayout.Space(8);
 
-            if (GUILayout.Button("Generate Lighting for Scenes"))
+            if (GUILayout.Button(generateButtonText))
             {
                 GenerateLighting();
             }

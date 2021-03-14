@@ -26,16 +26,16 @@ namespace UniSharperEditor
         /// <returns>The path of the file.</returns>
         public static string FileField(GUIContent label, string filePath, string title, string directory = "", string[] filters = null, float labelWidth = 0f)
         {
-            string text = filePath;
+            var text = filePath;
 
             using (new EditorGUIFieldScope(labelWidth))
             {
                 EditorGUILayout.LabelField(label, new GUIContent(text), Styles.PathFieldStyle);
-                bool buttonClicked = GUILayout.Button("Browse...", Styles.BrowseButtonStyle);
+                var buttonClicked = GUILayout.Button("Browse...", Styles.BrowseButtonStyle);
 
                 if (buttonClicked)
                 {
-                    string newPath = UnityEditorUtility.OpenFilePanelWithFilters(title, directory, filters);
+                    var newPath = UnityEditorUtility.OpenFilePanelWithFilters(title, directory, filters);
 
                     if (!string.IsNullOrEmpty(newPath))
                     {

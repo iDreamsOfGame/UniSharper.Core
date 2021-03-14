@@ -15,7 +15,7 @@ namespace UniSharper.Patterns
         #region Fields
 
         private static bool destroyed = false;
-        
+
         private static T instance = null;
 
         private static bool instantiated = false;
@@ -38,9 +38,9 @@ namespace UniSharper.Patterns
                     return null;
                 }
 
-                if (instantiated && instance != null) 
+                if (instantiated && instance != null)
                     return instance;
-                
+
                 var foundObjects = FindObjectsOfType<T>();
 
                 if (foundObjects.Length > 0)
@@ -48,9 +48,9 @@ namespace UniSharper.Patterns
                     // Found instances already have.
                     Instance = foundObjects[0];
 
-                    if (foundObjects.Length == 1) 
+                    if (foundObjects.Length == 1)
                         return instance;
-                    
+
                     Debug.LogWarningFormat("There are more than one instance of MonoBehaviourSingleton of type \"{0}\". Keeping the first. Destroying the others.", typeof(T).ToString());
 
                     for (int i = 1, length = foundObjects.Length; i < length; ++i)
@@ -71,13 +71,13 @@ namespace UniSharper.Patterns
 
             private set
             {
-                if (!Application.isPlaying || !value) 
+                if (!Application.isPlaying || !value)
                     return;
-                
+
                 instance = value;
                 instantiated = value;
 
-                if (!instance.transform.parent)
+                if (instance.transform.root == instance.transform)
                 {
                     DontDestroyOnLoad(instance.gameObject);
                 }

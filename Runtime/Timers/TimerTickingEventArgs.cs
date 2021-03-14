@@ -19,10 +19,7 @@ namespace UniSharper.Timers
         /// </summary>
         /// <param name="currentCount">The current ticking count of the <see cref="ITimer"/>.</param>
         public TimerTickingEventArgs(uint currentCount)
-            : base()
-        {
-            CurrentCount = currentCount;
-        }
+            : base() => CurrentCount = currentCount;
 
         #endregion Constructors
 
@@ -32,11 +29,7 @@ namespace UniSharper.Timers
         /// Gets or sets the current ticking count of the <see cref="ITimer"/>.
         /// </summary>
         /// <value>The current ticking count of the <see cref="ITimer"/>.</value>
-        public uint CurrentCount
-        {
-            get;
-            set;
-        }
+        public uint CurrentCount { get; set; }
 
         #endregion Properties
     }

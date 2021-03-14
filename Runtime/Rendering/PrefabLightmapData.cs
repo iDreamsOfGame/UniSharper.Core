@@ -33,14 +33,8 @@ namespace UniSharper.Rendering
         /// <value>The index of the lightmap.</value>
         public int LightmapIndex
         {
-            get
-            {
-                return lightmapIndex;
-            }
-            set
-            {
-                lightmapIndex = value;
-            }
+            get => lightmapIndex;
+            set => lightmapIndex = value;
         }
 
         /// <summary>
@@ -49,14 +43,8 @@ namespace UniSharper.Rendering
         /// <value>The lightmap scale offset.</value>
         public Vector4 LightmapScaleOffset
         {
-            get
-            {
-                return lightmapScaleOffset;
-            }
-            set
-            {
-                lightmapScaleOffset = value;
-            }
+            get => lightmapScaleOffset;
+            set => lightmapScaleOffset = value;
         }
 
         /// <summary>
@@ -65,14 +53,8 @@ namespace UniSharper.Rendering
         /// <value>The renderer.</value>
         public Renderer Renderer
         {
-            get
-            {
-                return renderer;
-            }
-            set
-            {
-                renderer = value;
-            }
+            get => renderer;
+            set => renderer = value;
         }
 
         #endregion Properties
@@ -91,7 +73,7 @@ namespace UniSharper.Rendering
         private Texture2D[] lightmapColors;
 
         [SerializeField]
-        private Texture2D[] lightmapDirs;
+        private Texture2D[] lightmapDirections;
 
         [SerializeField]
         private LightmapRendererInfo[] rendererInfos;
@@ -109,22 +91,16 @@ namespace UniSharper.Rendering
         /// <value>An array of color of incoming light.</value>
         public Texture2D[] LightmapColors
         {
-            set
-            {
-                lightmapColors = value;
-            }
+            set => lightmapColors = value;
         }
 
         /// <summary>
         /// Sets an array of dominant direction of incoming light.
         /// </summary>
         /// <value>An array of dominant direction of incoming light.</value>
-        public Texture2D[] LightmapDirs
+        public Texture2D[] LightmapDirections
         {
-            set
-            {
-                lightmapDirs = value;
-            }
+            set => lightmapDirections = value;
         }
 
         /// <summary>
@@ -133,10 +109,7 @@ namespace UniSharper.Rendering
         /// <value>The renderer informations.</value>
         public LightmapRendererInfo[] RendererInfos
         {
-            set
-            {
-                rendererInfos = value;
-            }
+            set => rendererInfos = value;
         }
 
         /// <summary>
@@ -145,10 +118,7 @@ namespace UniSharper.Rendering
         /// <value>An array of occlusion mask per light.</value>
         public Texture2D[] ShadowMasks
         {
-            set
-            {
-                shadowMasks = value;
-            }
+            set => shadowMasks = value;
         }
 
         #endregion Properties
@@ -167,29 +137,31 @@ namespace UniSharper.Rendering
                 throw new ArgumentNullException("instance");
             }
 
-            LightmapRendererInfo[] rendererInfos = instance.rendererInfos;
+            var rendererInfos = instance.rendererInfos;
 
             if (rendererInfos == null || rendererInfos.Length == 0)
             {
                 return;
             }
 
-            Texture2D[] lightmapColors = instance.lightmapColors;
-            Texture2D[] lightmapDirs = instance.lightmapDirs;
-            Texture2D[] shadowMasks = instance.shadowMasks;
+            var lightmapColors = instance.lightmapColors;
+            var lightmapDirs = instance.lightmapDirections;
+            var shadowMasks = instance.shadowMasks;
 
-            LightmapData[] lightmaps = LightmapSettings.lightmaps;
-            LightmapData[] combinedLightmaps = new LightmapData[lightmaps.Length + lightmapColors.Length];
+            var lightmaps = LightmapSettings.lightmaps;
+            var combinedLightmaps = new LightmapData[lightmaps.Length + lightmapColors.Length];
             lightmaps.CopyTo(combinedLightmaps, 0);
 
-            LightmapData[] storedLightmaps = new LightmapData[lightmapColors.Length];
+            var storedLightmaps = new LightmapData[lightmapColors.Length];
 
             for (int i = 0, length = lightmapColors.Length; i < length; i++)
             {
-                LightmapData data = new LightmapData();
-                data.lightmapColor = lightmapColors[i];
-                data.lightmapDir = lightmapDirs[i];
-                data.shadowMask = shadowMasks[i];
+                var data = new LightmapData
+                {
+                    lightmapColor = lightmapColors[i],
+                    lightmapDir = lightmapDirs[i],
+                    shadowMask = shadowMasks[i]
+                };
                 storedLightmaps[i] = data;
             }
 
@@ -210,7 +182,7 @@ namespace UniSharper.Rendering
         {
             for (int i = 0, length = infos.Length; i < length; i++)
             {
-                LightmapRendererInfo info = infos[i];
+                var info = infos[i];
                 info.Renderer.lightmapIndex = info.LightmapIndex + lightmapOffsetIndex;
                 info.Renderer.lightmapScaleOffset = info.LightmapScaleOffset;
             }

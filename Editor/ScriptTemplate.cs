@@ -2,7 +2,8 @@
 // project root for license information.
 
 using System;
-using System.IO;
+using System.IO;
+
 using UnityEngine;
 
 namespace UniSharperEditor
@@ -62,6 +63,31 @@ namespace UniSharperEditor
         #region Classes
 
         /// <summary>
+        /// Represents the strings of class member.
+        /// </summary>
+        public static class ClassMemeberFormatString
+        {
+            #region Fields
+
+            /// <summary>
+            /// The format string for enumeration definition.
+            /// </summary>
+            public const string EnumDefinition = "\t\t/// <summary>\r\n\t\t/// {0}\r\n\t\t/// </summary>\r\n\t\tpublic enum {1}\r\n\t\t{{\r\n{2}\r\n\t\t}}";
+
+            /// <summary>
+            /// The format string for enumeration property.
+            /// </summary>
+            public const string EnumProperty = "\t\t/// <summary>\r\n\t\t/// {0}\r\n\t\t/// </summary>\r\n\t\tpublic {1} {2}\r\n\t\t{{\r\n\t\t\tget => ({1}){3};\r\n\t\t}}";
+
+            /// <summary>
+            /// The format string for property member.
+            /// </summary>
+            public const string PropertyMember = "\t\t/// <summary>\r\n\t\t/// {0}\r\n\t\t/// </summary>\r\n\t\tpublic {1} {2}\r\n\t\t{{\r\n\t\t\tget;\r\n\t\t\tset;\r\n\t\t}}";
+
+            #endregion Fields
+        }
+
+        /// <summary>
         /// Represents the placeholder variable.
         /// </summary>
         public static class Placeholders
@@ -97,31 +123,6 @@ namespace UniSharperEditor
             /// The placeholder for the string of script name.
             /// </summary>
             public const string ScriptName = "#SCRIPT_NAME#";
-
-            #endregion Fields
-        }
-
-        /// <summary>
-        /// Represents the strings of class member.
-        /// </summary>
-        public static class ClassMemeberFormatString
-        {
-            #region Fields
-
-            /// <summary>
-            /// The format string for enumeration definition.
-            /// </summary>
-            public const string EnumDefinition = "\t\t/// <summary>\r\n\t\t/// {0}\r\n\t\t/// </summary>\r\n\t\tpublic enum {1}\r\n\t\t{{\r\n{2}\r\n\t\t}}";
-
-            /// <summary>
-            /// The format string for enumeration property.
-            /// </summary>
-            public const string EnumProperty = "\t\t/// <summary>\r\n\t\t/// {0}\r\n\t\t/// </summary>\r\n\t\tpublic {1} {2}\r\n\t\t{{\r\n\t\t\tget => ({1}){3};\r\n\t\t}}";
-
-            /// <summary>
-            /// The format string for property member.
-            /// </summary>
-            public const string PropertyMember = "\t\t/// <summary>\r\n\t\t/// {0}\r\n\t\t/// </summary>\r\n\t\tpublic {1} {2}\r\n\t\t{{\r\n\t\t\tget;\r\n\t\t\tset;\r\n\t\t}}";
 
             #endregion Fields
         }

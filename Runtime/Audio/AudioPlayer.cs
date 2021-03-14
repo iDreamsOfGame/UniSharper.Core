@@ -21,6 +21,27 @@ namespace UniSharper.Audio
 
         #region Properties
 
+        public AudioSource AudioSource
+        {
+            get
+            {
+                if (!audioSource)
+                    audioSource = GetComponent<AudioSource>();
+
+                return audioSource;
+            }
+        }
+
+        public bool IsLoop
+        {
+            get => AudioSource && AudioSource.loop;
+            set
+            {
+                if (AudioSource)
+                    AudioSource.loop = value;
+            }
+        }
+
         public bool Mute
         {
             get => audioSource && audioSource.mute;
@@ -34,44 +55,20 @@ namespace UniSharper.Audio
             }
         }
 
-        public bool IsLoop
-        {
-            get => AudioSource && AudioSource.loop;
-            set
-            {
-                if (AudioSource) 
-                    AudioSource.loop = value;
-            }
-        }
-
-        public AudioSource AudioSource
-        {
-            get
-            {
-                if (!audioSource) 
-                    audioSource = GetComponent<AudioSource>();
-                
-                return audioSource;
-            }
-        }
-
         #endregion Properties
 
         #region Methods
 
-        public void Pause()
-        {
-            AudioSource.Pause();
-        }
+        public void Pause() => AudioSource?.Pause();
 
         public void Play(float delay = 0f, bool muted = false, bool isLoop = false)
         {
             IsLoop = isLoop;
             AudioSource.mute = muted;
-            
-            if(!AudioSource || !AudioSource.clip)
+
+            if (!AudioSource || !AudioSource.clip)
                 return;
-            
+
             AudioSource.PlayDelayed(delay);
         }
 
@@ -79,27 +76,21 @@ namespace UniSharper.Audio
         {
             IsLoop = false;
             AudioSource.mute = muted;
-            
-            if(!AudioSource || !AudioSource.clip)
+
+            if (!AudioSource || !AudioSource.clip)
                 return;
-            
+
             StartCoroutine(PlayOneShotDelayed(delay));
         }
 
-        public void Resume()
-        {
-            AudioSource.UnPause();
-        }
+        public void Resume() => AudioSource?.UnPause();
 
-        public void Stop()
-        {
-            AudioSource.Stop();
-        }
+        public void Stop() => AudioSource?.Stop();
 
         private IEnumerator PlayOneShotDelayed(float delay)
         {
             yield return new WaitForSeconds(delay);
-            AudioSource.PlayOneShot(AudioSource.clip);
+            AudioSource?.PlayOneShot(AudioSource.clip);
         }
 
         #endregion Methods

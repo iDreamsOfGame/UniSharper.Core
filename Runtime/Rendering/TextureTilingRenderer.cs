@@ -58,13 +58,7 @@ namespace UniSharper.Rendering
         /// Gets or sets the name of the texture tiling.
         /// </summary>
         /// <value>The name of the texture tiling.</value>
-        public string TextureTilingName
-        {
-            get
-            {
-                return textureTilingName;
-            }
-        }
+        public string TextureTilingName => textureTilingName;
 
         private Mesh Mesh
         {
@@ -97,7 +91,7 @@ namespace UniSharper.Rendering
         {
             if (dataFormat != TilingSheetDataFormat.None)
             {
-                ITilingSheetDataParser parser = TilingSheetDataParser.CreateParser(dataFormat);
+                var parser = TilingSheetDataParser.CreateParser(dataFormat);
                 tilingData = parser.ParseData(name, data);
             }
         }
@@ -132,8 +126,8 @@ namespace UniSharper.Rendering
             // Change UV of mesh
             if (tilingData.ContainsKey(textureTilingName))
             {
-                Rect rect = tilingData[textureTilingName];
-                Vector2[] uvs = new Vector2[Mesh.uv.Length];
+                var rect = tilingData[textureTilingName];
+                var uvs = new Vector2[Mesh.uv.Length];
 
                 for (int i = 0, length = uvs.Length; i < length; i++)
                 {

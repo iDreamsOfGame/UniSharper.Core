@@ -3,7 +3,6 @@
 
 using System;
 using UnityEditor;
-using UnityEngine;
 using Object = UnityEngine.Object;
 
 namespace UniSharperEditor
@@ -13,6 +12,8 @@ namespace UniSharperEditor
     /// </summary>
     public static class AssetDatabaseUtility
     {
+        #region Methods
+
         /// <summary>
         /// Load editor resources
         /// </summary>
@@ -23,11 +24,11 @@ namespace UniSharperEditor
         {
             var type = typeof(T).Name.ToCamelCase();
             var guids = AssetDatabase.FindAssets($"{name} t: {type}", new string[] { EditorEnvironment.AssetsFolderName });
-            
+
             if (guids.Length > 0)
             {
                 var result = new T[guids.Length];
-                
+
                 for (var i = 0; i < result.Length; i++)
                 {
                     var assetPath = AssetDatabase.GUIDToAssetPath(guids[i]);
@@ -39,5 +40,7 @@ namespace UniSharperEditor
 
             return null;
         }
+
+        #endregion Methods
     }
 }

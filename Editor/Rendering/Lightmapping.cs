@@ -43,11 +43,12 @@ namespace UniSharperEditor.Rendering
         {
             if (UnityEditor.Lightmapping.giWorkflowMode != UnityEditor.Lightmapping.GIWorkflowMode.OnDemand)
             {
-                Debug.LogError("ExtractLightmapData requires that you have baked you lightmaps and Auto mode is disabled.");
+                const string errorMessage = "ExtractLightmapData requires that you have baked you lightmaps and Auto mode is disabled.";
+                Debug.LogError(errorMessage);
                 return;
             }
 
-            PrefabLightmapData[] prefabs = Object.FindObjectsOfType<PrefabLightmapData>();
+            var prefabs = Object.FindObjectsOfType<PrefabLightmapData>();
             MakeSureRendererGameObjectIsLightmapStatic(prefabs);
 
             // Bake lightmap for scene.
@@ -64,18 +65,18 @@ namespace UniSharperEditor.Rendering
             {
                 for (int i = 0, length = prefabs.Length; i < length; i++)
                 {
-                    PrefabLightmapData data = prefabs[i];
-                    GameObject gameObject = data.gameObject;
-                    List<LightmapRendererInfo> rendererInfos = new List<LightmapRendererInfo>();
-                    List<Texture2D> lightmapColors = new List<Texture2D>();
-                    List<Texture2D> lightmapDirs = new List<Texture2D>();
-                    List<Texture2D> shadowMasks = new List<Texture2D>();
+                    var data = prefabs[i];
+                    var gameObject = data.gameObject;
+                    var rendererInfos = new List<LightmapRendererInfo>();
+                    var lightmapColors = new List<Texture2D>();
+                    var lightmapDirs = new List<Texture2D>();
+                    var shadowMasks = new List<Texture2D>();
 
                     GenerateLightmapInfo(gameObject, rendererInfos, lightmapColors, lightmapDirs, shadowMasks);
 
                     data.RendererInfos = rendererInfos.ToArray();
                     data.LightmapColors = lightmapColors.ToArray();
-                    data.LightmapDirs = lightmapDirs.ToArray();
+                    data.LightmapDirections = lightmapDirs.ToArray();
                     data.ShadowMasks = shadowMasks.ToArray();
 
                     // Save prefab.
@@ -100,25 +101,27 @@ namespace UniSharperEditor.Rendering
         private static void GenerateLightmapInfo(GameObject gameObject, List<LightmapRendererInfo> rendererInfos, List<Texture2D> lightmapColors,
             List<Texture2D> lightmapDirs, List<Texture2D> shadowMasks)
         {
-            MeshRenderer[] renderers = gameObject.GetComponentsInChildren<MeshRenderer>();
+            var renderers = gameObject.GetComponentsInChildren<MeshRenderer>();
 
-            foreach (MeshRenderer renderer in renderers)
+            foreach (var renderer in renderers)
             {
-                PrefabLightmapExcludedRenderer excludedRenderer = renderer.gameObject.GetComponent<PrefabLightmapExcludedRenderer>();
+                var excludedRenderer = renderer.gameObject.GetComponent<PrefabLightmapExcludedRenderer>();
 
                 if (excludedRenderer != null)
                 {
                     continue;
                 }
 
-                LightmapRendererInfo info = new LightmapRendererInfo();
-                info.Renderer = renderer;
-                info.LightmapScaleOffset = renderer.lightmapScaleOffset;
+                var info = new LightmapRendererInfo
+                {
+                    Renderer = renderer,
+                    LightmapScaleOffset = renderer.lightmapScaleOffset
+                };
 
-                LightmapData data = LightmapSettings.lightmaps[renderer.lightmapIndex];
-                Texture2D lightmapColor = data.lightmapColor;
-                Texture2D lightmapDir = data.lightmapDir;
-                Texture2D shadowMask = data.shadowMask;
+                var data = LightmapSettings.lightmaps[renderer.lightmapIndex];
+                var lightmapColor = data.lightmapColor;
+                var lightmapDir = data.lightmapDir;
+                var shadowMask = data.shadowMask;
 
                 info.LightmapIndex = lightmapColors.IndexOf(lightmapColor);
 
@@ -142,14 +145,14 @@ namespace UniSharperEditor.Rendering
         {
             if (prefabs.Length > 0)
             {
-                foreach (PrefabLightmapData lightmap in prefabs)
+                foreach (var lightmap in prefabs)
                 {
-                    MeshRenderer[] renderers = lightmap.gameObject.GetComponentsInChildren<MeshRenderer>();
+                    var renderers = lightmap.gameObject.GetComponentsInChildren<MeshRenderer>();
 
-                    foreach (MeshRenderer renderer in renderers)
+                    foreach (var renderer in renderers)
                     {
-                        GameObject gameObject = renderer.gameObject;
-                        PrefabLightmapExcludedRenderer excludedRenderer = gameObject.GetComponent<PrefabLightmapExcludedRenderer>();
+                        var gameObject = renderer.gameObject;
+                        var excludedRenderer = gameObject.GetComponent<PrefabLightmapExcludedRenderer>();
 
                         if (excludedRenderer == null)
                         {
@@ -168,7 +171,7 @@ namespace UniSharperEditor.Rendering
         /// </summary>
         private static void OnLightmappingCompleted()
         {
-            PrefabLightmapData[] prefabs = Object.FindObjectsOfType<PrefabLightmapData>();
+            var prefabs = Object.FindObjectsOfType<PrefabLightmapData>();
             BakePrefabLightmaps(prefabs);
         }
 
@@ -182,13 +185,13 @@ namespace UniSharperEditor.Rendering
         [MenuItem("UniSharper/Rendering/Bake Prefab Lightmaps", true)]
         private static bool ValidatePrefabLightmapsBaking()
         {
-            PrefabLightmapData[] prefabs = Object.FindObjectsOfType<PrefabLightmapData>();
+            var prefabs = Object.FindObjectsOfType<PrefabLightmapData>();
 
             if (prefabs.Length > 0)
             {
-                foreach (PrefabLightmapData item in prefabs)
+                foreach (var item in prefabs)
                 {
-                    GameObject root = PrefabUtility.GetCorrespondingObjectFromSource(item.gameObject) as GameObject;
+                    var root = PrefabUtility.GetCorrespondingObjectFromSource(item.gameObject);
 
                     if (root != null)
                     {

@@ -11,39 +11,17 @@ namespace UniSharper.Effect
     [DisallowMultipleComponent]
     public class ParticleEffectController : MonoBehaviour, IParticleEffectController
     {
-        private bool started;
-        
+        #region Fields
+
         private float duration = -1f;
-        
+
         private ParticleSystem particleSystemRoot;
 
-        public ParticleEffectEvent Started { get; private set; }
-        
-        public ParticleEffectEvent Paused { get; private set; }
-        
-        public ParticleEffectEvent Resumed { get; private set; }
-        
-        public ParticleEffectEvent Stopped { get; private set; }
+        private bool started;
 
-        public ParticleEffectEvent LoopPointReached { get; private set; }
+        #endregion Fields
 
-        public ParticleSystem ParticleSystemRoot
-        {
-            get
-            {
-                if (particleSystemRoot) 
-                    return particleSystemRoot;
-
-                particleSystemRoot = GetComponent<ParticleSystem>();
-
-                if (!particleSystemRoot)
-                {
-                    particleSystemRoot = transform.GetComponentInChildren<ParticleSystem>(true);
-                }
-
-                return particleSystemRoot;
-            }
-        }
+        #region Properties
 
         public Transform CachedTransform => transform;
 
@@ -57,14 +35,14 @@ namespace UniSharper.Effect
                     foreach (var childParticleSystem in childParticleSystems)
                     {
                         var main = childParticleSystem.main;
-                        
+
                         if (main.loop)
                             return -1;
 
                         if (!childParticleSystem.emission.enabled)
                             continue;
 
-                        var  maxDuration = main.startDelayMultiplier + Mathf.Max (main.duration, main.startLifetimeMultiplier);
+                        var maxDuration = main.startDelayMultiplier + Mathf.Max(main.duration, main.startLifetimeMultiplier);
                         duration = Mathf.Max(duration, maxDuration);
                     }
                 }
@@ -73,9 +51,57 @@ namespace UniSharper.Effect
             }
         }
 
+        public bool IsLoop => ParticleSystemRoot?.main.loop ?? false;
+
+        public ParticleEffectEvent LoopPointReached { get; private set; }
+
+        public ParticleSystem ParticleSystemRoot
+        {
+            get
+            {
+                if (particleSystemRoot)
+                    return particleSystemRoot;
+
+                particleSystemRoot = GetComponent<ParticleSystem>();
+
+                if (!particleSystemRoot)
+                {
+                    particleSystemRoot = transform.GetComponentInChildren<ParticleSystem>(true);
+                }
+
+                return particleSystemRoot;
+            }
+        }
+
+        public ParticleEffectEvent Paused { get; private set; }
+
         public float PlaybackTime { get; private set; }
 
-        public bool IsLoop => ParticleSystemRoot?.main.loop ?? false;
+        public ParticleEffectEvent Resumed { get; private set; }
+
+        public ParticleEffectEvent Started { get; private set; }
+
+        public ParticleEffectEvent Stopped { get; private set; }
+
+        #endregion Properties
+
+        #region Methods
+
+        public void Pause()
+        {
+            if (!ParticleSystemRoot)
+                return;
+
+            if (ParticleSystemRoot.isPlaying)
+            {
+                ParticleSystemRoot.Pause();
+                FireEventPaused();
+            }
+            else
+            {
+                Debug.LogWarning("Can not pause particle effect, cause the state of ParticleSystem is not playing!");
+            }
+        }
 
         public void Play()
         {
@@ -92,27 +118,11 @@ namespace UniSharper.Effect
             }
         }
 
-        public void Pause()
-        {
-            if (!ParticleSystemRoot)
-                return;
-            
-            if (ParticleSystemRoot.isPlaying)
-            {
-                ParticleSystemRoot.Pause();
-                FireEventPaused();
-            }
-            else
-            {
-                Debug.LogWarning("Can not pause particle effect, cause the state of ParticleSystem is not playing!");
-            }
-        }
-
         public void Resume()
         {
             if (!ParticleSystemRoot)
                 return;
-            
+
             if (ParticleSystemRoot.isPaused)
             {
                 ParticleSystemRoot.Play();
@@ -128,7 +138,7 @@ namespace UniSharper.Effect
         {
             InternalStop();
         }
-        
+
         protected virtual void Awake()
         {
             InitializeEvents();
@@ -150,9 +160,9 @@ namespace UniSharper.Effect
 
             PlaybackTime += Time.deltaTime;
 
-            if (PlaybackTime < Duration) 
+            if (PlaybackTime < Duration)
                 return;
-            
+
             if (IsLoop)
             {
                 FireEventLoopPointReached();
@@ -161,26 +171,8 @@ namespace UniSharper.Effect
             {
                 FireEventStopped();
             }
-                
-            PlaybackTime = 0f;
-        }
 
-        private void InitializeEvents()
-        {
-            if (Started == null)
-                Started = new ParticleEffectEvent();
-            
-            if(Paused == null)
-                Paused = new ParticleEffectEvent();
-            
-            if(Resumed == null)
-                Resumed = new ParticleEffectEvent();
-            
-            if(Stopped == null)
-                Stopped = new ParticleEffectEvent();
-            
-            if(LoopPointReached == null)
-                LoopPointReached = new ParticleEffectEvent();
+            PlaybackTime = 0f;
         }
 
         private void DestroyEvents()
@@ -192,23 +184,9 @@ namespace UniSharper.Effect
             LoopPointReached?.RemoveAllListeners();
         }
 
-        private void InternalStop(bool fireStoppedEvent = true)
+        private void FireEventLoopPointReached()
         {
-            if (!ParticleSystemRoot)
-                return;
-
-            if (ParticleSystemRoot.isPlaying)
-                ParticleSystemRoot.Stop();
-
-            if(fireStoppedEvent)
-                FireEventStopped();
-
-            started = false;
-        }
-
-        private void FireEventStarted()
-        {
-            Started?.Invoke(this);
+            LoopPointReached?.Invoke(this);
         }
 
         private void FireEventPaused()
@@ -221,14 +199,48 @@ namespace UniSharper.Effect
             Resumed?.Invoke(this);
         }
 
+        private void FireEventStarted()
+        {
+            Started?.Invoke(this);
+        }
+
         private void FireEventStopped()
         {
             Stopped?.Invoke(this);
         }
 
-        private void FireEventLoopPointReached()
+        private void InitializeEvents()
         {
-            LoopPointReached?.Invoke(this);
+            if (Started == null)
+                Started = new ParticleEffectEvent();
+
+            if (Paused == null)
+                Paused = new ParticleEffectEvent();
+
+            if (Resumed == null)
+                Resumed = new ParticleEffectEvent();
+
+            if (Stopped == null)
+                Stopped = new ParticleEffectEvent();
+
+            if (LoopPointReached == null)
+                LoopPointReached = new ParticleEffectEvent();
         }
+
+        private void InternalStop(bool fireStoppedEvent = true)
+        {
+            if (!ParticleSystemRoot)
+                return;
+
+            if (ParticleSystemRoot.isPlaying)
+                ParticleSystemRoot.Stop();
+
+            if (fireStoppedEvent)
+                FireEventStopped();
+
+            started = false;
+        }
+
+        #endregion Methods
     }
 }

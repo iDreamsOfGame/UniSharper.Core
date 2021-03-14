@@ -20,7 +20,9 @@ namespace UniSharper.Threading
         #region Fields
 
         private Queue<IThreadSynchronizedObject> addedObjects;
+
         private Queue<IThreadSynchronizedObject> removedObjects;
+
         private List<IThreadSynchronizedObject> synchronizedObjects;
 
         #endregion Fields
@@ -31,30 +33,13 @@ namespace UniSharper.Threading
         /// Gets the number of objects contained in the <see cref="UnityThreadSynchronizer"/>.
         /// </summary>
         /// <value>The number of objects contained in the <see cref="UnityThreadSynchronizer"/>.</value>
-        public int Count
-        {
-            get
-            {
-                if (synchronizedObjects != null)
-                {
-                    return synchronizedObjects.Count;
-                }
-
-                return 0;
-            }
-        }
+        public int Count => synchronizedObjects != null ? synchronizedObjects.Count : 0;
 
         /// <summary>
         /// Gets a value indicating whether the <see cref="UnityThreadSynchronizer"/> is read-only.
         /// </summary>
         /// <value><c>true</c> if the <see cref="UnityThreadSynchronizer"/> is read-only; otherwise, <c>false</c>.</value>
-        bool ICollection<IThreadSynchronizedObject>.IsReadOnly
-        {
-            get
-            {
-                return false;
-            }
-        }
+        bool ICollection<IThreadSynchronizedObject>.IsReadOnly => false;
 
         #endregion Properties
 
@@ -92,15 +77,7 @@ namespace UniSharper.Threading
         /// <returns>
         /// <c>true</c> if <c>item</c> is found in the <see cref="UnityThreadSynchronizer"/>; otherwise, <c>false</c>.
         /// </returns>
-        public bool Contains(IThreadSynchronizedObject item)
-        {
-            if (synchronizedObjects != null)
-            {
-                return synchronizedObjects.Contains(item);
-            }
-
-            return false;
-        }
+        public bool Contains(IThreadSynchronizedObject item) => synchronizedObjects != null && synchronizedObjects.Contains(item);
 
         /// <summary>
         /// Copies the objects of <see cref="IThreadSynchronizedObject"/> to sychronize in the <see
@@ -124,10 +101,7 @@ namespace UniSharper.Threading
         /// Returns an enumerator that iterates through the collection.
         /// </summary>
         /// <returns>An enumerator that can be used to iterate through the collection.</returns>
-        public IEnumerator<IThreadSynchronizedObject> GetEnumerator()
-        {
-            return synchronizedObjects?.GetEnumerator();
-        }
+        public IEnumerator<IThreadSynchronizedObject> GetEnumerator() => synchronizedObjects?.GetEnumerator();
 
         /// <summary>
         /// Removes the first occurrence of a specific object of <see cref="IThreadSynchronizedObject"/>
@@ -149,10 +123,7 @@ namespace UniSharper.Threading
         /// Returns an enumerator that iterates through the collection.
         /// </summary>
         /// <returns>An enumerator that can be used to iterate through the collection.</returns>
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         private void Awake()
         {

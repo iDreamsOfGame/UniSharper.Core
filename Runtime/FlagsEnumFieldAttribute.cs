@@ -40,11 +40,7 @@ namespace UniSharper
         /// Gets the caption/label for the attribute.
         /// </summary>
         /// <value>The caption/label for the attribute.</value>
-        public string Label
-        {
-            get;
-            private set;
-        }
+        public string Label { get; private set; }
 
         #endregion Properties
     }

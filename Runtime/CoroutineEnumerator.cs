@@ -14,7 +14,8 @@ namespace UniSharper
     {
         #region Fields
 
-        private Queue<IEnumerator> coroutineQueue;
+        private readonly Queue<IEnumerator> coroutineQueue;
+
         private object current;
 
         #endregion Fields
@@ -25,10 +26,7 @@ namespace UniSharper
         /// Initializes a new instance of the <see cref="CoroutineEnumerator"/> class with some coroutines.
         /// </summary>
         /// <param name="coroutines">The coroutines.</param>
-        public CoroutineEnumerator(params IEnumerator[] coroutines)
-        {
-            coroutineQueue = new Queue<IEnumerator>(coroutines);
-        }
+        public CoroutineEnumerator(params IEnumerator[] coroutines) => coroutineQueue = new Queue<IEnumerator>(coroutines);
 
         #endregion Constructors
 
@@ -38,13 +36,7 @@ namespace UniSharper
         /// Gets the element in the collection at the current position of the enumerator.
         /// </summary>
         /// <value>The element in the collection at the current position of the enumerator.</value>
-        public object Current
-        {
-            get
-            {
-                return current;
-            }
-        }
+        public object Current => current;
 
         #endregion Properties
 
@@ -54,10 +46,7 @@ namespace UniSharper
         /// Enqueues the specified coroutine.
         /// </summary>
         /// <param name="coroutine">The coroutine.</param>
-        public void Enqueue(IEnumerator coroutine)
-        {
-            coroutineQueue.Enqueue(coroutine);
-        }
+        public void Enqueue(IEnumerator coroutine) => coroutineQueue.Enqueue(coroutine);
 
         /// <summary>
         /// Advances the enumerator to the next element of the collection.
@@ -80,10 +69,7 @@ namespace UniSharper
         /// <summary>
         /// Sets the enumerator to its initial position, which is before the first element in the collection.
         /// </summary>
-        public void Reset()
-        {
-            coroutineQueue.Clear();
-        }
+        public void Reset() => coroutineQueue.Clear();
 
         #endregion Methods
     }

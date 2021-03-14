@@ -14,19 +14,28 @@ namespace UniSharperEditor.Compilation
     {
         #region Methods
 
-        public static Type GetEditorType(string typeFullName)
-        {
-            return GetType(AssembliesType.Editor, typeFullName);
-        }
+        /// <summary>
+        /// Gets the type of the editor.
+        /// </summary>
+        /// <param name="typeFullName">Full name of the type.</param>
+        /// <returns>The type with the specified name, if found; otherwise, <c>null</c>.</returns>
+        public static Type GetEditorType(string typeFullName) => GetType(AssembliesType.Editor, typeFullName);
 
-        public static Type GetPlayerType(string typeFullName)
-        {
-            return GetType(AssembliesType.Player, typeFullName);
-        }
+        /// <summary>
+        /// Gets the type of the player.
+        /// </summary>
+        /// <param name="typeFullName">Full name of the type.</param>
+        /// <returns>The type with the specified name, if found; otherwise, <c>null</c>.</returns>
+        public static Type GetPlayerType(string typeFullName) => GetType(AssembliesType.Player, typeFullName);
 
+        /// <summary>
+        /// Gets the type of player or editor.
+        /// </summary>
+        /// <param name="typeFullName">Full name of the type.</param>
+        /// <returns>The type with the specified name, if found; otherwise, <c>null</c>.</returns>
         public static Type GetType(string typeFullName)
         {
-            Type type = GetPlayerType(typeFullName);
+            var type = GetPlayerType(typeFullName);
 
             if (type == null)
             {
@@ -38,11 +47,11 @@ namespace UniSharperEditor.Compilation
 
         private static Type GetType(AssembliesType assembliesType, string typeFullName)
         {
-            Assembly[] assemblies = CompilationPipeline.GetAssemblies(assembliesType);
+            var assemblies = CompilationPipeline.GetAssemblies(assembliesType);
             foreach (var assembly in assemblies)
             {
-                GenericAssembely genericAssembely = GenericAssembely.LoadFile(assembly.outputPath);
-                Type type = genericAssembely.GetType(typeFullName);
+                var genericAssembely = GenericAssembely.LoadFile(assembly.outputPath);
+                var type = genericAssembely.GetType(typeFullName);
 
                 if (type != null)
                     return type;

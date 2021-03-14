@@ -10,48 +10,13 @@ namespace UniSharper.Effect
     /// </summary>
     public interface IParticleEffectController
     {
-        /// <summary>
-        /// Invoked immediately after Play is called.
-        /// </summary>
-        ParticleEffectEvent Started { get; }
-
-        /// <summary>
-        /// Invoked immediately after Pause is called.
-        /// </summary>
-        ParticleEffectEvent Paused { get; }
-
-        /// <summary>
-        /// Invoked immediately after Resume is called.
-        /// </summary>
-        ParticleEffectEvent Resumed { get; }
-        
-        /// <summary>
-        /// Invoked when the time of <see cref="UnityEngine.ParticleSystem"/> stopped.
-        /// </summary>
-        ParticleEffectEvent Stopped { get; }
-
-        /// <summary>
-        /// Invoked when the time of <see cref="UnityEngine.ParticleSystem"/> reaches the playback time.
-        /// </summary>
-        ParticleEffectEvent LoopPointReached { get; }
-
-        /// <summary>
-        /// Get the root component of <see cref="UnityEngine.ParticleSystem"/>.
-        /// </summary>
-        /// <value>The root component of <see cref="UnityEngine.ParticleSystem"/>. </value>
-        ParticleSystem ParticleSystemRoot { get; }
+        #region Properties
 
         /// <summary>
         /// Get the the <see cref="UnityEngine.Transform"/> attached to this <see cref="IParticleEffectController"/>.
         /// </summary>
         /// <value>The the <see cref="UnityEngine.Transform"/> attached to this <see cref="IParticleEffectController"/>. </value>
         Transform CachedTransform { get; }
-
-        /// <summary>
-        /// Get the playback position of the <see cref="UnityEngine.ParticleSystem"/> in seconds.
-        /// </summary>
-        /// <value>The playback position of the <see cref="UnityEngine.ParticleSystem"/> in seconds. </value>
-        float PlaybackTime { get; }
 
         /// <summary>
         /// Get the duration of the <see cref="UnityEngine.ParticleSystem"/> in seconds.
@@ -66,9 +31,45 @@ namespace UniSharper.Effect
         bool IsLoop { get; }
 
         /// <summary>
-        /// Starts the particle effect.
+        /// Invoked when the time of <see cref="UnityEngine.ParticleSystem"/> reaches the playback time.
         /// </summary>
-        void Play();
+        ParticleEffectEvent LoopPointReached { get; }
+
+        /// <summary>
+        /// Get the root component of <see cref="UnityEngine.ParticleSystem"/>.
+        /// </summary>
+        /// <value>The root component of <see cref="UnityEngine.ParticleSystem"/>. </value>
+        ParticleSystem ParticleSystemRoot { get; }
+
+        /// <summary>
+        /// Invoked immediately after Pause is called.
+        /// </summary>
+        ParticleEffectEvent Paused { get; }
+
+        /// <summary>
+        /// Get the playback position of the <see cref="UnityEngine.ParticleSystem"/> in seconds.
+        /// </summary>
+        /// <value>The playback position of the <see cref="UnityEngine.ParticleSystem"/> in seconds. </value>
+        float PlaybackTime { get; }
+
+        /// <summary>
+        /// Invoked immediately after Resume is called.
+        /// </summary>
+        ParticleEffectEvent Resumed { get; }
+
+        /// <summary>
+        /// Invoked immediately after Play is called.
+        /// </summary>
+        ParticleEffectEvent Started { get; }
+
+        /// <summary>
+        /// Invoked when the time of <see cref="UnityEngine.ParticleSystem"/> stopped.
+        /// </summary>
+        ParticleEffectEvent Stopped { get; }
+
+        #endregion Properties
+
+        #region Methods
 
         /// <summary>
         /// Pauses the particle effect.
@@ -76,13 +77,20 @@ namespace UniSharper.Effect
         void Pause();
 
         /// <summary>
+        /// Starts the particle effect.
+        /// </summary>
+        void Play();
+
+        /// <summary>
         /// Resumes playing the particle effect.
         /// </summary>
         void Resume();
-        
+
         /// <summary>
         /// Stops playing the particle effect.
         /// </summary>
         void Stop();
+
+        #endregion Methods
     }
 }

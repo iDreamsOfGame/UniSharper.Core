@@ -12,13 +12,44 @@ namespace UniSharper
     /// </summary>
     public static class PlayerEnvironment
     {
+        #region Fields
+
         /// <summary>
         /// Gets the newline string defined for windows.
         /// </summary>
         /// <value>The newline string defined for windows.</value>
         public const string WindowsNewLine = "\r\n";
-        
+
+        private const string DeviceInfoAndroidJavaClassName = "io.github.idreamsofgame.unisharper.core.DeviceInfo";
+
+        #endregion Fields
+
         #region Properties
+
+        /// <summary>
+        /// Gets the SDK version of the software currently running on Android.
+        /// </summary>
+        public static int AndroidSdkInt
+        {
+            get
+            {
+#if !UNITY_EDITOR && UNITY_ANDROID
+                var os = SystemInfo.operatingSystem;
+                var sections = os.Split(' ');
+
+                foreach (var section in sections)
+                {
+                    var stringArray = section.Split('-');
+                    if (stringArray.Length <= 1 || stringArray[0] != "API")
+                        continue;
+
+                    int.TryParse(stringArray[1], out var sdkInt);
+                    return sdkInt;
+                }
+#endif
+                return 0;
+            }
+        }
 
         /// <summary>
         /// Gets a value indicating whether the runtime platform is Android.
@@ -74,32 +105,6 @@ namespace UniSharper
                 }
             }
         }
-        
-        /// <summary>
-        /// Gets the SDK version of the software currently running on Android.
-        /// </summary>
-        public static int AndroidSdkInt
-        {
-            get
-            {
-#if !UNITY_EDITOR && UNITY_ANDROID
-                var os = SystemInfo.operatingSystem;
-                var sections = os.Split(' ');
-
-                foreach (var section in sections)
-                {
-                    var stringArray = section.Split('-');
-                    if (stringArray.Length <= 1 || stringArray[0] != "API") 
-                        continue;
-                    
-                    int.TryParse(stringArray[1], out var sdkInt);
-                    return sdkInt;
-                }
-#endif
-                
-                return 0;
-            }
-        }
 
         #endregion Properties
 
@@ -107,7 +112,7 @@ namespace UniSharper
 
         private static string GetAndroidDeviceIdentifier()
         {
-            using (var deviceInfo = new AndroidJavaClass("io.github.idreamsofgame.unisharper.core.DeviceInfo"))
+            using (var deviceInfo = new AndroidJavaClass(DeviceInfoAndroidJavaClassName))
             {
                 var uniqueDeviceIdentifier = deviceInfo.CallStatic<string>("getUniqueDeviceIdentifier");
                 return CryptoUtility.Md5HashEncrypt(uniqueDeviceIdentifier);

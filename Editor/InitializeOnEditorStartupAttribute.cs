@@ -19,10 +19,7 @@ namespace UniSharperEditor
         /// </summary>
         /// <param name="executionOrder">The execution order.</param>
         public InitializeOnEditorStartupAttribute(int executionOrder = 0)
-            : base()
-        {
-            ExecutionOrder = executionOrder;
-        }
+            : base() => ExecutionOrder = executionOrder;
 
         #endregion Constructors
 
@@ -32,11 +29,7 @@ namespace UniSharperEditor
         /// Gets the execution order.
         /// </summary>
         /// <value>The execution order.</value>
-        public int ExecutionOrder
-        {
-            get;
-            private set;
-        }
+        public int ExecutionOrder { get; private set; }
 
         #endregion Properties
     }

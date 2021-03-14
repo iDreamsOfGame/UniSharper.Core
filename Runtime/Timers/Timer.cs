@@ -93,61 +93,37 @@ namespace UniSharper.Timers
         /// Gets or sets a value indicating whether accept application pause.
         /// </summary>
         /// <value><c>true</c> if accept application pause; otherwise, <c>false</c>.</value>
-        public bool CanAcceptApplicationPause
-        {
-            get;
-            set;
-        }
+        public bool CanAcceptApplicationPause { get; set; }
 
         /// <summary>
         /// Gets the current ticking count of <see cref="Timer"/>.
         /// </summary>
         /// <value>The current ticking count of <see cref="Timer"/>.</value>
-        public uint CurrentCount
-        {
-            get;
-            protected set;
-        }
+        public uint CurrentCount { get; protected set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the <see cref="Timer"/> ignore time scale of Unity.
         /// </summary>
         /// <value><c>true</c> if ignore time scale of Unity; otherwise, <c>false</c>.</value>
-        public bool IgnoreTimeScale
-        {
-            get;
-            set;
-        }
+        public bool IgnoreTimeScale { get; set; }
 
         /// <summary>
         /// Gets or sets the time, in seconds, between <see cref="Ticking"/> events.
         /// </summary>
         /// <value>The time, in seconds, between <see cref="Ticking"/> events.</value>
-        public float Interval
-        {
-            get;
-            set;
-        }
+        public float Interval { get; set; }
 
         /// <summary>
         /// Gets or sets the repeat count of <see cref="Timer"/>.
         /// </summary>
         /// <value>The repeat count of <see cref="Timer"/>.</value>
-        public uint RepeatCount
-        {
-            get;
-            set;
-        }
+        public uint RepeatCount { get; set; }
 
         /// <summary>
         /// Gets the state of the <see cref="Timer"/>.
         /// </summary>
         /// <value>The state of the <see cref="Timer"/>.</value>
-        public TimerState TimerState
-        {
-            get;
-            protected set;
-        }
+        public TimerState TimerState { get; protected set; }
 
         #endregion Properties
 

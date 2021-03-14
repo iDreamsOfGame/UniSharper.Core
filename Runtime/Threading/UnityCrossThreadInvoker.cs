@@ -15,11 +15,17 @@ namespace UniSharper.Threading
     /// <seealso cref="UnityCrossThreadInvoker"/>
     public sealed class UnityCrossThreadInvoker : SingletonMonoBehaviour<UnityCrossThreadInvoker>
     {
+        #region Fields
+
         private ConcurrentQueue<Action> executionQueue;
-        
+
         private ConcurrentQueue<Action<object[]>> executionWithParametersQueue;
 
         private ConcurrentDictionary<Action<object[]>, object[]> methodParameterMap;
+
+        #endregion Fields
+
+        #region Methods
 
         /// <summary>
         /// Initialize.
@@ -53,11 +59,6 @@ namespace UniSharper.Threading
             }
         }
 
-        private void InternalInitialize()
-        {
-            // Do nothing, just for instantiating GameObject and add component.
-        }
-
         private void Awake()
         {
             executionQueue = new ConcurrentQueue<Action>();
@@ -65,27 +66,26 @@ namespace UniSharper.Threading
             methodParameterMap = new ConcurrentDictionary<Action<object[]>, object[]>();
         }
 
-        private void Update()
+        private void InternalInitialize()
         {
-            InvokeMethod();
-            InvokeMethodWithParameters();
+            // Do nothing, just for instantiating GameObject and add component.
         }
 
         private void InvokeMethod()
         {
             var result = executionQueue.TryDequeue(out var method);
-            if (!result) 
+            if (!result)
                 return;
-            
+
             method.Invoke();
         }
 
         private void InvokeMethodWithParameters()
         {
             var result = executionWithParametersQueue.TryDequeue(out var method);
-            if (!result) 
+            if (!result)
                 return;
-            
+
             var hasParameters = methodParameterMap.TryGetValue(method, out var parameters);
             method.Invoke(parameters);
 
@@ -94,5 +94,13 @@ namespace UniSharper.Threading
                 methodParameterMap.TryRemove(method, out parameters);
             }
         }
+
+        private void Update()
+        {
+            InvokeMethod();
+            InvokeMethodWithParameters();
+        }
+
+        #endregion Methods
     }
 }

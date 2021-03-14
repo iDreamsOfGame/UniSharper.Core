@@ -12,25 +12,32 @@ namespace UniSharperEditor
     [CustomEditor(typeof(MeshRenderer))]
     internal class MeshRendererEditor : Editor
     {
+        #region Fields
+
         private MeshRenderer meshRenderer;
-        
+
+        #endregion Fields
+
+        #region Methods
+
         public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();
             meshRenderer = target as MeshRenderer;
- 
-            string[] layerNames = new string[SortingLayer.layers.Length];
-            for (int i = 0; i < SortingLayer.layers.Length; i++)
+
+            var layerNames = new string[SortingLayer.layers.Length];
+            for (var i = 0; i < SortingLayer.layers.Length; i++)
                 layerNames[i] = SortingLayer.layers[i].name;
- 
-            int layerValue = SortingLayer.GetLayerValueFromID(meshRenderer.sortingLayerID);
+
+            var layerValue = SortingLayer.GetLayerValueFromID(meshRenderer.sortingLayerID);
             layerValue = EditorGUILayout.Popup("Sorting Layer", layerValue, layerNames);
- 
-            SortingLayer layer = SortingLayer.layers[layerValue];
+
+            var layer = SortingLayer.layers[layerValue];
             meshRenderer.sortingLayerName = layer.name;
             meshRenderer.sortingLayerID = layer.id;
             meshRenderer.sortingOrder = EditorGUILayout.IntField("Order in Layer", meshRenderer.sortingOrder);
         }
 
+        #endregion Methods
     }
 }

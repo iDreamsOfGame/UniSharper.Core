@@ -32,11 +32,11 @@ namespace UniSharperEditor
         /// </summary>
         static EditorInitializationOrderManager()
         {
-            List<Type> typeList = new List<Type>();
+            var typeList = new List<Type>();
 
             for (int i = 0, length = LoadedTypes.Length; i < length; ++i)
             {
-                Type type = LoadedTypes[i];
+                var type = LoadedTypes[i];
 
                 if (type.IsDefined(typeof(InitializeOnEditorStartupAttribute), false))
                 {
@@ -74,7 +74,7 @@ namespace UniSharperEditor
                 {
                     try
                     {
-                        Assembly assembly = Assembly.GetExecutingAssembly();
+                        var assembly = Assembly.GetExecutingAssembly();
                         loadedTypes = assembly.GetTypes();
                     }
                     catch (ReflectionTypeLoadException)
@@ -110,8 +110,8 @@ namespace UniSharperEditor
             /// </returns>
             public int Compare(Type x, Type y)
             {
-                InitializeOnEditorStartupAttribute[] xAttrs = x.GetCustomAttributes(typeof(InitializeOnEditorStartupAttribute), false) as InitializeOnEditorStartupAttribute[];
-                InitializeOnEditorStartupAttribute[] yAttrs = y.GetCustomAttributes(typeof(InitializeOnEditorStartupAttribute), false) as InitializeOnEditorStartupAttribute[];
+                var xAttrs = x.GetCustomAttributes(typeof(InitializeOnEditorStartupAttribute), false) as InitializeOnEditorStartupAttribute[];
+                var yAttrs = y.GetCustomAttributes(typeof(InitializeOnEditorStartupAttribute), false) as InitializeOnEditorStartupAttribute[];
 
                 if (xAttrs[0].ExecutionOrder > yAttrs[0].ExecutionOrder)
                 {

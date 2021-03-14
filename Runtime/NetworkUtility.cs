@@ -1,3 +1,6 @@
+// Copyright (c) Jerry Lee. All rights reserved. Licensed under the MIT License.
+// See LICENSE in the project root for license information.
+
 using UnityEngine;
 
 namespace UniSharper
@@ -7,6 +10,14 @@ namespace UniSharper
     /// </summary>
     public static class NetworkUtility
     {
+        #region Fields
+
+        private const string AndroidJavaClassName = "io.github.idreamsofgame.unisharper.core.NetUtils";
+
+        #endregion Fields
+
+        #region Methods
+
         /// <summary>
         /// Opens the URL specified.
         /// </summary>
@@ -27,10 +38,12 @@ namespace UniSharper
 
         private static bool OpenURLOnAndroid(string url)
         {
-            using (var netUtils = new AndroidJavaClass("io.github.idreamsofgame.unisharper.core.NetUtils"))
+            using (var netUtils = new AndroidJavaClass(AndroidJavaClassName))
             {
                 return netUtils.CallStatic<bool>("openURL", url);
             }
         }
+
+        #endregion Methods
     }
 }

@@ -11,27 +11,31 @@ namespace UniSharper.Rendering.PostProcessing
     [RequireComponent(typeof(Camera))]
     public class CameraShake : SingletonMonoBehaviour<CameraShake>
     {
+        #region Fields
+
         private Transform cachedTransform;
-
-        private bool isShaking;
-
-        private float elapsedTime;
-
-        private float duration;
 
         private Action completedCallback;
 
-        [SerializeField]
-        private Vector3 originalPosition;
+        private float duration;
+
+        private float elapsedTime;
 
         [SerializeField]
         private float magnitude = 1f;
 
         [SerializeField]
-        private AnimationCurve shakeAmplitude;
-        
+        private Vector3 originalPosition;
+
         [SerializeField]
         private bool resetPositionAfterShaking = true;
+
+        [SerializeField]
+        private AnimationCurve shakeAmplitude;
+
+        #endregion Fields
+
+        #region Properties
 
         public Transform CachedTransform
         {
@@ -44,25 +48,7 @@ namespace UniSharper.Rendering.PostProcessing
             }
         }
 
-        public bool IsShaking => isShaking;
-
-        /// <summary>
-        /// The original position.
-        /// </summary>
-        public Vector3 OriginalPosition
-        {
-            get => originalPosition;
-            set => originalPosition = value;
-        }
-
-        /// <summary>
-        /// The shake amplitude. Which is a animation curve.
-        /// </summary>
-        public AnimationCurve ShakeAmplitude
-        {
-            get => shakeAmplitude;
-            set => shakeAmplitude = value;
-        }
+        public bool IsShaking { get; private set; }
 
         /// <summary>
         /// The magnitude of shaking.
@@ -74,6 +60,15 @@ namespace UniSharper.Rendering.PostProcessing
         }
 
         /// <summary>
+        /// The original position.
+        /// </summary>
+        public Vector3 OriginalPosition
+        {
+            get => originalPosition;
+            set => originalPosition = value;
+        }
+
+        /// <summary>
         /// Whether reset position to original position when shaking complete.
         /// </summary>
         public bool ResetPositionAfterShaking
@@ -82,18 +77,48 @@ namespace UniSharper.Rendering.PostProcessing
             set => resetPositionAfterShaking = value;
         }
 
+        /// <summary>
+        /// The shake amplitude. Which is a animation curve.
+        /// </summary>
+        public AnimationCurve ShakeAmplitude
+        {
+            get => shakeAmplitude;
+            set => shakeAmplitude = value;
+        }
+
+        #endregion Properties
+
+        #region Methods
+
         public void Shake(float duration, Action completedCallback = null)
         {
             elapsedTime = 0f;
             this.duration = duration;
             this.completedCallback = completedCallback;
             CachedTransform.localPosition = originalPosition;
-            isShaking = true;
+            IsShaking = true;
+        }
+
+        private bool CheckShakeComplete()
+        {
+            if (elapsedTime >= duration)
+            {
+                elapsedTime = 0f;
+                IsShaking = false;
+
+                if (resetPositionAfterShaking)
+                    CachedTransform.localPosition = originalPosition;
+
+                completedCallback?.Invoke();
+                return true;
+            }
+
+            return false;
         }
 
         private void LateUpdate()
         {
-            if(!isShaking)
+            if (!IsShaking)
                 return;
 
             elapsedTime += Time.deltaTime;
@@ -106,21 +131,6 @@ namespace UniSharper.Rendering.PostProcessing
             CachedTransform.localPosition = originalPosition + Random.insideUnitSphere * power;
         }
 
-        private bool CheckShakeComplete()
-        {
-            if (elapsedTime >= duration)
-            {
-                elapsedTime = 0f;
-                isShaking = false;
-
-                if (resetPositionAfterShaking)
-                    CachedTransform.localPosition = originalPosition;
-                
-                completedCallback?.Invoke();
-                return true;
-            }
-
-            return false;
-        }
+        #endregion Methods
     }
 }

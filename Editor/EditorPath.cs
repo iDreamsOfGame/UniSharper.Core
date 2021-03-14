@@ -28,7 +28,7 @@ namespace UniSharperEditor
                 throw new ArgumentNullException(nameof(paths));
             }
 
-            string[] newPaths = new string[paths.Length + 1];
+            var newPaths = new string[paths.Length + 1];
             newPaths[0] = Directory.GetCurrentDirectory();
             paths.CopyTo(newPaths, 1);
             return ReSharpPathUtility.UnifyToAltDirectorySeparatorChar(Path.Combine(newPaths));
@@ -47,8 +47,8 @@ namespace UniSharperEditor
                 throw new ArgumentNullException(nameof(path));
             }
 
-            string currentDirectory = ReSharpPathUtility.UnifyToAltDirectorySeparatorChar(Directory.GetCurrentDirectory());
-            string absolutePath = ReSharpPathUtility.UnifyToAltDirectorySeparatorChar(path);
+            var currentDirectory = ReSharpPathUtility.UnifyToAltDirectorySeparatorChar(Directory.GetCurrentDirectory());
+            var absolutePath = ReSharpPathUtility.UnifyToAltDirectorySeparatorChar(path);
 
             if (absolutePath.KmpIndexOf(currentDirectory) != -1)
             {
@@ -71,7 +71,7 @@ namespace UniSharperEditor
                 throw new ArgumentNullException(nameof(path));
             }
 
-            string newPath = ReSharpPathUtility.UnifyToAltDirectorySeparatorChar(path);
+            var newPath = ReSharpPathUtility.UnifyToAltDirectorySeparatorChar(path);
             return newPath.StartsWith(EditorEnvironment.AssetsFolderName + Path.AltDirectorySeparatorChar) || newPath.StartsWith(ReSharpPathUtility.UnifyToAltDirectorySeparatorChar(Directory.GetCurrentDirectory()));
         }
 

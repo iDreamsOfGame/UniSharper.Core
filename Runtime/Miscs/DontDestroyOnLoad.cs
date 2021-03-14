@@ -18,7 +18,14 @@ namespace UniSharper.Miscs
         /// </summary>
         private void Awake()
         {
-            DontDestroyOnLoad(gameObject);
+            if (transform.root == transform)
+            {
+                DontDestroyOnLoad(gameObject);
+            }
+            else
+            {
+                DontDestroyOnLoad(transform.root.gameObject);
+            }
         }
 
         #endregion Methods

@@ -26,7 +26,8 @@ namespace UniSharperEditor.Help
         [MenuItem("UniSharper/Help/About UniSharper...", false, 1000)]
         private static void ShowAboutWindow()
         {
-            AboutWindow windowWithRect = GetWindowWithRect<AboutWindow>(new Rect(100f, 100f, 230f, 110f), true, "About UniSharper");
+            const string title = "About UniSharper";
+            GetWindowWithRect<AboutWindow>(new Rect(100f, 100f, 230f, 110f), true, title);
         }
 
         private void OnGUI()
@@ -37,7 +38,7 @@ namespace UniSharperEditor.Help
             GUILayout.BeginVertical(new GUILayoutOption[0]);
             GUILayout.Label("UniSharper", new GUIStyle() { fontStyle = FontStyle.Bold, fontSize = 30, normal = new GUIStyleState() { textColor = Color.white } });
             GUILayout.Space(10f);
-            GUILayout.Label("Copyright (c) 2020 Jerry Lee");
+            GUILayout.Label("Copyright (c) 2021 Jerry Lee");
             GUILayout.Label("cosmos53076@163.com");
             GUILayout.EndVertical();
             GUILayout.Space(10f);

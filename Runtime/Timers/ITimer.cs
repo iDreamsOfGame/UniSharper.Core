@@ -56,55 +56,37 @@ namespace UniSharper.Timers
         /// Gets or sets a value indicating whether accept application pause.
         /// </summary>
         /// <value><c>true</c> if accept application pause; otherwise, <c>false</c>.</value>
-        bool CanAcceptApplicationPause
-        {
-            get; set;
-        }
+        bool CanAcceptApplicationPause { get; set; }
 
         /// <summary>
         /// Gets the current ticking count of <see cref="ITimer"/>.
         /// </summary>
         /// <value>The current ticking count of <see cref="ITimer"/>.</value>
-        uint CurrentCount
-        {
-            get;
-        }
+        uint CurrentCount { get; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the <see cref="ITimer"/> ignore time scale of Unity.
         /// </summary>
         /// <value><c>true</c> if ignore time scale of Unity; otherwise, <c>false</c>.</value>
-        bool IgnoreTimeScale
-        {
-            get; set;
-        }
+        bool IgnoreTimeScale { get; set; }
 
         /// <summary>
         /// Gets or sets the time, in seconds, between <see cref="Ticking"/> events.
         /// </summary>
         /// <value>The time, in seconds, between <see cref="Ticking"/> events.</value>
-        float Interval
-        {
-            get; set;
-        }
+        float Interval { get; set; }
 
         /// <summary>
         /// Gets or sets the repeat count of <see cref="ITimer"/>.
         /// </summary>
         /// <value>The repeat count of <see cref="ITimer"/>.</value>
-        uint RepeatCount
-        {
-            get; set;
-        }
+        uint RepeatCount { get; set; }
 
         /// <summary>
         /// Gets the state of the <see cref="ITimer"/>.
         /// </summary>
         /// <value>The state of the <see cref="ITimer"/>.</value>
-        TimerState TimerState
-        {
-            get;
-        }
+        TimerState TimerState { get; }
 
         #endregion Properties
 

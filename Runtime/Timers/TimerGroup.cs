@@ -14,9 +14,11 @@ namespace UniSharper.Timers
     {
         #region Fields
 
-        private Queue<ITimer> addedTimers;
+        private readonly Queue<ITimer> addedTimers;
+
+        private readonly List<ITimer> timers;
+
         private Queue<ITimer> removedTimers;
-        private List<ITimer> timers;
 
         #endregion Fields
 
@@ -27,11 +29,7 @@ namespace UniSharper.Timers
         /// </summary>
         public TimerGroup()
         {
-            if (timers == null)
-            {
-                timers = new List<ITimer>();
-            }
-
+            timers = new List<ITimer>();
             addedTimers = new Queue<ITimer>();
             removedTimers = new Queue<ITimer>();
         }
@@ -41,10 +39,7 @@ namespace UniSharper.Timers
         /// </summary>
         /// <param name="timers">The timers array.</param>
         public TimerGroup(params ITimer[] timers)
-            : this()
-        {
-            this.timers = new List<ITimer>(timers);
-        }
+            : this() => this.timers = new List<ITimer>(timers);
 
         #endregion Constructors
 
@@ -54,13 +49,7 @@ namespace UniSharper.Timers
         /// Gets the number of <see cref="ITimer"/> contained in this <see cref="TimerGroup"/>.
         /// </summary>
         /// <value>The number of <see cref="ITimer"/> contained in this <see cref="TimerGroup"/>.</value>
-        public int Count
-        {
-            get
-            {
-                return timers.Count;
-            }
-        }
+        public int Count => timers.Count;
 
         #endregion Properties
 
@@ -84,10 +73,7 @@ namespace UniSharper.Timers
         /// <summary>
         /// Removes all <see cref="ITimer"/> contained in this <see cref="TimerGroup"/>.
         /// </summary>
-        public void Clear()
-        {
-            removedTimers = new Queue<ITimer>(timers);
-        }
+        public void Clear() => removedTimers = new Queue<ITimer>(timers);
 
         /// <summary>
         /// Determines whether the specified <see cref="ITimer"/> contained in this <see cref="TimerGroup"/>.

@@ -12,36 +12,20 @@ namespace UniSharper.Rendering.DataParsers
 
         private static readonly Dictionary<TilingSheetDataFormat, ITilingSheetDataParser> parsers = new Dictionary<TilingSheetDataFormat, ITilingSheetDataParser>()
         {
-            { TilingSheetDataFormat.UnityJson, new UnityJsonDataParser() }
+            { TilingSheetDataFormat.UnityJson, new TPUnityJsonDataParser() }
         };
-
-        private static Dictionary<string, Dictionary<string, Rect>> dataDict = new Dictionary<string, Dictionary<string, Rect>>();
 
         #endregion Fields
 
         #region Properties
 
-        protected static Dictionary<string, Dictionary<string, Rect>> DataDict
-        {
-            get
-            {
-                return dataDict;
-            }
-        }
+        protected static Dictionary<string, Dictionary<string, Rect>> DataMap { get; } = new Dictionary<string, Dictionary<string, Rect>>();
 
         #endregion Properties
 
         #region Methods
 
-        public static ITilingSheetDataParser CreateParser(TilingSheetDataFormat dataFormat)
-        {
-            if (parsers.ContainsKey(dataFormat))
-            {
-                return parsers[dataFormat];
-            }
-
-            return null;
-        }
+        public static ITilingSheetDataParser CreateParser(TilingSheetDataFormat dataFormat) => parsers.ContainsKey(dataFormat) ? parsers[dataFormat] : null;
 
         public abstract Dictionary<string, Rect> ParseData(string name, string data);
 

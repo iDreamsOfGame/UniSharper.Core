@@ -25,10 +25,10 @@ namespace UniSharperEditor
         /// <param name="label">The label of this property.</param>
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            FlagsEnumFieldAttribute flagsAttribute = (FlagsEnumFieldAttribute)attribute;
-            Enum targetEnum = GetBaseProperty<Enum>(property);
+            var flagsAttribute = (FlagsEnumFieldAttribute)attribute;
+            var targetEnum = GetBaseProperty<Enum>(property);
 
-            string propertyDisplayName = flagsAttribute.Label;
+            var propertyDisplayName = flagsAttribute.Label;
 
             if (string.IsNullOrEmpty(propertyDisplayName))
             {
@@ -52,12 +52,12 @@ namespace UniSharperEditor
         private static T GetBaseProperty<T>(SerializedProperty property)
         {
             // Separate the steps it takes to get to this property.
-            string[] separatedPaths = property.propertyPath.Split('.');
+            var separatedPaths = property.propertyPath.Split('.');
 
             // Go down to the root of this serialized property.
-            object reflectionTarget = property.serializedObject.targetObject as object;
+            var reflectionTarget = property.serializedObject.targetObject as object;
 
-            foreach (string path in separatedPaths)
+            foreach (var path in separatedPaths)
             {
                 reflectionTarget = reflectionTarget.GetFieldValue(path);
             }

@@ -16,10 +16,7 @@ namespace UniSharper.Timers
         /// Gets the number of <see cref="ITimer"/> contained in this <see cref="ITimerList"/>.
         /// </summary>
         /// <value>The number of <see cref="ITimer"/> contained in this <see cref="ITimerList"/>.</value>
-        int Count
-        {
-            get;
-        }
+        int Count { get; }
 
         #endregion Properties
 

@@ -27,18 +27,7 @@ namespace UniSharper.Timers
         /// Gets the number of <see cref="ITimer"/> elements contained in the <see cref="TimerManager"/>.
         /// </summary>
         /// <value>The number of <see cref="ITimer"/> elements contained in the <see cref="TimerManager"/>.</value>
-        public int Count
-        {
-            get
-            {
-                if (timerList != null)
-                {
-                    return timerList.Count;
-                }
-
-                return 0;
-            }
-        }
+        public int Count => timerList != null ? timerList.Count : 0;
 
         /// <summary>
         /// Gets the timer list.
@@ -65,18 +54,12 @@ namespace UniSharper.Timers
         /// Adds an <see cref="ITimer"/> item.
         /// </summary>
         /// <param name="timer">The <see cref="ITimer"/> to be added.</param>
-        public void Add(ITimer timer)
-        {
-            TimerList.Add(timer);
-        }
+        public void Add(ITimer timer) => TimerList.Add(timer);
 
         /// <summary>
         /// Removes all <see cref="ITimer"/> items.
         /// </summary>
-        public void Clear()
-        {
-            TimerList.Clear();
-        }
+        public void Clear() => TimerList.Clear();
 
         /// <summary>
         /// Determines whether the <see cref="TimerManager"/> contains a specific <see cref="ITimer"/>.
@@ -86,18 +69,12 @@ namespace UniSharper.Timers
         /// <c>true</c> if <see cref="ITimer"/> item is found in the <see cref="TimerManager"/>;
         /// otherwise, <c>false</c>.
         /// </returns>
-        public bool Contains(ITimer timer)
-        {
-            return TimerList.Contains(timer);
-        }
+        public bool Contains(ITimer timer) => TimerList.Contains(timer);
 
         /// <summary>
         /// Pauses all timers in the <see cref="TimerManager"/>.
         /// </summary>
-        public void PauseAll()
-        {
-            TimerList.PauseAll();
-        }
+        public void PauseAll() => TimerList.PauseAll();
 
         /// <summary>
         /// Removes the first occurrence of a specific object from the <see cref="TimerManager"/>.
@@ -107,42 +84,27 @@ namespace UniSharper.Timers
         /// <c>true</c> if item was successfully removed; otherwise, <c>false</c>. This method also
         /// returns <c>false</c> if item is not found in the <see cref="TimerManager"/>.
         /// </returns>
-        public bool Remove(ITimer timer)
-        {
-            return TimerList.Remove(timer);
-        }
+        public bool Remove(ITimer timer) => TimerList.Remove(timer);
 
         /// <summary>
         /// Resets all timers in the <see cref="TimerManager"/>.
         /// </summary>
-        public void ResetAll()
-        {
-            TimerList.ResetAll();
-        }
+        public void ResetAll() => TimerList.ResetAll();
 
         /// <summary>
         /// Resumes all timers in <see cref="TimerManager"/>.
         /// </summary>
-        public void ResumeAll()
-        {
-            TimerList.ResumeAll();
-        }
+        public void ResumeAll() => TimerList.ResumeAll();
 
         /// <summary>
         /// Starts all timers in the <see cref="TimerManager"/>.
         /// </summary>
-        public void StartAll()
-        {
-            TimerList.StartAll();
-        }
+        public void StartAll() => TimerList.StartAll();
 
         /// <summary>
         /// Stops all timers in the <see cref="TimerManager"/>.
         /// </summary>
-        public void StopAll()
-        {
-            TimerList.StopAll();
-        }
+        public void StopAll() => TimerList.StopAll();
 
         /// <summary>
         /// This function is called when the application pauses.
@@ -171,7 +133,7 @@ namespace UniSharper.Timers
             {
                 timerList.ForEach((timer) =>
                 {
-                    float deltaTime = timer.IgnoreTimeScale ? Time.unscaledDeltaTime : Time.deltaTime;
+                    var deltaTime = timer.IgnoreTimeScale ? Time.unscaledDeltaTime : Time.deltaTime;
 
                     try
                     {
@@ -179,7 +141,7 @@ namespace UniSharper.Timers
                     }
                     catch (Exception exception)
                     {
-                        Debug.LogException(exception);
+                        Debug.LogWarning(exception);
                     }
                 });
             }

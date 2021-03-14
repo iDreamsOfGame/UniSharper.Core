@@ -19,16 +19,16 @@ namespace UniSharper.Audio
         AudioSource AudioSource { get; }
 
         /// <summary>
-        /// Un- / Mutes the <see cref="UnityEngine.AudioSource"/>.
-        /// </summary>
-        /// <value>The indicator that the <see cref="UnityEngine.AudioSource"/> is muting. </value>
-        bool Mute { get; set; }
-
-        /// <summary>
         /// Is the audio clip looping.
         /// </summary>
         /// <value>The indicator that the <see cref="UnityEngine.AudioSource"/> replays after it finishes or not. </value>
         bool IsLoop { get; set; }
+
+        /// <summary>
+        /// Un- / Mutes the <see cref="UnityEngine.AudioSource"/>.
+        /// </summary>
+        /// <value>The indicator that the <see cref="UnityEngine.AudioSource"/> is muting. </value>
+        bool Mute { get; set; }
 
         #endregion Properties
 
