@@ -23,4 +23,23 @@ public final class DeviceInfo {
         String serialNumber = Build.SERIAL;
         return androidID + "-" + serialNumber;
     }
+
+    /**
+     * Gets the contry code of this Android device.
+     *
+     * @return The country/region code, which should either be the empty string, an uppercase ISO 3166 2-letter code, or a UN M.49 3-digit code.
+     */
+    public static String getCountryCode() {
+        Context context = UnityPlayer.currentActivity;
+        String countryCode;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            countryCode = context.getResources().getConfiguration().getLocales().get(0).getCountry();
+        }
+        else {
+            countryCode = context.getResources().getConfiguration().locale.getCountry();
+        }
+
+        return countryCode;
+    }
 }
