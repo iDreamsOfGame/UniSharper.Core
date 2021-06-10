@@ -1,3 +1,12 @@
+## [1.10.0] - 2021-06-10
+
+### Added
+
+- Adds utility class **PlayerPrefsUtility**.
+- Adds class **PlayerPreferences**.
+
+
+
 ## [1.9.0] - 2021-03-07
 
 ### Added
