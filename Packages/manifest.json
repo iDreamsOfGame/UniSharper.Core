@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.unity.ide.rider": "3.0.7",
     "com.unity.test-framework": "1.1.22",
     "com.unity.ugui": "1.0.0",
     "io.github.idreamsofgame.resharp.core": "1.0.1",
