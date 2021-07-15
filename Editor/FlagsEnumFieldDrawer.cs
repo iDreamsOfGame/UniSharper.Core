@@ -25,21 +25,28 @@ namespace UniSharperEditor
         /// <param name="label">The label of this property.</param>
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            var flagsAttribute = (FlagsEnumFieldAttribute)attribute;
-            var targetEnum = GetBaseProperty<Enum>(property);
-
-            var propertyDisplayName = flagsAttribute.Label;
-
-            if (string.IsNullOrEmpty(propertyDisplayName))
+            if (property.propertyType == SerializedPropertyType.Enum)
             {
-                propertyDisplayName = property.name;
+                var flagsAttribute = (FlagsEnumFieldAttribute)attribute;
+                var targetEnum = GetBaseProperty<Enum>(property);
+
+                var propertyDisplayName = flagsAttribute.Label;
+
+                if (string.IsNullOrEmpty(propertyDisplayName))
+                {
+                    propertyDisplayName = property.name;
+                }
+
+                if (targetEnum != null)
+                {
+                    EditorGUI.BeginProperty(position, label, property);
+                    property.intValue = (int)Enum.ToObject(targetEnum.GetType(), EditorGUI.EnumFlagsField(position, propertyDisplayName, targetEnum));
+                    EditorGUI.EndProperty();
+                }
             }
-
-            if (targetEnum != null)
+            else
             {
-                EditorGUI.BeginProperty(position, label, property);
-                property.intValue = (int)Enum.ToObject(targetEnum.GetType(), EditorGUI.EnumFlagsField(position, propertyDisplayName, targetEnum));
-                EditorGUI.EndProperty();
+                EditorGUI.PropertyField(position, property, label);
             }
         }
 

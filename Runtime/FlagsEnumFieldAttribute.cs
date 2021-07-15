@@ -10,7 +10,7 @@ namespace UniSharper
     /// Represents the enumeration property with Flags attribute declaration.
     /// </summary>
     /// <seealso cref="PropertyAttribute"/>
-    [AttributeUsage(AttributeTargets.Field, Inherited = true, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
     public class FlagsEnumFieldAttribute : PropertyAttribute
     {
         #region Constructors

@@ -1,3 +1,12 @@
+## [1.11.0] - 2021-07-15
+
+### Added
+
+- Adds attributes **TagFieldAttribute**, **SortingLayerFieldAttribute**, **LayerFieldAttribute**.
+- Adds utility method **Vector2Utility.Rotate**
+
+
+
 ## [1.10.0] - 2021-06-10
 
 ### Added

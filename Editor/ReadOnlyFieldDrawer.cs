@@ -14,8 +14,6 @@ namespace UniSharperEditor
     [CustomPropertyDrawer(typeof(ReadOnlyFieldAttribute))]
     internal class ReadOnlyFieldDrawer : PropertyDrawer
     {
-        #region Methods
-
         /// <summary>
         /// Override this method to make your own GUI for the property.
         /// </summary>
@@ -28,7 +26,5 @@ namespace UniSharperEditor
             EditorGUI.PropertyField(position, property, label, true);
             EditorGUI.EndDisabledGroup();
         }
-
-        #endregion Methods
     }
 }

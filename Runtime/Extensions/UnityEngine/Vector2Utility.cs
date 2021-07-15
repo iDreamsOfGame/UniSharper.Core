@@ -8,6 +8,17 @@ namespace UnityEngine
     public static class Vector2Utility
     {
         /// <summary>
+        /// Rotate a vector by a angle value.
+        /// </summary>
+        /// <param name="from">Which vector start from.</param>
+        /// <param name="angle">The angle value to rotate.</param>
+        /// <returns>The target vector through rotating a start vector.</returns>
+        public static Vector2 Rotate(Vector2 from, float angle)
+        {
+            return Quaternion.AngleAxis(angle, Vector3.forward) * from;
+        }
+        
+        /// <summary>
         /// Generates quadratic bezier points.
         /// </summary>
         /// <param name="startPoint">The position of start point. </param>

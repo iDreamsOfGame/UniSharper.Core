@@ -10,7 +10,7 @@ namespace UniSharper
     /// Represents the readonly field that you can not change the value of field in the Inspector window.
     /// </summary>
     /// <seealso cref="PropertyAttribute"/>
-    [AttributeUsage(AttributeTargets.Field, Inherited = true, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
     public class ReadOnlyFieldAttribute : PropertyAttribute
     {
     }
