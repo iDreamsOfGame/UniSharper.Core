@@ -5,8 +5,6 @@ namespace UniSharper.Samples
 {
     internal class CameraShakeSample : MonoBehaviour
     {
-        #region Methods
-
         private void Start()
         {
             CameraShake.Instance.Shake(5f, () =>
@@ -14,7 +12,5 @@ namespace UniSharper.Samples
                 Debug.Log("Random shaking completed!");
             });
         }
-
-        #endregion Methods
     }
 }

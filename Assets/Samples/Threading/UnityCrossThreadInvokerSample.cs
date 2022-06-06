@@ -7,20 +7,14 @@ namespace UniSharper.Samples
 {
     internal class UnityCrossThreadInvokerSample : MonoBehaviour
     {
-        #region Fields
+        [SerializeField]
+        private Text text1;
 
         [SerializeField]
-        private Text text1 = null;
+        private Text text2;
 
         [SerializeField]
-        private Text text2 = null;
-
-        [SerializeField]
-        private Text text3 = null;
-
-        #endregion Fields
-
-        #region Methods
+        private Text text3;
 
         private void InternalShowText()
         {
@@ -38,12 +32,12 @@ namespace UniSharper.Samples
 
         private void InvokeAnonymousMethodTest()
         {
-            new Thread(new ThreadStart(() =>
+            new Thread(() =>
             {
                 Thread.Sleep(0);
                 UnityCrossThreadInvoker.Invoke(
                     () => { text1.text = "I am anonymous method coming from other thread!"; });
-            })).Start();
+            }).Start();
         }
 
         private void InvokeWithoutParametersTest()
@@ -57,11 +51,11 @@ namespace UniSharper.Samples
 
         private void InvokeWithParametersTest()
         {
-            new Thread(new ThreadStart(() =>
+            new Thread(() =>
             {
                 Thread.Sleep(3000);
                 UnityCrossThreadInvoker.Invoke(InternalShowTextWithParameters, "I am method with parameters coming from other thread!");
-            })).Start();
+            }).Start();
         }
 
         private void Start()
@@ -71,7 +65,5 @@ namespace UniSharper.Samples
             InvokeWithoutParametersTest();
             InvokeAnonymousMethodTest();
         }
-
-        #endregion Methods
     }
 }

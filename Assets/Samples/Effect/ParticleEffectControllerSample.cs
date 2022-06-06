@@ -5,14 +5,8 @@ namespace UniSharper.Samples
 {
     internal class ParticleEffectControllerSample : MonoBehaviour
     {
-        #region Fields
-
         [SerializeField]
-        private ParticleEffectController effectController = null;
-
-        #endregion Fields
-
-        #region Methods
+        private ParticleEffectController effectController;
 
         private void OnEffectPaused(IParticleEffectController particleEffectController)
         {
@@ -57,7 +51,5 @@ namespace UniSharper.Samples
             effectController.Play();
             Invoke(nameof(Pause), 0.5f);
         }
-
-        #endregion Methods
     }
 }

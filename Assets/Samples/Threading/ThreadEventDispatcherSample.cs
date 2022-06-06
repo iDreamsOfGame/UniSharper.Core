@@ -7,16 +7,10 @@ namespace UniSharper.Samples
 {
     public class ThreadEventDispatcherSample : MonoBehaviour
     {
-        #region Fields
-
         private IThreadEventDispatcher dispatcher;
 
         [SerializeField]
-        private Text textComponent = null;
-
-        #endregion Fields
-
-        #region Methods
+        private Text textComponent;
 
         private void OnShowText(ThreadEvent e)
         {
@@ -35,9 +29,7 @@ namespace UniSharper.Samples
         {
             dispatcher = new ThreadEventDispatcher();
             dispatcher.AddEventListener(ThreadEventSample.Type.ShowText, OnShowText);
-            ThreadPool.QueueUserWorkItem(state => ShowTextContent());
+            ThreadPool.QueueUserWorkItem(_ => ShowTextContent());
         }
-
-        #endregion Methods
     }
 }

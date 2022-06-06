@@ -7,18 +7,12 @@ namespace UniSharper.Samples
     /// </summary>
     internal class DrawQuadraticBezierCurveSample : MonoBehaviour
     {
-        #region Fields
-
         [SerializeField]
-        private LineRenderer lineRenderer = null;
-
-        #endregion Fields
-
-        #region Methods
+        private LineRenderer lineRenderer;
 
         private void Start()
         {
-            var points = Vector3Utility.GenerateQuadraticBezierPoints(UnityEngine.Vector3.zero, new Vector3(0.5f, 0.5f),
+            var points = Vector3Utility.GenerateQuadraticBezierPoints(Vector3.zero, new Vector3(0.5f, 0.5f),
                 new Vector3(1, 0, 0), 50);
 
             for (var i = 1; i < points.Length; i++)
@@ -28,7 +22,5 @@ namespace UniSharper.Samples
                 lineRenderer.SetPosition(i - 1, point);
             }
         }
-
-        #endregion Methods
     }
 }

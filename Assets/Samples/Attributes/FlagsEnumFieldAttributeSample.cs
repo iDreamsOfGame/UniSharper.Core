@@ -5,14 +5,8 @@ namespace UniSharper.Samples
 {
     internal class FlagsEnumFieldAttributeSample : MonoBehaviour
     {
-        #region Fields
-
         [FlagsEnumField]
         public EnumFlagsTest enumFlagsField = EnumFlagsTest.None;
-
-        #endregion Fields
-
-        #region Enums
 
         [Flags]
         public enum EnumFlagsTest
@@ -23,16 +17,10 @@ namespace UniSharper.Samples
             Value3 = 4,
             Value4 = 8
         }
-
-        #endregion Enums
-
-        #region Methods
-
+        
         private void Start()
         {
             Debug.Log((int)(EnumFlagsTest.Value1 | EnumFlagsTest.Value2));
         }
-
-        #endregion Methods
     }
 }

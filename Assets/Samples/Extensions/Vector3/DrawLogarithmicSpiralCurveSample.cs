@@ -4,14 +4,8 @@ namespace UniSharper.Samples
 {
     internal class DrawLogarithmicSpiralCurveSample : MonoBehaviour
     {
-        #region Fields
-
         [SerializeField]
-        private LineRenderer lineRenderer = null;
-
-        #endregion Fields
-
-        #region Methods
+        private LineRenderer lineRenderer;
 
         private void Start()
         {
@@ -24,7 +18,5 @@ namespace UniSharper.Samples
                 lineRenderer.SetPosition(i - 1, point);
             }
         }
-
-        #endregion Methods
     }
 }
