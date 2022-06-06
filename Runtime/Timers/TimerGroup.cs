@@ -12,17 +12,11 @@ namespace UniSharper.Timers
     /// <seealso cref="ITimerList"/>
     public class TimerGroup : ITimerList
     {
-        #region Fields
-
         private readonly Queue<ITimer> addedTimers;
 
         private readonly List<ITimer> timers;
 
         private Queue<ITimer> removedTimers;
-
-        #endregion Fields
-
-        #region Constructors
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TimerGroup"/> class.
@@ -41,19 +35,11 @@ namespace UniSharper.Timers
         public TimerGroup(params ITimer[] timers)
             : this() => this.timers = new List<ITimer>(timers);
 
-        #endregion Constructors
-
-        #region Properties
-
         /// <summary>
         /// Gets the number of <see cref="ITimer"/> contained in this <see cref="TimerGroup"/>.
         /// </summary>
         /// <value>The number of <see cref="ITimer"/> contained in this <see cref="TimerGroup"/>.</value>
         public int Count => timers.Count;
-
-        #endregion Properties
-
-        #region Methods
 
         /// <summary>
         /// Adds an <see cref="ITimer"/> item to this <see cref="TimerGroup"/>.
@@ -63,9 +49,7 @@ namespace UniSharper.Timers
         public void Add(ITimer timer)
         {
             if (timer == null)
-            {
                 throw new ArgumentNullException(nameof(timer));
-            }
 
             addedTimers.Enqueue(timer);
         }
@@ -87,9 +71,7 @@ namespace UniSharper.Timers
         public bool Contains(ITimer timer)
         {
             if (timer == null)
-            {
                 throw new ArgumentNullException(nameof(timer));
-            }
 
             return timers.Contains(timer);
         }
@@ -105,23 +87,21 @@ namespace UniSharper.Timers
         public void ForEach(Action<ITimer> action)
         {
             if (action == null)
-            {
                 throw new ArgumentNullException(nameof(action));
-            }
 
             while (addedTimers.Count > 0)
             {
-                ITimer timer = addedTimers.Dequeue();
+                var timer = addedTimers.Dequeue();
                 timers.Add(timer);
             }
 
             while (removedTimers.Count > 0)
             {
-                ITimer timer = removedTimers.Dequeue();
+                var timer = removedTimers.Dequeue();
                 timers.Remove(timer);
             }
 
-            foreach (ITimer timer in timers)
+            foreach (var timer in timers)
             {
                 if (timer != null)
                 {
@@ -138,7 +118,7 @@ namespace UniSharper.Timers
         /// </param>
         public void PauseAll(bool causedByApplicationPaused = false)
         {
-            ForEach((timer) =>
+            ForEach(timer =>
             {
                 timer.Pause(causedByApplicationPaused);
             });
@@ -171,7 +151,7 @@ namespace UniSharper.Timers
         /// </summary>
         public void ResetAll()
         {
-            ForEach((timer) =>
+            ForEach(timer =>
             {
                 timer.Reset();
             });
@@ -182,7 +162,7 @@ namespace UniSharper.Timers
         /// </summary>
         public void ResumeAll()
         {
-            ForEach((timer) =>
+            ForEach(timer =>
             {
                 timer.Resume();
             });
@@ -193,7 +173,7 @@ namespace UniSharper.Timers
         /// </summary>
         public void StartAll()
         {
-            ForEach((timer) =>
+            ForEach(timer =>
             {
                 timer.Start();
             });
@@ -204,12 +184,10 @@ namespace UniSharper.Timers
         /// </summary>
         public void StopAll()
         {
-            ForEach((timer) =>
+            ForEach(timer =>
             {
                 timer.Stop();
             });
         }
-
-        #endregion Methods
     }
 }

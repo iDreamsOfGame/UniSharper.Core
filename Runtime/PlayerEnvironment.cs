@@ -13,8 +13,6 @@ namespace UniSharper
     /// </summary>
     public static class PlayerEnvironment
     {
-        #region Fields
-
         /// <summary>
         /// Gets the newline string defined for windows.
         /// </summary>
@@ -22,10 +20,6 @@ namespace UniSharper
         public const string WindowsNewLine = "\r\n";
 
         private const string AndroidDeviceInfoClassFullPath = "io.github.idreamsofgame.unisharper.core.DeviceInfo";
-
-        #endregion
-
-        #region Properties
 
         /// <summary>
         /// Gets a value indicating whether the runtime platform is Android.
@@ -67,21 +61,13 @@ namespace UniSharper
         /// Gets a unique device identifier. It is guaranteed to be unique for every device (Read Only).
         /// </summary>
         /// <value>A unique device identifier.</value>
-        public static string UniqueDeviceIdentifier
-        {
-            get
+        public static string UniqueDeviceIdentifier =>
+            Application.platform switch
             {
-                switch (Application.platform)
-                {
-                    case RuntimePlatform.Android:
-                        return GetAndroidDeviceIdentifier();
+                RuntimePlatform.Android => GetAndroidDeviceIdentifier(),
+                _ => SystemInfo.deviceUniqueIdentifier
+            };
 
-                    default:
-                        return SystemInfo.deviceUniqueIdentifier;
-                }
-            }
-        }
-        
         /// <summary>
         /// Gets the SDK version of the software currently running on Android.
         /// </summary>
@@ -108,42 +94,26 @@ namespace UniSharper
             }
         }
 
-        public static string CountryCode
-        {
-            get
+        public static string CountryCode =>
+            Application.platform switch
             {
-                switch (Application.platform)
-                {
-                    case RuntimePlatform.Android:
-                        return GetAndroidCountryCode();
-
-                    default:
-                        return RegionInfo.CurrentRegion.Name;
-                }
-            }
-        }
-
-        #endregion Properties
-
-        #region Methods
+                RuntimePlatform.Android => GetAndroidCountryCode(),
+                _ => RegionInfo.CurrentRegion.Name
+            };
 
         private static string GetAndroidDeviceIdentifier()
         {
-            using (var deviceInfo = new AndroidJavaClass(AndroidDeviceInfoClassFullPath))
-            {
-                var uniqueDeviceIdentifier = deviceInfo.CallStatic<string>("getUniqueDeviceIdentifier");
-                return CryptoUtility.Md5HashEncrypt(uniqueDeviceIdentifier);
-            }
+            using var deviceInfo = new AndroidJavaClass(AndroidDeviceInfoClassFullPath);
+            const string methodName = "getUniqueDeviceIdentifier";
+            var uniqueDeviceIdentifier = deviceInfo.CallStatic<string>(methodName);
+            return CryptoUtility.Md5HashEncrypt(uniqueDeviceIdentifier);
         }
 
         private static string GetAndroidCountryCode()
         {
-            using (var deviceInfo = new AndroidJavaClass(AndroidDeviceInfoClassFullPath))
-            { 
-                return deviceInfo.CallStatic<string>("getCountryCode");
-            }
+            using var deviceInfo = new AndroidJavaClass(AndroidDeviceInfoClassFullPath);
+            const string methodName = "getCountryCode";
+            return deviceInfo.CallStatic<string>(methodName);
         }
-
-        #endregion Methods
     }
 }

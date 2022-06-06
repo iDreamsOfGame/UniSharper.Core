@@ -15,15 +15,9 @@ namespace UniSharperEditor.Rendering
     /// <seealso cref="EditorWindow"/>
     internal class LightingGenerationWindow : EditorWindow
     {
-        #region Fields
-
-        private List<SceneAsset> scenes = new List<SceneAsset>();
+        private readonly List<SceneAsset> scenes = new();
 
         private Vector2 scrollPosition;
-
-        #endregion Fields
-
-        #region Methods
 
         [MenuItem("UniSharper/Rendering/Generate Lighting for Scenes", false, 1)]
         public static void ShowWindow()
@@ -85,7 +79,5 @@ namespace UniSharperEditor.Rendering
 
             GUILayout.EndScrollView();
         }
-
-        #endregion Methods
     }
 }

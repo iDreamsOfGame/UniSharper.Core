@@ -6,7 +6,7 @@ using System;
 namespace UniSharper.Timers
 {
     /// <summary>
-    /// Represents the method that will handle the <see cref="ITimer.Completed"/> event.
+    /// Represents the method that will handle the <see cref="ITimer.OnCompleted"/> event.
     /// </summary>
     /// <param name="sender">The source of the event.</param>
     /// <param name="e">The <see cref="EventArgs"/> instance containing no event data.</param>
@@ -20,11 +20,11 @@ namespace UniSharper.Timers
     public delegate void TimerPausedEventHandler(object sender, EventArgs e);
 
     /// <summary>
-    /// Represents the method that will handle the <see cref="ITimer.Reseted"/> event.
+    /// Represents the method that will handle the <see cref="ITimer.OnReset"/> event.
     /// </summary>
     /// <param name="sender">The source of the event.</param>
     /// <param name="e">The <see cref="EventArgs"/> instance containing no event data.</param>
-    public delegate void TimerResetedEventHandler(object sender, EventArgs e);
+    public delegate void TimerResetEventHandler(object sender, EventArgs e);
 
     /// <summary>
     /// Represents the method that will handle the <see cref="ITimer.Resumed"/> event.

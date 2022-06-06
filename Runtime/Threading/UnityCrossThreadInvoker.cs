@@ -15,17 +15,11 @@ namespace UniSharper.Threading
     /// <seealso cref="UnityCrossThreadInvoker"/>
     public sealed class UnityCrossThreadInvoker : SingletonMonoBehaviour<UnityCrossThreadInvoker>
     {
-        #region Fields
-
         private ConcurrentQueue<Action> executionQueue;
 
         private ConcurrentQueue<Action<object[]>> executionWithParametersQueue;
 
         private ConcurrentDictionary<Action<object[]>, object[]> methodParameterMap;
-
-        #endregion Fields
-
-        #region Methods
 
         /// <summary>
         /// Initialize.
@@ -100,7 +94,5 @@ namespace UniSharper.Threading
             InvokeMethod();
             InvokeMethodWithParameters();
         }
-
-        #endregion Methods
     }
 }

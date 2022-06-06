@@ -11,8 +11,6 @@ namespace UniSharperEditor
     /// </summary>
     public static class EditorUtility
     {
-        #region Methods
-
         /// <summary>
         /// Clears all the console information.
         /// </summary>
@@ -20,7 +18,5 @@ namespace UniSharperEditor
         {
             Assembly.Load("UnityEditor").GetType("UnityEditor.LogEntries").InvokeStaticMethod("Clear");
         }
-
-        #endregion Methods
     }
 }

@@ -1,3 +1,6 @@
+// Copyright (c) Jerry Lee. All rights reserved. Licensed under the MIT License.
+// See LICENSE in the project root for license information.
+
 using System;
 using UniSharper.Patterns;
 using UnityEngine;
@@ -11,8 +14,6 @@ namespace UniSharper.Rendering.PostProcessing
     [RequireComponent(typeof(Camera))]
     public class CameraShake : SingletonMonoBehaviour<CameraShake>
     {
-        #region Fields
-
         private Transform cachedTransform;
 
         private Action completedCallback;
@@ -32,10 +33,6 @@ namespace UniSharper.Rendering.PostProcessing
 
         [SerializeField]
         private AnimationCurve shakeAmplitude;
-
-        #endregion Fields
-
-        #region Properties
 
         public Transform CachedTransform
         {
@@ -86,10 +83,6 @@ namespace UniSharper.Rendering.PostProcessing
             set => shakeAmplitude = value;
         }
 
-        #endregion Properties
-
-        #region Methods
-
         public void Shake(float duration, Action completedCallback = null)
         {
             elapsedTime = 0f;
@@ -101,19 +94,18 @@ namespace UniSharper.Rendering.PostProcessing
 
         private bool CheckShakeComplete()
         {
-            if (elapsedTime >= duration)
-            {
-                elapsedTime = 0f;
-                IsShaking = false;
+            if (!(elapsedTime >= duration)) 
+                return false;
+            
+            elapsedTime = 0f;
+            IsShaking = false;
 
-                if (resetPositionAfterShaking)
-                    CachedTransform.localPosition = originalPosition;
+            if (resetPositionAfterShaking)
+                CachedTransform.localPosition = originalPosition;
 
-                completedCallback?.Invoke();
-                return true;
-            }
+            completedCallback?.Invoke();
+            return true;
 
-            return false;
         }
 
         private void LateUpdate()
@@ -130,7 +122,5 @@ namespace UniSharper.Rendering.PostProcessing
             var power = magnitude * amplitude;
             CachedTransform.localPosition = originalPosition + Random.insideUnitSphere * power;
         }
-
-        #endregion Methods
     }
 }

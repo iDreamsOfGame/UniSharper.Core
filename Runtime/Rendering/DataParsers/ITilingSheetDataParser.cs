@@ -12,10 +12,6 @@ namespace UniSharper.Rendering.DataParsers
     /// </summary>
     internal interface ITilingSheetDataParser
     {
-        #region Methods
-
         Dictionary<string, Rect> ParseData(string name, string data);
-
-        #endregion Methods
     }
 }

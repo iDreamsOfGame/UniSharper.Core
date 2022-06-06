@@ -13,8 +13,6 @@ namespace UniSharperEditor
     /// </summary>
     public static class ScriptTemplate
     {
-        #region Methods
-
         /// <summary>
         /// Load script template file.
         /// </summary>
@@ -33,42 +31,32 @@ namespace UniSharperEditor
             var fileNameWithoutExtensions = Path.GetFileNameWithoutExtension(fileName);
             var list = AssetDatabaseUtility.LoadEditorResources<TextAsset>(fileNameWithoutExtensions);
 
-            if (list != null && list.Length > 0)
-            {
+            if (list is { Length: > 0 })
                 return list[0].text;
-            }
-            else
+
+            // Search file in package directory.
+            var rootPath = Path.Combine(Directory.GetCurrentDirectory(), "Library", "PackageCache");
+            var searchDirResults = Directory.GetDirectories(rootPath, $"{packageName}*", SearchOption.TopDirectoryOnly);
+
+            if (searchDirResults.Length > 0)
             {
-                // Search file in package directory.
-                var rootPath = Path.Combine(Directory.GetCurrentDirectory(), "Library", "PackageCache");
-                var searchDirResults = Directory.GetDirectories(rootPath, $"{packageName}*", SearchOption.TopDirectoryOnly);
+                var dirPath = searchDirResults[0];
+                var searchFileResults = Directory.GetFiles(dirPath, fileName, SearchOption.AllDirectories);
 
-                if (searchDirResults.Length > 0)
+                if (searchFileResults.Length > 0)
                 {
-                    var dirPath = searchDirResults[0];
-                    var searchFileResults = Directory.GetFiles(dirPath, fileName, SearchOption.AllDirectories);
-
-                    if (searchFileResults.Length > 0)
-                    {
-                        return File.ReadAllText(searchFileResults[0]);
-                    }
+                    return File.ReadAllText(searchFileResults[0]);
                 }
             }
 
             return string.Empty;
         }
 
-        #endregion Methods
-
-        #region Classes
-
         /// <summary>
         /// Represents the strings of class member.
         /// </summary>
-        public static class ClassMemeberFormatString
+        public static class ClassMemberFormatString
         {
-            #region Fields
-
             /// <summary>
             /// The format string for enumeration definition.
             /// </summary>
@@ -77,14 +65,12 @@ namespace UniSharperEditor
             /// <summary>
             /// The format string for enumeration property.
             /// </summary>
-            public const string EnumProperty = "\t\t/// <summary>\r\n\t\t/// {0}\r\n\t\t/// </summary>\r\n\t\tpublic {1} {2}\r\n\t\t{{\r\n\t\t\tget => ({1}){3};\r\n\t\t}}";
+            public const string EnumProperty = "\t\t/// <summary>\r\n\t\t/// {0}\r\n\t\t/// </summary>\r\n\t\tpublic {1} {2} => ({1}){3};";
 
             /// <summary>
             /// The format string for property member.
             /// </summary>
-            public const string PropertyMember = "\t\t/// <summary>\r\n\t\t/// {0}\r\n\t\t/// </summary>\r\n\t\tpublic {1} {2}\r\n\t\t{{\r\n\t\t\tget;\r\n\t\t\tset;\r\n\t\t}}";
-
-            #endregion Fields
+            public const string PropertyMember = "\t\t/// <summary>\r\n\t\t/// {0}\r\n\t\t/// </summary>\r\n\t\tpublic {1} {2} {{ get; set; }}";
         }
 
         /// <summary>
@@ -92,8 +78,6 @@ namespace UniSharperEditor
         /// </summary>
         public static class Placeholders
         {
-            #region Fields
-
             /// <summary>
             /// The placeholder for the string of constants.
             /// </summary>
@@ -123,10 +107,6 @@ namespace UniSharperEditor
             /// The placeholder for the string of script name.
             /// </summary>
             public const string ScriptName = "#SCRIPT_NAME#";
-
-            #endregion Fields
         }
-
-        #endregion Classes
     }
 }

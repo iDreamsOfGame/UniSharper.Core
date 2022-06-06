@@ -8,15 +8,11 @@ namespace UnityEngine
     /// </summary>
     public static class Vector2Extensions
     {
-        #region Methods
-
         /// <summary>
         /// Converts the <see cref="Vector2"/> to the accurate <see cref="string"/>.
         /// </summary>
         /// <param name="source">The <see cref="Vector2"/>.</param>
         /// <returns>The accurate <see cref="string"/> of the <see cref="Vector2"/>.</returns>
         public static string ToAccurateString(this Vector2 source) => $"({source.x}, {source.y})";
-
-        #endregion Methods
     }
 }

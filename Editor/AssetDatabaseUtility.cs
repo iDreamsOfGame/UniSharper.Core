@@ -12,8 +12,6 @@ namespace UniSharperEditor
     /// </summary>
     public static class AssetDatabaseUtility
     {
-        #region Methods
-
         /// <summary>
         /// Load editor resources
         /// </summary>
@@ -23,7 +21,7 @@ namespace UniSharperEditor
         public static T[] LoadEditorResources<T>(string name) where T : Object
         {
             var type = typeof(T).Name.ToCamelCase();
-            var guids = AssetDatabase.FindAssets($"{name} t: {type}", new string[] { EditorEnvironment.AssetsFolderName });
+            var guids = AssetDatabase.FindAssets($"{name} t: {type}", new[] { EditorEnvironment.AssetsFolderName });
 
             if (guids.Length > 0)
             {
@@ -40,7 +38,5 @@ namespace UniSharperEditor
 
             return null;
         }
-
-        #endregion Methods
     }
 }

@@ -15,40 +15,19 @@ namespace UniSharper.Timers
     /// <seealso cref="ITimerList"/>
     public sealed class TimerManager : SingletonMonoBehaviour<TimerManager>
     {
-        #region Fields
-
         private ITimerList timerList;
-
-        #endregion Fields
-
-        #region Properties
-
+        
         /// <summary>
         /// Gets the number of <see cref="ITimer"/> elements contained in the <see cref="TimerManager"/>.
         /// </summary>
         /// <value>The number of <see cref="ITimer"/> elements contained in the <see cref="TimerManager"/>.</value>
-        public int Count => timerList != null ? timerList.Count : 0;
+        public int Count => timerList?.Count ?? 0;
 
         /// <summary>
         /// Gets the timer list.
         /// </summary>
         /// <value>The timer list.</value>
-        private ITimerList TimerList
-        {
-            get
-            {
-                if (timerList == null)
-                {
-                    timerList = new TimerGroup();
-                }
-
-                return timerList;
-            }
-        }
-
-        #endregion Properties
-
-        #region Methods
+        private ITimerList TimerList => timerList ??= new TimerGroup();
 
         /// <summary>
         /// Adds an <see cref="ITimer"/> item.
@@ -129,24 +108,19 @@ namespace UniSharper.Timers
         /// </summary>
         private void Update()
         {
-            if (timerList != null)
+            timerList?.ForEach(timer =>
             {
-                timerList.ForEach((timer) =>
+                var deltaTime = timer.IgnoreTimeScale ? Time.unscaledDeltaTime : Time.deltaTime;
+
+                try
                 {
-                    var deltaTime = timer.IgnoreTimeScale ? Time.unscaledDeltaTime : Time.deltaTime;
-
-                    try
-                    {
-                        timer.Tick(deltaTime);
-                    }
-                    catch (Exception exception)
-                    {
-                        Debug.LogWarning(exception);
-                    }
-                });
-            }
+                    timer.Tick(deltaTime);
+                }
+                catch (Exception exception)
+                {
+                    Debug.LogWarning(exception);
+                }
+            });
         }
-
-        #endregion Methods
     }
 }

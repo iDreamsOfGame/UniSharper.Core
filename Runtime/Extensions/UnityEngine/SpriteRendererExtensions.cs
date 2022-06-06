@@ -8,8 +8,6 @@ namespace UnityEngine
     /// </summary>
     public static class SpriteRendererExtensions
     {
-        #region Methods
-
         /// <summary>
         /// Set the alpha value of <see cref="UnityEngine.SpriteRenderer"/>.
         /// </summary>
@@ -20,7 +18,5 @@ namespace UnityEngine
             var color = spriteRenderer.color;
             spriteRenderer.color = new Color(color.r, color.g, color.b, alpha);
         }
-
-        #endregion Methods
     }
 }

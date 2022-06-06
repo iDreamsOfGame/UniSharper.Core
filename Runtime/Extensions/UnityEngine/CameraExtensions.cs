@@ -8,13 +8,7 @@ namespace UnityEngine
     /// </summary>
     public static class CameraExtensions
     {
-        #region Fields
-
         private static readonly Rect ScreenRect = new Rect(0, 0, Screen.width, Screen.height);
-
-        #endregion Fields
-
-        #region Methods
 
         /// <summary>
         /// Captures a screenshot of the camera view into a <see cref="UnityEngine.Texture2D"/> object.
@@ -69,7 +63,5 @@ namespace UnityEngine
             Object.Destroy(canvas);
             return output;
         }
-
-        #endregion Methods
     }
 }

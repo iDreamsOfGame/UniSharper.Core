@@ -10,15 +10,9 @@ namespace UniSharperEditor
     /// Create a field scope on the editor GUI Layer. Implements the <see cref="System.IDisposable"/>
     /// </summary>
     /// <seealso cref="System.IDisposable"/>
-    public struct EditorGUIFieldScope : IDisposable
+    public readonly struct EditorGUIFieldScope : IDisposable
     {
-        #region Fields
-
-        private float cachedLabelWidth;
-
-        #endregion Fields
-
-        #region Constructors
+        private readonly float cachedLabelWidth;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EditorGUIFieldScope"/> class.
@@ -30,10 +24,6 @@ namespace UniSharperEditor
             EditorGUIUtility.labelWidth = labelWidth;
             EditorGUILayout.BeginHorizontal();
         }
-
-        #endregion Constructors
-
-        #region Methods
 
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting
@@ -49,7 +39,5 @@ namespace UniSharperEditor
             EditorGUILayout.EndHorizontal();
             EditorGUIUtility.labelWidth = cachedLabelWidth;
         }
-
-        #endregion Methods
     }
 }

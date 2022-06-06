@@ -10,8 +10,6 @@ namespace UnityEngine
     /// </summary>
     public static class GameObjectExtensions
     {
-        #region Methods
-
         /// <summary>
         /// Copies all components values of the specific <see cref="GameObject"/> to the other <see cref="GameObject"/>.
         /// </summary>
@@ -22,21 +20,21 @@ namespace UnityEngine
         /// </param>
         public static void CopyAllComponentsValues(this GameObject gameObject, GameObject targetGameObject, bool excludeTransform = true)
         {
-            if (targetGameObject)
+            if (!targetGameObject) 
+                return;
+            
+            var components = gameObject.GetAllComponents();
+
+            for (int i = 0, length = components.Length; i < length; ++i)
             {
-                var components = gameObject.GetAllComponents();
+                var component = components[i];
 
-                for (int i = 0, length = components.Length; i < length; ++i)
+                if (excludeTransform && component.GetType().FullName == "UnityEngine.Transform")
                 {
-                    var component = components[i];
-
-                    if (excludeTransform && component.GetType().FullName == "UnityEngine.Transform")
-                    {
-                        continue;
-                    }
-
-                    component.CopyComponentValues(targetGameObject);
+                    continue;
                 }
+
+                component.CopyComponentValues(targetGameObject);
             }
         }
 
@@ -49,28 +47,28 @@ namespace UnityEngine
         /// <returns>The <see cref="GameObject"/> you want to find.</returns>
         public static GameObject FindInChildren(this GameObject gameObject, string targetName, bool includeInactive = true)
         {
-            if (!string.IsNullOrEmpty(targetName))
+            if (string.IsNullOrEmpty(targetName))
+                return null;
+            
+            var transform = gameObject.transform;
+
+            foreach (Transform childTransform in transform)
             {
-                var transform = gameObject.transform;
-
-                foreach (Transform childTransform in transform)
+                if (!includeInactive && !childTransform.gameObject.activeSelf)
                 {
-                    if (!includeInactive && !childTransform.gameObject.activeSelf)
-                    {
-                        continue;
-                    }
+                    continue;
+                }
 
-                    if (childTransform.name == targetName)
-                    {
-                        return childTransform.gameObject;
-                    }
+                if (childTransform.name == targetName)
+                {
+                    return childTransform.gameObject;
+                }
 
-                    var targetGameObject = childTransform.gameObject.FindInChildren(targetName, includeInactive);
+                var targetGameObject = childTransform.gameObject.FindInChildren(targetName, includeInactive);
 
-                    if (targetGameObject != null)
-                    {
-                        return targetGameObject;
-                    }
+                if (targetGameObject != null)
+                {
+                    return targetGameObject;
                 }
             }
 
@@ -101,11 +99,8 @@ namespace UnityEngine
         public static Component GetOrAddComponent(this GameObject gameObject, Type type)
         {
             var component = gameObject.GetComponent(type);
-
-            if (component == null)
-            {
+            if (!component)
                 component = gameObject.AddComponent(type);
-            }
 
             return component;
         }
@@ -121,13 +116,11 @@ namespace UnityEngine
         /// </returns>
         public static bool IsInLayerMask(this GameObject gameObject, LayerMask layerMask)
         {
-            if (gameObject)
-            {
-                int objectLayerMaskValue = (1 << gameObject.layer);
-                return (layerMask.value & objectLayerMaskValue) > 0;
-            }
-
-            return false;
+            if (!gameObject)
+                return false;
+            
+            var objectLayerMaskValue = 1 << gameObject.layer;
+            return (layerMask.value & objectLayerMaskValue) > 0;
         }
 
         /// <summary>
@@ -142,14 +135,11 @@ namespace UnityEngine
         public static bool RemoveComponent<T>(this GameObject gameObject, float delay = 0.0f) where T : Component
         {
             var component = gameObject.GetComponent<T>();
-
-            if (component != null)
-            {
-                Object.Destroy(component, delay);
-                return true;
-            }
-
-            return false;
+            if (!component) 
+                return false;
+            
+            Object.Destroy(component, delay);
+            return true;
         }
 
         /// <summary>
@@ -163,14 +153,11 @@ namespace UnityEngine
         public static bool RemoveComponentImmediate<T>(this GameObject gameObject) where T : Component
         {
             var component = gameObject.GetComponent<T>();
-
-            if (component != null)
-            {
-                Object.DestroyImmediate(component);
-                return true;
-            }
-
-            return false;
+            if (!component)
+                return false;
+            
+            Object.DestroyImmediate(component);
+            return true;
         }
 
         /// <summary>
@@ -182,28 +169,28 @@ namespace UnityEngine
         /// <param name="includeInactive">if set to <c>true</c> include inactive <see cref="GameObject"/>.</param>
         public static void SetChildrenLayer(this GameObject gameObject, int layer = -1, bool includeParent = true, bool includeInactive = true)
         {
-            if (layer >= 0)
+            if (layer < 0) 
+                return;
+            
+            if (includeParent)
             {
-                if (includeParent)
+                if (!(!gameObject.activeSelf && !includeInactive))
                 {
-                    if (!(!gameObject.activeSelf && !includeInactive))
-                    {
-                        gameObject.layer = layer;
-                    }
+                    gameObject.layer = layer;
+                }
+            }
+
+            var transform = gameObject.transform;
+
+            foreach (Transform childTransform in transform)
+            {
+                if (!includeInactive && !childTransform.gameObject.activeSelf)
+                {
+                    continue;
                 }
 
-                var transform = gameObject.transform;
-
-                foreach (Transform childTransform in transform)
-                {
-                    if (!includeInactive && !childTransform.gameObject.activeSelf)
-                    {
-                        continue;
-                    }
-
-                    childTransform.gameObject.layer = layer;
-                    childTransform.gameObject.SetChildrenLayer(layer, includeParent, includeInactive);
-                }
+                childTransform.gameObject.layer = layer;
+                childTransform.gameObject.SetChildrenLayer(layer, includeParent, includeInactive);
             }
         }
 
@@ -216,13 +203,11 @@ namespace UnityEngine
         /// <param name="includeInactive">if set to <c>true</c> include inactive <see cref="GameObject"/>.</param>
         public static void SetChildrenLayer(this GameObject gameObject, string layerName, bool includeParent = true, bool includeInactive = true)
         {
-            if (!string.IsNullOrEmpty(layerName))
-            {
-                var layer = LayerMask.NameToLayer(layerName);
-                gameObject.SetChildrenLayer(layer, includeParent, includeInactive);
-            }
+            if (string.IsNullOrEmpty(layerName)) 
+                return;
+            
+            var layer = LayerMask.NameToLayer(layerName);
+            gameObject.SetChildrenLayer(layer, includeParent, includeInactive);
         }
-
-        #endregion Methods
     }
 }

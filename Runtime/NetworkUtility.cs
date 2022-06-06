@@ -10,13 +10,7 @@ namespace UniSharper
     /// </summary>
     public static class NetworkUtility
     {
-        #region Fields
-
         private const string AndroidJavaClassName = "io.github.idreamsofgame.unisharper.core.NetUtils";
-
-        #endregion Fields
-
-        #region Methods
 
         /// <summary>
         /// Opens the URL specified.
@@ -38,12 +32,8 @@ namespace UniSharper
 
         private static bool OpenURLOnAndroid(string url)
         {
-            using (var netUtils = new AndroidJavaClass(AndroidJavaClassName))
-            {
-                return netUtils.CallStatic<bool>("openURL", url);
-            }
+            using var netUtils = new AndroidJavaClass(AndroidJavaClassName);
+            return netUtils.CallStatic<bool>("openURL", url);
         }
-
-        #endregion Methods
     }
 }

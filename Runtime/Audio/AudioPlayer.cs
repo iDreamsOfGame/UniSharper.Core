@@ -13,13 +13,7 @@ namespace UniSharper.Audio
     [RequireComponent(typeof(AudioSource))]
     public class AudioPlayer : MonoBehaviour, IAudioPlayer
     {
-        #region Fields
-
         private AudioSource audioSource;
-
-        #endregion Fields
-
-        #region Properties
 
         public AudioSource AudioSource
         {
@@ -55,12 +49,6 @@ namespace UniSharper.Audio
             }
         }
 
-        #endregion Properties
-
-        #region Methods
-
-        public void Pause() => AudioSource?.Pause();
-
         public void Play(float delay = 0f, bool muted = false, bool isLoop = false)
         {
             IsLoop = isLoop;
@@ -82,17 +70,37 @@ namespace UniSharper.Audio
 
             StartCoroutine(PlayOneShotDelayed(delay));
         }
+        
+        public void Pause()
+        {
+            if (!AudioSource)
+                return;
+            
+            AudioSource.Pause();
+        }
 
-        public void Resume() => AudioSource?.UnPause();
+        public void Resume()
+        {
+            if (!AudioSource)
+                return;
+            
+            AudioSource.UnPause();
+        }
 
-        public void Stop() => AudioSource?.Stop();
+        public void Stop()
+        {
+            if (!AudioSource)
+                return;
+            
+            AudioSource.Stop();
+        }
 
         private IEnumerator PlayOneShotDelayed(float delay)
         {
             yield return new WaitForSeconds(delay);
-            AudioSource?.PlayOneShot(AudioSource.clip);
+            
+            if(AudioSource)
+                AudioSource.PlayOneShot(AudioSource.clip);
         }
-
-        #endregion Methods
     }
 }

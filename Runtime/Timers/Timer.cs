@@ -11,15 +11,9 @@ namespace UniSharper.Timers
     /// <seealso cref="ITimer"/>
     public class Timer : ITimer
     {
-        #region Fields
-
         private bool disposed;
 
         private float time;
-
-        #endregion Fields
-
-        #region Constructors
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Timer"/> class, and sets the Interval
@@ -33,7 +27,10 @@ namespace UniSharper.Timers
         /// <param name="canAcceptApplicationPause">
         /// if set to <c>true</c> can accept timer pause caused by application pause; otherwise, <c>false</c>.
         /// </param>
-        public Timer(float interval, uint repeatCount = 0, bool ignoreTimeScale = false, bool canAcceptApplicationPause = true)
+        /// <param name="autoManage">
+        /// if set to <c>true</c> can add to timer manager; otherwise, <c>false</c>.
+        /// </param>
+        public Timer(float interval, uint repeatCount = 0, bool ignoreTimeScale = false, bool canAcceptApplicationPause = true, bool autoManage = true)
         {
             TimerState = TimerState.Stop;
             time = 0f;
@@ -43,27 +40,24 @@ namespace UniSharper.Timers
             IgnoreTimeScale = ignoreTimeScale;
             CanAcceptApplicationPause = canAcceptApplicationPause;
 
-            Initialize();
+            if (autoManage && TimerManager.Instance)
+                TimerManager.Instance.Add(this);
         }
-
-        #endregion Constructors
-
-        #region Events
 
         /// <summary>
         /// Occurs when the timer completed, ticking count equals to the <see cref="RepeatCount"/>.
         /// </summary>
-        public event TimerCompletedEventHandler Completed;
+        public event TimerCompletedEventHandler OnCompleted;
+        
+        /// <summary>
+        /// Occurs when call the method <see cref="Reset"/>.
+        /// </summary>
+        public event TimerResetEventHandler OnReset;
 
         /// <summary>
         /// Occurs when call the method <see cref="Pause"/>.
         /// </summary>
         public event TimerPausedEventHandler Paused;
-
-        /// <summary>
-        /// Occurs when call the method <see cref="Reset"/>.
-        /// </summary>
-        public event TimerResetedEventHandler Reseted;
 
         /// <summary>
         /// Occurs when call the method <see cref="Resume"/>.
@@ -84,10 +78,6 @@ namespace UniSharper.Timers
         /// Occurs when the specified timer interval has elapsed.
         /// </summary>
         public event TimerTickingEventHandler Ticking;
-
-        #endregion Events
-
-        #region Properties
 
         /// <summary>
         /// Gets or sets a value indicating whether accept application pause.
@@ -125,10 +115,6 @@ namespace UniSharper.Timers
         /// <value>The state of the <see cref="Timer"/>.</value>
         public TimerState TimerState { get; protected set; }
 
-        #endregion Properties
-
-        #region Methods
-
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting
         /// unmanaged resources.
@@ -159,15 +145,11 @@ namespace UniSharper.Timers
                 return;
             }
 
-            if (TimerState == TimerState.Running)
-            {
-                TimerState = TimerState.Pause;
-
-                if (Paused != null)
-                {
-                    Paused.Invoke(this, EventArgs.Empty);
-                }
-            }
+            if (TimerState != TimerState.Running) 
+                return;
+            
+            TimerState = TimerState.Pause;
+            Paused?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>
@@ -186,10 +168,7 @@ namespace UniSharper.Timers
             CurrentCount = 0;
             time = 0f;
 
-            if (Reseted != null)
-            {
-                Reseted.Invoke(this, EventArgs.Empty);
-            }
+            OnReset?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>
@@ -203,15 +182,11 @@ namespace UniSharper.Timers
                 throw new ObjectDisposedException(GetType().FullName);
             }
 
-            if (TimerState == TimerState.Pause)
-            {
-                TimerState = TimerState.Running;
-
-                if (Resumed != null)
-                {
-                    Resumed.Invoke(this, EventArgs.Empty);
-                }
-            }
+            if (TimerState != TimerState.Pause) 
+                return;
+            
+            TimerState = TimerState.Running;
+            Resumed?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>
@@ -225,15 +200,11 @@ namespace UniSharper.Timers
                 throw new ObjectDisposedException(GetType().FullName);
             }
 
-            if (TimerState != TimerState.Running)
-            {
-                TimerState = TimerState.Running;
-
-                if (Started != null)
-                {
-                    Started.Invoke(this, EventArgs.Empty);
-                }
-            }
+            if (TimerState == TimerState.Running) 
+                return;
+            
+            TimerState = TimerState.Running;
+            Started?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>
@@ -247,15 +218,11 @@ namespace UniSharper.Timers
                 throw new ObjectDisposedException(GetType().FullName);
             }
 
-            if (TimerState != TimerState.Stop)
-            {
-                TimerState = TimerState.Stop;
-
-                if (Stopped != null)
-                {
-                    Stopped.Invoke(this, EventArgs.Empty);
-                }
-            }
+            if (TimerState == TimerState.Stop) 
+                return;
+            
+            TimerState = TimerState.Stop;
+            Stopped?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>
@@ -270,29 +237,22 @@ namespace UniSharper.Timers
             }
 
             time += deltaTime;
+            if (time < Interval)
+                return;
+            
+            CurrentCount++;
 
-            if (time >= Interval)
+            // Raise Ticking event
+            Ticking?.Invoke(this, new TimerTickingEventArgs(CurrentCount));
+
+            if (RepeatCount != 0 && CurrentCount >= RepeatCount)
             {
-                CurrentCount++;
+                Reset();
 
-                // Raise Ticking event
-                if (Ticking != null)
-                {
-                    Ticking.Invoke(this, new TimerTickingEventArgs(CurrentCount));
-                }
-
-                if (RepeatCount != 0 && CurrentCount >= RepeatCount)
-                {
-                    Reset();
-
-                    if (Completed != null)
-                    {
-                        Completed.Invoke(this, EventArgs.Empty);
-                    }
-                }
-
-                time = time - Interval;
+                OnCompleted?.Invoke(this, EventArgs.Empty);
             }
+
+            time -= Interval;
         }
 
         /// <summary>
@@ -306,10 +266,8 @@ namespace UniSharper.Timers
         {
             if (disposing && !disposed)
             {
-                if (TimerManager.Instance != null)
-                {
+                if (TimerManager.Instance)
                     TimerManager.Instance.Remove(this);
-                }
             }
 
             disposed = true;
@@ -321,12 +279,10 @@ namespace UniSharper.Timers
         /// </summary>
         protected virtual void Initialize()
         {
-            if (TimerManager.Instance != null)
-            {
-                TimerManager.Instance.Add(this);
-            }
+            if (!TimerManager.Instance) 
+                return;
+            
+            TimerManager.Instance.Add(this);
         }
-
-        #endregion Methods
     }
 }

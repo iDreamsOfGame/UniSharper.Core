@@ -11,8 +11,6 @@ namespace UniSharper.Threading.Event
     /// </summary>
     public class ThreadEvent
     {
-        #region Constructors
-
         /// <summary>
         /// Initializes a new instance of the <see cref="ThreadEvent"/> class.
         /// </summary>
@@ -24,22 +22,16 @@ namespace UniSharper.Threading.Event
             Context = context;
         }
 
-        #endregion Constructors
-
-        #region Properties
-
         /// <summary>
         /// Gets or sets the context object.
         /// </summary>
         /// <value>The context object.</value>
-        public object Context { get; set; }
+        public object Context { get; }
 
         /// <summary>
         /// The type of event.
         /// </summary>
         /// <value>The type of event.</value>
-        public Enum EventType { get; set; }
-
-        #endregion Properties
+        public Enum EventType { get; }
     }
 }

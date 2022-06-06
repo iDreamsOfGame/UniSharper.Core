@@ -13,8 +13,6 @@ namespace UniSharper
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
     public class FlagsEnumFieldAttribute : PropertyAttribute
     {
-        #region Constructors
-
         /// <summary>
         /// Initializes a new instance of the <see cref="FlagsEnumFieldAttribute"/> class.
         /// </summary>
@@ -32,16 +30,10 @@ namespace UniSharper
             Label = label;
         }
 
-        #endregion Constructors
-
-        #region Properties
-
         /// <summary>
         /// Gets the caption/label for the attribute.
         /// </summary>
         /// <value>The caption/label for the attribute.</value>
-        public string Label { get; private set; }
-
-        #endregion Properties
+        public string Label { get; }
     }
 }

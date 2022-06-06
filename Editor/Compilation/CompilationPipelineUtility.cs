@@ -2,8 +2,9 @@
 // project root for license information.
 
 using System;
+using System.Linq;
 using UnityEditor.Compilation;
-using GenericAssembely = System.Reflection.Assembly;
+using GenericAssembly = System.Reflection.Assembly;
 
 namespace UniSharperEditor.Compilation
 {
@@ -12,8 +13,6 @@ namespace UniSharperEditor.Compilation
     /// </summary>
     public static class CompilationPipelineUtility
     {
-        #region Methods
-
         /// <summary>
         /// Gets the type of the editor.
         /// </summary>
@@ -33,33 +32,14 @@ namespace UniSharperEditor.Compilation
         /// </summary>
         /// <param name="typeFullName">Full name of the type.</param>
         /// <returns>The type with the specified name, if found; otherwise, <c>null</c>.</returns>
-        public static Type GetType(string typeFullName)
-        {
-            var type = GetPlayerType(typeFullName);
-
-            if (type == null)
-            {
-                type = GetEditorType(typeFullName);
-            }
-
-            return type;
-        }
+        public static Type GetType(string typeFullName) => GetPlayerType(typeFullName) ?? GetEditorType(typeFullName);
 
         private static Type GetType(AssembliesType assembliesType, string typeFullName)
         {
             var assemblies = CompilationPipeline.GetAssemblies(assembliesType);
-            foreach (var assembly in assemblies)
-            {
-                var genericAssembely = GenericAssembely.LoadFile(assembly.outputPath);
-                var type = genericAssembely.GetType(typeFullName);
-
-                if (type != null)
-                    return type;
-            }
-
-            return null;
+            return assemblies.Select(assembly => GenericAssembly.LoadFile(assembly.outputPath))
+                .Select(genericAssembly => genericAssembly.GetType(typeFullName))
+                .FirstOrDefault(type => type != null);
         }
-
-        #endregion Methods
     }
 }

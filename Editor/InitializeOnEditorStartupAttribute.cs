@@ -12,25 +12,19 @@ namespace UniSharperEditor
     [AttributeUsage(AttributeTargets.Class)]
     internal class InitializeOnEditorStartupAttribute : Attribute
     {
-        #region Constructors
-
         /// <summary>
         /// Initializes a new instance of the <see cref="InitializeOnEditorStartupAttribute"/> class.
         /// </summary>
         /// <param name="executionOrder">The execution order.</param>
         public InitializeOnEditorStartupAttribute(int executionOrder = 0)
-            : base() => ExecutionOrder = executionOrder;
-
-        #endregion Constructors
-
-        #region Properties
+        {
+            ExecutionOrder = executionOrder;
+        }
 
         /// <summary>
         /// Gets the execution order.
         /// </summary>
         /// <value>The execution order.</value>
-        public int ExecutionOrder { get; private set; }
-
-        #endregion Properties
+        public int ExecutionOrder { get; }
     }
 }

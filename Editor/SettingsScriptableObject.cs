@@ -13,8 +13,6 @@ namespace UniSharperEditor
     /// <seealso cref="UnityEngine.ScriptableObject"/>
     public abstract class SettingsScriptableObject : ScriptableObject
     {
-        #region Methods
-
         /// <summary>
         /// Save settings data.
         /// </summary>
@@ -23,7 +21,5 @@ namespace UniSharperEditor
             UnityEditorUtility.SetDirty(this);
             AssetDatabase.SaveAssets();
         }
-
-        #endregion Methods
     }
 }

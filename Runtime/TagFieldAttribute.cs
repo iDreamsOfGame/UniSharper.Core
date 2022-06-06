@@ -14,11 +14,6 @@ namespace UniSharper
     public class TagFieldAttribute : PropertyAttribute
     {
         /// <summary>
-        /// Determine whether use the default tag filed drawer.
-        /// </summary>
-        public bool UseDefaultTagFieldDrawer { get; }
-
-        /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="useDefaultTagFieldDrawer">Determine whether use the default tag filed drawer.</param>
@@ -26,5 +21,10 @@ namespace UniSharper
         {
             UseDefaultTagFieldDrawer = useDefaultTagFieldDrawer;
         }
+        
+        /// <summary>
+        /// Determine whether use the default tag filed drawer.
+        /// </summary>
+        public bool UseDefaultTagFieldDrawer { get; }
     }
 }

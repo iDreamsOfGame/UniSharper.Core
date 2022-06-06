@@ -16,16 +16,10 @@ namespace UniSharperEditor
     [InitializeOnLoad]
     internal sealed class EditorInitializationOrderManager
     {
-        #region Fields
-
         /// <summary>
         /// The loaded types.
         /// </summary>
         private static Type[] loadedTypes;
-
-        #endregion Fields
-
-        #region Constructors
 
         /// <summary>
         /// Initializes static members of the <see cref="EditorInitializationOrderManager"/> class.
@@ -58,10 +52,6 @@ namespace UniSharperEditor
             });
         }
 
-        #endregion Constructors
-
-        #region Properties
-
         /// <summary>
         /// Gets the loaded types.
         /// </summary>
@@ -70,26 +60,22 @@ namespace UniSharperEditor
         {
             get
             {
-                if (loadedTypes == null)
+                if (loadedTypes != null) 
+                    return loadedTypes;
+                
+                try
                 {
-                    try
-                    {
-                        var assembly = Assembly.GetExecutingAssembly();
-                        loadedTypes = assembly.GetTypes();
-                    }
-                    catch (ReflectionTypeLoadException)
-                    {
-                        return new Type[0];
-                    }
+                    var assembly = Assembly.GetExecutingAssembly();
+                    loadedTypes = assembly.GetTypes();
+                }
+                catch (ReflectionTypeLoadException)
+                {
+                    return Type.EmptyTypes;
                 }
 
                 return loadedTypes;
             }
         }
-
-        #endregion Properties
-
-        #region Classes
 
         /// <summary>
         /// The comparer of initialization order.
@@ -97,8 +83,6 @@ namespace UniSharperEditor
         /// <seealso cref="IComparer{Type}"/>
         private class InitializationOrderComparer : IComparer<Type>
         {
-            #region Methods
-
             /// <summary>
             /// Compares the specified x with y.
             /// </summary>
@@ -110,26 +94,13 @@ namespace UniSharperEditor
             /// </returns>
             public int Compare(Type x, Type y)
             {
-                var xAttrs = x.GetCustomAttributes(typeof(InitializeOnEditorStartupAttribute), false) as InitializeOnEditorStartupAttribute[];
-                var yAttrs = y.GetCustomAttributes(typeof(InitializeOnEditorStartupAttribute), false) as InitializeOnEditorStartupAttribute[];
+                var xAttrs = x?.GetCustomAttributes(typeof(InitializeOnEditorStartupAttribute), false) as InitializeOnEditorStartupAttribute[];
+                var yAttrs = y?.GetCustomAttributes(typeof(InitializeOnEditorStartupAttribute), false) as InitializeOnEditorStartupAttribute[];
 
-                if (xAttrs[0].ExecutionOrder > yAttrs[0].ExecutionOrder)
-                {
-                    return -1;
-                }
-                else if (xAttrs[0].ExecutionOrder < yAttrs[0].ExecutionOrder)
-                {
-                    return 1;
-                }
-                else
-                {
-                    return 0;
-                }
+                return yAttrs != null && xAttrs != null && xAttrs[0].ExecutionOrder > yAttrs[0].ExecutionOrder 
+                    ? -1
+                    : yAttrs != null && xAttrs != null && xAttrs[0].ExecutionOrder < yAttrs[0].ExecutionOrder ? 1 : 0;
             }
-
-            #endregion Methods
         }
-
-        #endregion Classes
     }
 }

@@ -30,13 +30,11 @@ namespace UniSharper.Rendering
     /// <seealso cref="MonoBehaviour"/>
     public class TextureTilingRenderer : MonoBehaviour
     {
-        #region Fields
+        [SerializeField]
+        private bool AutoUpdateMeshUV;
 
         [SerializeField]
-        private bool AutoUpdateMeshUV = false;
-
-        [SerializeField]
-        private TextAsset dataFileAsset = null;
+        private TextAsset dataFileAsset;
 
         [SerializeField]
         private TilingSheetDataFormat dataFormat = TilingSheetDataFormat.None;
@@ -50,10 +48,6 @@ namespace UniSharper.Rendering
 
         private Dictionary<string, Rect> tilingData;
 
-        #endregion Fields
-
-        #region Properties
-
         /// <summary>
         /// Gets or sets the name of the texture tiling.
         /// </summary>
@@ -64,23 +58,12 @@ namespace UniSharper.Rendering
         {
             get
             {
-                if (!mesh)
-                {
-                    MeshFilter meshFilter = GetComponent<MeshFilter>();
-
-                    if (meshFilter)
-                    {
-                        mesh = meshFilter.mesh;
-                    }
-                }
+                if(!mesh && TryGetComponent<MeshFilter>(out var meshFilter))
+                    mesh = meshFilter.mesh;
 
                 return mesh;
             }
         }
-
-        #endregion Properties
-
-        #region Methods
 
         /// <summary>
         /// Loads the data.
@@ -89,11 +72,11 @@ namespace UniSharper.Rendering
         /// <param name="data">The data.</param>
         public void LoadData(string name, string data)
         {
-            if (dataFormat != TilingSheetDataFormat.None)
-            {
-                var parser = TilingSheetDataParser.CreateParser(dataFormat);
-                tilingData = parser.ParseData(name, data);
-            }
+            if (dataFormat == TilingSheetDataFormat.None) 
+                return;
+            
+            var parser = TilingSheetDataParser.CreateParser(dataFormat);
+            tilingData = parser.ParseData(name, data);
         }
 
         /// <summary>
@@ -124,19 +107,19 @@ namespace UniSharper.Rendering
             }
 
             // Change UV of mesh
-            if (tilingData.ContainsKey(textureTilingName))
+            if (!tilingData.ContainsKey(textureTilingName)) 
+                return;
+            
+            var rect = tilingData[textureTilingName];
+            var uvs = new Vector2[Mesh.uv.Length];
+
+            for (int i = 0, length = uvs.Length; i < length; i++)
             {
-                var rect = tilingData[textureTilingName];
-                var uvs = new Vector2[Mesh.uv.Length];
-
-                for (int i = 0, length = uvs.Length; i < length; i++)
-                {
-                    uvs[i].x = rect.x + meshOriginalUV[i].x * rect.width;
-                    uvs[i].y = rect.y + meshOriginalUV[i].y * rect.height;
-                }
-
-                Mesh.uv = uvs;
+                uvs[i].x = rect.x + meshOriginalUV[i].x * rect.width;
+                uvs[i].y = rect.y + meshOriginalUV[i].y * rect.height;
             }
+
+            Mesh.uv = uvs;
         }
 
         /// <summary>
@@ -144,10 +127,10 @@ namespace UniSharper.Rendering
         /// </summary>
         private void Awake()
         {
-            if (dataFileAsset)
-            {
-                LoadData(dataFileAsset.name, dataFileAsset.text);
-            }
+            if (!dataFileAsset) 
+                return;
+            
+            LoadData(dataFileAsset.name, dataFileAsset.text);
         }
 
         /// <summary>
@@ -156,21 +139,19 @@ namespace UniSharper.Rendering
         [ContextMenu("Execute")]
         private void Execute()
         {
-            if (dataFileAsset && !string.IsNullOrEmpty(textureTilingName))
-            {
-                LoadData(dataFileAsset.name, dataFileAsset.text);
-                UpdateMeshUV();
-            }
+            if (!dataFileAsset || string.IsNullOrEmpty(textureTilingName)) 
+                return;
+            
+            LoadData(dataFileAsset.name, dataFileAsset.text);
+            UpdateMeshUV();
         }
 
         private void Start()
         {
-            if (AutoUpdateMeshUV)
-            {
-                UpdateMeshUV();
-            }
+            if (!AutoUpdateMeshUV) 
+                return;
+            
+            UpdateMeshUV();
         }
-
-        #endregion Methods
     }
 }

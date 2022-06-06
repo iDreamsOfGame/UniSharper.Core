@@ -17,33 +17,23 @@ namespace UniSharper.Threading
     /// <seealso cref="System.Collections.Generic.ICollection{UniSharper.Threading.ISynchronizedObject}"/>
     public class UnityThreadSynchronizer : SingletonMonoBehaviour<UnityThreadSynchronizer>, ICollection<IThreadSynchronizedObject>
     {
-        #region Fields
-
         private Queue<IThreadSynchronizedObject> addedObjects;
 
         private Queue<IThreadSynchronizedObject> removedObjects;
 
         private List<IThreadSynchronizedObject> synchronizedObjects;
 
-        #endregion Fields
-
-        #region Properties
-
         /// <summary>
         /// Gets the number of objects contained in the <see cref="UnityThreadSynchronizer"/>.
         /// </summary>
         /// <value>The number of objects contained in the <see cref="UnityThreadSynchronizer"/>.</value>
-        public int Count => synchronizedObjects != null ? synchronizedObjects.Count : 0;
+        public int Count => synchronizedObjects?.Count ?? 0;
 
         /// <summary>
         /// Gets a value indicating whether the <see cref="UnityThreadSynchronizer"/> is read-only.
         /// </summary>
         /// <value><c>true</c> if the <see cref="UnityThreadSynchronizer"/> is read-only; otherwise, <c>false</c>.</value>
         bool ICollection<IThreadSynchronizedObject>.IsReadOnly => false;
-
-        #endregion Properties
-
-        #region Methods
 
         /// <summary>
         /// Adds an object of <see cref="IThreadSynchronizedObject"/> to the <see cref="UnityThreadSynchronizer"/>.
@@ -53,10 +43,7 @@ namespace UniSharper.Threading
         /// </param>
         public void Add(IThreadSynchronizedObject item)
         {
-            if (addedObjects != null)
-            {
-                addedObjects.Enqueue(item);
-            }
+            addedObjects?.Enqueue(item);
         }
 
         /// <summary>
@@ -65,9 +52,7 @@ namespace UniSharper.Threading
         public void Clear()
         {
             if (synchronizedObjects != null)
-            {
                 removedObjects = new Queue<IThreadSynchronizedObject>(synchronizedObjects);
-            }
         }
 
         /// <summary>
@@ -80,7 +65,7 @@ namespace UniSharper.Threading
         public bool Contains(IThreadSynchronizedObject item) => synchronizedObjects != null && synchronizedObjects.Contains(item);
 
         /// <summary>
-        /// Copies the objects of <see cref="IThreadSynchronizedObject"/> to sychronize in the <see
+        /// Copies the objects of <see cref="IThreadSynchronizedObject"/> to synchronize in the <see
         /// cref="UnityThreadSynchronizer"/> to an <see cref="System.Array"/>, starting at a particular <see
         /// cref="System.Array"/> index.
         /// </summary>
@@ -101,7 +86,7 @@ namespace UniSharper.Threading
         /// Returns an enumerator that iterates through the collection.
         /// </summary>
         /// <returns>An enumerator that can be used to iterate through the collection.</returns>
-        public IEnumerator<IThreadSynchronizedObject> GetEnumerator() => synchronizedObjects?.GetEnumerator();
+        public IEnumerator<IThreadSynchronizedObject> GetEnumerator() => synchronizedObjects?.GetEnumerator() ?? new List<IThreadSynchronizedObject>.Enumerator();
 
         /// <summary>
         /// Removes the first occurrence of a specific object of <see cref="IThreadSynchronizedObject"/>
@@ -144,20 +129,18 @@ namespace UniSharper.Threading
 
                 while (removedObjects.Count > 0)
                 {
-                    IThreadSynchronizedObject obj = removedObjects.Dequeue();
+                    var obj = removedObjects.Dequeue();
                     synchronizedObjects.Remove(obj);
                 }
 
-                if (synchronizedObjects != null)
+                if (synchronizedObjects == null)
+                    return;
+                
+                foreach (var item in synchronizedObjects)
                 {
-                    foreach (IThreadSynchronizedObject item in synchronizedObjects)
-                    {
-                        item.Synchronize();
-                    }
+                    item.Synchronize();
                 }
             }
         }
-
-        #endregion Methods
     }
 }

@@ -9,8 +9,6 @@ namespace UniSharperEditor
     /// </summary>
     public static class EditorEnvironment
     {
-        #region Fields
-
         /// <summary>
         /// The folder name of 'Assets'.
         /// </summary>
@@ -20,7 +18,5 @@ namespace UniSharperEditor
         /// The default folder name of 'Scripts'.
         /// </summary>
         public const string DefaultScriptsFolderName = "Scripts";
-
-        #endregion Fields
     }
 }

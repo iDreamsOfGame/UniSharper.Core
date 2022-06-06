@@ -2,6 +2,7 @@
 // See LICENSE in the project root for license information.
 
 using UnityEngine;
+// ReSharper disable All
 
 namespace UniSharper.Patterns
 {
@@ -12,17 +13,11 @@ namespace UniSharper.Patterns
     /// <seealso cref="MonoBehaviour"/>
     public abstract class SingletonMonoBehaviour<T> : MonoBehaviour where T : MonoBehaviour
     {
-        #region Fields
+        private static bool instantiated;
+        
+        private static bool destroyed;
 
-        private static bool destroyed = false;
-
-        private static T instance = null;
-
-        private static bool instantiated = false;
-
-        #endregion Fields
-
-        #region Properties
+        private static T instance;
 
         /// <summary>
         /// Gets or sets the singleton instance.
@@ -34,11 +29,11 @@ namespace UniSharper.Patterns
             {
                 if (destroyed)
                 {
-                    Debug.LogWarningFormat("SingletonMonoBehaviour<{0}> already destroyed. Return null.", typeof(T));
+                    Debug.LogWarning($"SingletonMonoBehaviour<{typeof(T)}> already destroyed. Return null.");
                     return null;
                 }
 
-                if (instantiated && instance != null)
+                if (instance && instantiated)
                     return instance;
 
                 var foundObjects = FindObjectsOfType<T>();
@@ -51,7 +46,7 @@ namespace UniSharper.Patterns
                     if (foundObjects.Length == 1)
                         return instance;
 
-                    Debug.LogWarningFormat("There are more than one instance of MonoBehaviourSingleton of type \"{0}\". Keeping the first. Destroying the others.", typeof(T).ToString());
+                    Debug.LogWarning($"There are more than one instance of MonoBehaviourSingleton of type {typeof(T)}. Keeping the first. Destroying the others.");
 
                     for (int i = 1, length = foundObjects.Length; i < length; ++i)
                     {
@@ -88,10 +83,6 @@ namespace UniSharper.Patterns
             }
         }
 
-        #endregion Properties
-
-        #region Methods
-
         /// <summary>
         /// Called when script receive message Destroy.
         /// </summary>
@@ -99,7 +90,5 @@ namespace UniSharper.Patterns
         {
             destroyed = true;
         }
-
-        #endregion Methods
     }
 }

@@ -11,17 +11,11 @@ namespace UniSharper.Effect
     [DisallowMultipleComponent]
     public class ParticleEffectController : MonoBehaviour, IParticleEffectController
     {
-        #region Fields
-
         private float duration = -1f;
 
         private ParticleSystem particleSystemRoot;
 
         private bool started;
-
-        #endregion Fields
-
-        #region Properties
 
         public Transform CachedTransform => transform;
 
@@ -51,7 +45,7 @@ namespace UniSharper.Effect
             }
         }
 
-        public bool IsLoop => ParticleSystemRoot?.main.loop ?? false;
+        public bool IsLoop => ParticleSystemRoot && ParticleSystemRoot.main.loop;
 
         public ParticleEffectEvent LoopPointReached { get; private set; }
 
@@ -83,10 +77,21 @@ namespace UniSharper.Effect
 
         public ParticleEffectEvent Stopped { get; private set; }
 
-        #endregion Properties
+        public void Play()
+        {
+            InternalStop(false);
 
-        #region Methods
+            if (!ParticleSystemRoot)
+                return;
 
+            if (!ParticleSystemRoot.isStopped) 
+                return;
+            
+            ParticleSystemRoot.Play();
+            FireEventStarted();
+            started = true;
+        }
+        
         public void Pause()
         {
             if (!ParticleSystemRoot)
@@ -100,21 +105,6 @@ namespace UniSharper.Effect
             else
             {
                 Debug.LogWarning("Can not pause particle effect, cause the state of ParticleSystem is not playing!");
-            }
-        }
-
-        public void Play()
-        {
-            InternalStop(false);
-
-            if (!ParticleSystemRoot)
-                return;
-
-            if (ParticleSystemRoot.isStopped)
-            {
-                ParticleSystemRoot.Play();
-                FireEventStarted();
-                started = true;
             }
         }
 
@@ -211,20 +201,11 @@ namespace UniSharper.Effect
 
         private void InitializeEvents()
         {
-            if (Started == null)
-                Started = new ParticleEffectEvent();
-
-            if (Paused == null)
-                Paused = new ParticleEffectEvent();
-
-            if (Resumed == null)
-                Resumed = new ParticleEffectEvent();
-
-            if (Stopped == null)
-                Stopped = new ParticleEffectEvent();
-
-            if (LoopPointReached == null)
-                LoopPointReached = new ParticleEffectEvent();
+            Started ??= new ParticleEffectEvent();
+            Paused ??= new ParticleEffectEvent();
+            Resumed ??= new ParticleEffectEvent();
+            Stopped ??= new ParticleEffectEvent();
+            LoopPointReached ??= new ParticleEffectEvent();
         }
 
         private void InternalStop(bool fireStoppedEvent = true)
@@ -240,7 +221,5 @@ namespace UniSharper.Effect
 
             started = false;
         }
-
-        #endregion Methods
     }
 }

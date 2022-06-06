@@ -11,22 +11,20 @@ namespace UniSharper.Timers
     /// <seealso cref="System.IDisposable"/>
     public interface ITimer : IDisposable
     {
-        #region Events
-
         /// <summary>
         /// Occurs when the timer completed, ticking count equals to the <see cref="RepeatCount"/>.
         /// </summary>
-        event TimerCompletedEventHandler Completed;
+        event TimerCompletedEventHandler OnCompleted;
+        
+        /// <summary>
+        /// Occurs when call the method <see cref="Reset"/> of this <see cref="ITimer"/>.
+        /// </summary>
+        event TimerResetEventHandler OnReset;
 
         /// <summary>
         /// Occurs when call the method <see cref="Pause"/> of this <see cref="ITimer"/>.
         /// </summary>
         event TimerPausedEventHandler Paused;
-
-        /// <summary>
-        /// Occurs when call the method <see cref="Reset"/> of this <see cref="ITimer"/>.
-        /// </summary>
-        event TimerResetedEventHandler Reseted;
 
         /// <summary>
         /// Occurs when call the method <see cref="Resume"/> of this <see cref="ITimer"/>.
@@ -47,10 +45,6 @@ namespace UniSharper.Timers
         /// Occurs when the specified timer interval has elapsed.
         /// </summary>
         event TimerTickingEventHandler Ticking;
-
-        #endregion Events
-
-        #region Properties
 
         /// <summary>
         /// Gets or sets a value indicating whether accept application pause.
@@ -88,10 +82,6 @@ namespace UniSharper.Timers
         /// <value>The state of the <see cref="ITimer"/>.</value>
         TimerState TimerState { get; }
 
-        #endregion Properties
-
-        #region Methods
-
         /// <summary>
         /// Pauses timing.
         /// </summary>
@@ -125,7 +115,5 @@ namespace UniSharper.Timers
         /// </summary>
         /// <param name="deltaTime">The delta time.</param>
         void Tick(float deltaTime);
-
-        #endregion Methods
     }
 }

@@ -9,13 +9,9 @@ namespace UniSharper.Threading
     /// </summary>
     public interface IThreadSynchronizedObject
     {
-        #region Methods
-
         /// <summary>
         /// Synchronizes data between threads.
         /// </summary>
         void Synchronize();
-
-        #endregion Methods
     }
 }

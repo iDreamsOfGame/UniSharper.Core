@@ -11,23 +11,13 @@ namespace UniSharper.Miscs
     /// <seealso cref="MonoBehaviour"/>
     public sealed class DontDestroyOnLoad : MonoBehaviour
     {
-        #region Methods
-
         /// <summary>
         /// Called when the script instance is being loaded.
         /// </summary>
         private void Awake()
         {
-            if (transform.root == transform)
-            {
-                DontDestroyOnLoad(gameObject);
-            }
-            else
-            {
-                DontDestroyOnLoad(transform.root.gameObject);
-            }
+            var cachedTransform = transform;
+            DontDestroyOnLoad(cachedTransform.root == cachedTransform ? gameObject : cachedTransform.root.gameObject);
         }
-
-        #endregion Methods
     }
 }

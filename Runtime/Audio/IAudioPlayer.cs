@@ -10,8 +10,6 @@ namespace UniSharper.Audio
     /// </summary>
     public interface IAudioPlayer
     {
-        #region Properties
-
         /// <summary>
         /// Get the component of <see cref="UnityEngine.AudioSource"/>.
         /// </summary>
@@ -30,15 +28,6 @@ namespace UniSharper.Audio
         /// <value>The indicator that the <see cref="UnityEngine.AudioSource"/> is muting. </value>
         bool Mute { get; set; }
 
-        #endregion Properties
-
-        #region Methods
-
-        /// <summary>
-        /// Pauses playing.
-        /// </summary>
-        void Pause();
-
         /// <summary>
         /// Plays the audio.
         /// </summary>
@@ -53,6 +42,11 @@ namespace UniSharper.Audio
         /// <param name="delay">Delay time specified in seconds. </param>
         /// <param name="muted">Whether mutes the audio. </param>
         void PlayOneShot(float delay = 0f, bool muted = false);
+        
+        /// <summary>
+        /// Pauses playing.
+        /// </summary>
+        void Pause();
 
         /// <summary>
         /// Resumes playing.
@@ -63,7 +57,5 @@ namespace UniSharper.Audio
         /// Stops playing audio.
         /// </summary>
         void Stop();
-
-        #endregion Methods
     }
 }

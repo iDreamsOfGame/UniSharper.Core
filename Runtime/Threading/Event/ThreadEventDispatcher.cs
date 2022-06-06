@@ -13,8 +13,6 @@ namespace UniSharper.Threading.Event
     /// <seealso cref="IThreadEventDispatcher"/>
     public class ThreadEventDispatcher : IThreadEventDispatcher
     {
-        #region Fields
-
         private readonly Queue<ThreadEvent> eventQueue;
 
         private readonly Dictionary<Enum, List<Action<ThreadEvent>>> listeners;
@@ -23,15 +21,11 @@ namespace UniSharper.Threading.Event
 
         private readonly Dictionary<Enum, List<Action<ThreadEvent>>> pendingRemovedListeners;
 
-        private readonly object syncRoot = new object();
+        private readonly object syncRoot = new();
 
         private bool isPending;
 
         private Dictionary<Enum, List<Action<ThreadEvent>>> pendingListeners;
-
-        #endregion Fields
-
-        #region Constructors
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ThreadEventDispatcher"/> class.
@@ -51,10 +45,6 @@ namespace UniSharper.Threading.Event
             }
         }
 
-        #endregion Constructors
-
-        #region Destructors
-
         /// <summary>
         /// Finalizes an instance of the <see cref="ThreadEventDispatcher"/> class.
         /// </summary>
@@ -65,10 +55,6 @@ namespace UniSharper.Threading.Event
                 UnityThreadSynchronizer.Instance.Remove(this);
             }
         }
-
-        #endregion Destructors
-
-        #region Methods
 
         /// <summary>
         /// Registers an event listener to receive an event notification.
@@ -307,15 +293,12 @@ namespace UniSharper.Threading.Event
             if (pendingRemovedListeners == null || pendingRemovedListeners.Count == 0)
                 return;
 
-            foreach (var kvp in pendingRemovedListeners)
+            foreach (var (eventType, actions) in pendingRemovedListeners)
             {
-                var eventType = kvp.Key;
-                var listeners = kvp.Value;
-
-                if (listeners == null || listeners.Count == 0)
+                if (actions == null || actions.Count == 0)
                     continue;
 
-                foreach (var listener in listeners)
+                foreach (var listener in actions)
                 {
                     RemoveNormalEventListener(eventType, listener);
                 }
@@ -331,15 +314,12 @@ namespace UniSharper.Threading.Event
             if (pendingListeners == null || pendingListeners.Count == 0)
                 return;
 
-            foreach (var kvp in pendingListeners)
+            foreach (var (eventType, actions) in pendingListeners)
             {
-                var eventType = kvp.Key;
-                var listeners = kvp.Value;
-
-                if (listeners == null || listeners.Count == 0)
+                if (actions == null || actions.Count == 0)
                     continue;
 
-                foreach (var listener in listeners)
+                foreach (var listener in actions)
                 {
                     AddNormalEventListener(eventType, listener);
                 }
@@ -356,7 +336,5 @@ namespace UniSharper.Threading.Event
             var list = listeners[eventType];
             list.Remove(listener);
         }
-
-        #endregion Methods
     }
 }

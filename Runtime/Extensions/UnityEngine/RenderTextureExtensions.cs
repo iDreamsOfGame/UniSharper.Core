@@ -8,8 +8,6 @@ namespace UnityEngine
     /// </summary>
     public static class RenderTextureExtensions
     {
-        #region Methods
-
         /// <summary>
         /// Converts <see cref="UnityEngine.RenderTexture"/> to <see cref="UnityEngine.Texture2D"/>.
         /// </summary>
@@ -30,7 +28,5 @@ namespace UnityEngine
             RenderTexture.active = originalActiveRenderTexture;
             return output;
         }
-
-        #endregion Methods
     }
 }

@@ -8,8 +8,6 @@ namespace UnityEngine
     /// </summary>
     public static class MathfUtility
     {
-        #region Methods
-
         /// <summary>
         /// Clamps the angle between -180 and 180.
         /// </summary>
@@ -21,35 +19,38 @@ namespace UnityEngine
         {
             angle = NormalizeAngle(angle);
 
-            if (angle > 180)
+            switch (angle)
             {
-                angle -= 360;
-            }
-            else if (angle < -180)
-            {
-                angle += 360;
+                case > 180:
+                    angle -= 360;
+                    break;
+                case < -180:
+                    angle += 360;
+                    break;
             }
 
             min = NormalizeAngle(min);
 
-            if (min > 180)
+            switch (min)
             {
-                min -= 360;
-            }
-            else if (min < -180)
-            {
-                min += 360;
+                case > 180:
+                    min -= 360;
+                    break;
+                case < -180:
+                    min += 360;
+                    break;
             }
 
             max = NormalizeAngle(max);
 
-            if (max > 180)
+            switch (max)
             {
-                max -= 360;
-            }
-            else if (max < -180)
-            {
-                max += 360;
+                case > 180:
+                    max -= 360;
+                    break;
+                case < -180:
+                    max += 360;
+                    break;
             }
 
             return Mathf.Clamp(angle, min, max);
@@ -74,7 +75,5 @@ namespace UnityEngine
 
             return angle;
         }
-
-        #endregion Methods
     }
 }

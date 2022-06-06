@@ -14,11 +14,6 @@ namespace UniSharper
     public class LayerFieldAttribute : PropertyAttribute
     {
         /// <summary>
-        /// Determine whether use the default layer filed drawer.
-        /// </summary>
-        public bool UseDefaultLayerFieldDrawer { get; }
-
-        /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="useDefaultTagFieldDrawer">Determine whether use the default layer filed drawer.</param>
@@ -26,5 +21,10 @@ namespace UniSharper
         {
             UseDefaultLayerFieldDrawer = useDefaultLayerFieldDrawer;
         }
+        
+        /// <summary>
+        /// Determine whether use the default layer filed drawer.
+        /// </summary>
+        public bool UseDefaultLayerFieldDrawer { get; }
     }
 }

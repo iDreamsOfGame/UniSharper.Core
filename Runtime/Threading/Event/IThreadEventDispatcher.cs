@@ -13,8 +13,6 @@ namespace UniSharper.Threading.Event
     /// <seealso cref="IThreadSynchronizedObject"/>
     public interface IThreadEventDispatcher : IThreadSynchronizedObject
     {
-        #region Methods
-
         /// <summary>
         /// Registers an event listener to receive an event notification.
         /// </summary>
@@ -76,7 +74,5 @@ namespace UniSharper.Threading.Event
         /// </summary>
         /// <param name="eventType">The type of event.</param>
         void RemoveEventListeners(Enum eventType);
-
-        #endregion Methods
     }
 }

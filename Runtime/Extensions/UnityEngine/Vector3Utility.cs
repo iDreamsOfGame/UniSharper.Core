@@ -1,3 +1,6 @@
+// Copyright (c) Jerry Lee. All rights reserved. Licensed under the MIT License.
+// See LICENSE in the project root for license information.
+
 using System;
 
 namespace UnityEngine
@@ -7,8 +10,6 @@ namespace UnityEngine
     /// </summary>
     public static class Vector3Utility
     {
-        #region Methods
-
         public static Vector3 CalculateCubicBezierPoint(float t, Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3)
         {
             if (t < 0 || t > 1)
@@ -153,7 +154,5 @@ namespace UnityEngine
         /// <param name="b">The <see cref="Vector3"/> b.</param>
         /// <returns>The angle between <see cref="Vector3"/> a and b.</returns>
         public static float GetAngle(Vector3 a, Vector3 b) => Mathf.Acos(Vector3.Dot(a.normalized, b.normalized)) * Mathf.Rad2Deg;
-
-        #endregion Methods
     }
 }

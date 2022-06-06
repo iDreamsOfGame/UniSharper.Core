@@ -10,8 +10,6 @@ namespace UniSharper.Effect
     /// </summary>
     public interface IParticleEffectController
     {
-        #region Properties
-
         /// <summary>
         /// Get the the <see cref="UnityEngine.Transform"/> attached to this <see cref="IParticleEffectController"/>.
         /// </summary>
@@ -67,19 +65,15 @@ namespace UniSharper.Effect
         /// </summary>
         ParticleEffectEvent Stopped { get; }
 
-        #endregion Properties
-
-        #region Methods
-
-        /// <summary>
-        /// Pauses the particle effect.
-        /// </summary>
-        void Pause();
-
         /// <summary>
         /// Starts the particle effect.
         /// </summary>
         void Play();
+        
+        /// <summary>
+        /// Pauses the particle effect.
+        /// </summary>
+        void Pause();
 
         /// <summary>
         /// Resumes playing the particle effect.
@@ -90,7 +84,5 @@ namespace UniSharper.Effect
         /// Stops playing the particle effect.
         /// </summary>
         void Stop();
-
-        #endregion Methods
     }
 }

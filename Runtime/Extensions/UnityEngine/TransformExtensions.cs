@@ -8,8 +8,6 @@ namespace UnityEngine
     /// </summary>
     public static class TransformExtensions
     {
-        #region Methods
-
         /// <summary>
         /// Finds the <see cref="Transform"/> in children.
         /// </summary>
@@ -143,43 +141,65 @@ namespace UnityEngine
         /// </summary>
         /// <param name="transform">The <see cref="Transform"/>.</param>
         /// <param name="value">The value of axis <c>x</c> in the local coordinate.</param>
-        public static void SetLocalPositionX(this Transform transform, float value) => transform.localPosition = new Vector3(value, transform.localPosition.y, transform.localPosition.z);
+        public static void SetLocalPositionX(this Transform transform, float value)
+        {
+            var localPosition = transform.localPosition;
+            transform.localPosition = new Vector3(value, localPosition.y, localPosition.z);
+        }
 
         /// <summary>
         /// Sets the value of axis <c>y</c> in the local coordinate.
         /// </summary>
         /// <param name="transform">The <see cref="Transform"/>.</param>
         /// <returns>The value of axis <c>y</c> in the local coordinate.</returns>
-        public static void SetLocalPositionY(this Transform transform, float value) => transform.localPosition = new Vector3(transform.localPosition.x, value, transform.localPosition.z);
+        public static void SetLocalPositionY(this Transform transform, float value)
+        {
+            var localPosition = transform.localPosition;
+            transform.localPosition = new Vector3(localPosition.x, value, localPosition.z);
+        }
 
         /// <summary>
         /// Sets the value of axis <c>z</c> in the local coordinate.
         /// </summary>
         /// <param name="transform">The <see cref="Transform"/>.</param>
         /// <returns>The value of axis <c>z</c> in the local coordinate.</returns>
-        public static void SetLocalPositionZ(this Transform transform, float value) => transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, value);
+        public static void SetLocalPositionZ(this Transform transform, float value)
+        {
+            var localPosition = transform.localPosition;
+            transform.localPosition = new Vector3(localPosition.x, localPosition.y, value);
+        }
 
         /// <summary>
         /// Sets the value of axis <c>x</c> in the world coordinate.
         /// </summary>
         /// <param name="transform">The <see cref="Transform"/>.</param>
         /// <param name="value">The value of axis <c>x</c> in the world coordinate.</param>
-        public static void SetPositionX(this Transform transform, float value) => transform.position = new Vector3(value, transform.position.y, transform.position.z);
+        public static void SetPositionX(this Transform transform, float value)
+        {
+            var position = transform.position;
+            transform.position = new Vector3(value, position.y, position.z);
+        }
 
         /// <summary>
         /// Sets the value of axis <c>y</c> in the world coordinate.
         /// </summary>
         /// <param name="transform">The <see cref="Transform"/>.</param>
         /// <returns>The value of axis <c>y</c> in the world coordinate.</returns>
-        public static void SetPositionY(this Transform transform, float value) => transform.position = new Vector3(transform.position.x, value, transform.position.z);
+        public static void SetPositionY(this Transform transform, float value)
+        {
+            var position = transform.position;
+            transform.position = new Vector3(position.x, value, position.z);
+        }
 
         /// <summary>
         /// Sets the value of axis <c>z</c> in the world coordinate.
         /// </summary>
         /// <param name="transform">The <see cref="Transform"/>.</param>
         /// <returns>The value of axis <c>z</c> in the world coordinate.</returns>
-        public static void SetPositionZ(this Transform transform, float value) => transform.position = new Vector3(transform.position.x, transform.position.y, value);
-
-        #endregion Methods
+        public static void SetPositionZ(this Transform transform, float value)
+        {
+            var position = transform.position;
+            transform.position = new Vector3(position.x, position.y, value);
+        }
     }
 }

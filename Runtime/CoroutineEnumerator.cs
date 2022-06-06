@@ -12,15 +12,9 @@ namespace UniSharper
     /// <seealso cref="IEnumerator"/>
     public class CoroutineEnumerator : IEnumerator
     {
-        #region Fields
-
         private readonly Queue<IEnumerator> coroutineQueue;
 
         private object current;
-
-        #endregion Fields
-
-        #region Constructors
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CoroutineEnumerator"/> class with some coroutines.
@@ -28,19 +22,11 @@ namespace UniSharper
         /// <param name="coroutines">The coroutines.</param>
         public CoroutineEnumerator(params IEnumerator[] coroutines) => coroutineQueue = new Queue<IEnumerator>(coroutines);
 
-        #endregion Constructors
-
-        #region Properties
-
         /// <summary>
         /// Gets the element in the collection at the current position of the enumerator.
         /// </summary>
         /// <value>The element in the collection at the current position of the enumerator.</value>
         public object Current => current;
-
-        #endregion Properties
-
-        #region Methods
 
         /// <summary>
         /// Enqueues the specified coroutine.
@@ -70,7 +56,5 @@ namespace UniSharper
         /// Sets the enumerator to its initial position, which is before the first element in the collection.
         /// </summary>
         public void Reset() => coroutineQueue.Clear();
-
-        #endregion Methods
     }
 }

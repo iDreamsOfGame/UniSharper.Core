@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Jerry Lee. All rights reserved. Licensed under the MIT License. See LICENSE in the
 // project root for license information.
 
+using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -12,16 +13,10 @@ namespace UniSharperEditor.Help
     /// <seealso cref="EditorWindow"/>
     internal class AboutWindow : EditorWindow
     {
-        #region Fields
-
         /// <summary>
         /// The menu item priority.
         /// </summary>
         public const int MenuItemPriority = int.MaxValue;
-
-        #endregion Fields
-
-        #region Methods
 
         [MenuItem("UniSharper/Help/About UniSharper...", false, 1000)]
         private static void ShowAboutWindow()
@@ -33,10 +28,10 @@ namespace UniSharperEditor.Help
         private void OnGUI()
         {
             GUILayout.Space(10f);
-            GUILayout.BeginHorizontal(new GUILayoutOption[0]);
+            GUILayout.BeginHorizontal(Array.Empty<GUILayoutOption>());
             GUILayout.Space(20f);
-            GUILayout.BeginVertical(new GUILayoutOption[0]);
-            GUILayout.Label("UniSharper", new GUIStyle() { fontStyle = FontStyle.Bold, fontSize = 30, normal = new GUIStyleState() { textColor = Color.white } });
+            GUILayout.BeginVertical(Array.Empty<GUILayoutOption>());
+            GUILayout.Label("UniSharper", new GUIStyle { fontStyle = FontStyle.Bold, fontSize = 30, normal = new GUIStyleState { textColor = Color.white } });
             GUILayout.Space(10f);
             GUILayout.Label("Copyright (c) 2021 Jerry Lee");
             GUILayout.Label("cosmos53076@163.com");
@@ -45,7 +40,5 @@ namespace UniSharperEditor.Help
             GUILayout.EndHorizontal();
             GUILayout.Space(10f);
         }
-
-        #endregion Methods
     }
 }

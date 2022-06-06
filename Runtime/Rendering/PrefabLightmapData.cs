@@ -12,8 +12,6 @@ namespace UniSharper.Rendering
     [Serializable]
     public class LightmapRendererInfo
     {
-        #region Fields
-
         [SerializeField]
         private int lightmapIndex;
 
@@ -22,10 +20,6 @@ namespace UniSharper.Rendering
 
         [SerializeField]
         private Renderer renderer;
-
-        #endregion Fields
-
-        #region Properties
 
         /// <summary>
         /// Gets or sets the index of the lightmap.
@@ -56,8 +50,6 @@ namespace UniSharper.Rendering
             get => renderer;
             set => renderer = value;
         }
-
-        #endregion Properties
     }
 
     /// <summary>
@@ -67,8 +59,6 @@ namespace UniSharper.Rendering
     [DisallowMultipleComponent, ExecuteInEditMode]
     public class PrefabLightmapData : MonoBehaviour
     {
-        #region Fields
-
         [SerializeField]
         private Texture2D[] lightmapColors;
 
@@ -80,10 +70,6 @@ namespace UniSharper.Rendering
 
         [SerializeField]
         private Texture2D[] shadowMasks;
-
-        #endregion Fields
-
-        #region Properties
 
         /// <summary>
         /// Sets an array of color of incoming light.
@@ -104,9 +90,9 @@ namespace UniSharper.Rendering
         }
 
         /// <summary>
-        /// Sets the renderer informations.
+        /// Sets the renderer information collection.
         /// </summary>
-        /// <value>The renderer informations.</value>
+        /// <value>The renderer information collection.</value>
         public LightmapRendererInfo[] RendererInfos
         {
             set => rendererInfos = value;
@@ -121,10 +107,6 @@ namespace UniSharper.Rendering
             set => shadowMasks = value;
         }
 
-        #endregion Properties
-
-        #region Methods
-
         /// <summary>
         /// Applies the static lightmap.
         /// </summary>
@@ -134,7 +116,7 @@ namespace UniSharper.Rendering
         {
             if (!instance)
             {
-                throw new ArgumentNullException("instance");
+                throw new ArgumentNullException(nameof(instance));
             }
 
             var rendererInfos = instance.rendererInfos;
@@ -175,7 +157,7 @@ namespace UniSharper.Rendering
         /// Applies the static lightmap for this prefab.
         /// </summary>
         /// <param name="infos">
-        /// The <see cref="Array"/> of <see cref="LightmapRendererInfo"/> stored lightmap renderer informations.
+        /// The <see cref="Array"/> of <see cref="LightmapRendererInfo"/> stored lightmap renderer information collection.
         /// </param>
         /// <param name="lightmapOffsetIndex">Index of the lightmap offset.</param>
         private static void ApplyStaticLightmap(LightmapRendererInfo[] infos, int lightmapOffsetIndex)
@@ -195,7 +177,5 @@ namespace UniSharper.Rendering
         {
             ApplyStaticLightmap(this);
         }
-
-        #endregion Methods
     }
 }

@@ -10,8 +10,6 @@ namespace UnityEngine
     /// </summary>
     public static class Texture2DExtensions
     {
-        #region Methods
-
         /// <summary>
         /// Blend other texture as overlay.
         /// </summary>
@@ -78,7 +76,5 @@ namespace UnityEngine
                 return output;
             }
         }
-
-        #endregion Methods
     }
 }

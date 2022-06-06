@@ -15,8 +15,6 @@ namespace UniSharperEditor
     [CustomPropertyDrawer(typeof(FlagsEnumFieldAttribute))]
     internal class FlagsEnumFieldDrawer : PropertyDrawer
     {
-        #region Methods
-
         /// <summary>
         /// Override this method to make your own GUI for the property.
         /// </summary>
@@ -71,7 +69,5 @@ namespace UniSharperEditor
 
             return (T)reflectionTarget;
         }
-
-        #endregion Methods
     }
 }

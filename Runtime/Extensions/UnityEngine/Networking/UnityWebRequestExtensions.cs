@@ -10,15 +10,9 @@ namespace UnityEngine.Networking
     /// </summary>
     public static class UnityWebRequestExtensions
     {
-        #region Fields
-
         private const string HeaderContentTypeName = "Content-Type";
 
         private const string JsonContentTypeValue = "application/json";
-
-        #endregion Fields
-
-        #region Methods
 
         /// <summary>
         /// Get the Content-Type of request header.
@@ -50,7 +44,5 @@ namespace UnityEngine.Networking
         {
             request.SetContentType(JsonContentTypeValue);
         }
-
-        #endregion Methods
     }
 }

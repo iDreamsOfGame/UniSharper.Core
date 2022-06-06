@@ -1,3 +1,6 @@
+// Copyright (c) Jerry Lee. All rights reserved. Licensed under the MIT License.
+// See LICENSE in the project root for license information.
+
 using System.Collections.Generic;
 
 namespace UnityEngine
@@ -259,9 +262,7 @@ namespace UnityEngine
             if (keyList != null && keyList.Contains(key)) 
                 return;
 
-            if (keyList == null)
-                keyList = new List<string>();
-            
+            keyList ??= new List<string>();
             keyList.Add(key);
             PreferenceKeyList = keyList;
         }

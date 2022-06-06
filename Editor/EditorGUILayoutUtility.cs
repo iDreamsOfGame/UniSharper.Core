@@ -12,8 +12,6 @@ namespace UniSharperEditor
     /// </summary>
     public static class EditorGUILayoutUtility
     {
-        #region Methods
-
         /// <summary>
         /// Make a file field.
         /// </summary>
@@ -33,15 +31,12 @@ namespace UniSharperEditor
                 EditorGUILayout.LabelField(label, new GUIContent(text), Styles.PathFieldStyle);
                 var buttonClicked = GUILayout.Button("Browse...", Styles.BrowseButtonStyle);
 
-                if (buttonClicked)
-                {
-                    var newPath = UnityEditorUtility.OpenFilePanelWithFilters(title, directory, filters);
-
-                    if (!string.IsNullOrEmpty(newPath))
-                    {
-                        text = newPath;
-                    }
-                }
+                if (!buttonClicked)
+                    return text;
+                
+                var newPath = UnityEditorUtility.OpenFilePanelWithFilters(title, directory, filters);
+                if (!string.IsNullOrEmpty(newPath))
+                    text = newPath;
             }
 
             return text;
@@ -66,35 +61,26 @@ namespace UniSharperEditor
                 EditorGUILayout.LabelField(label, new GUIContent(text), Styles.PathFieldStyle);
                 var buttonClicked = GUILayout.Button("Browse...", Styles.BrowseButtonStyle);
 
-                if (buttonClicked)
-                {
-                    var newPath = UnityEditorUtility.OpenFolderPanel(title, folder, defaultName);
-
-                    if (!string.IsNullOrEmpty(newPath))
-                    {
-                        text = newPath;
-                    }
-                }
+                if (!buttonClicked)
+                    return text;
+                
+                var newPath = UnityEditorUtility.OpenFolderPanel(title, folder, defaultName);
+                if (!string.IsNullOrEmpty(newPath))
+                    text = newPath;
             }
 
             return text;
         }
-
-        #endregion Methods
-
-        #region Classes
 
         /// <summary>
         /// The collection of GUI styles.
         /// </summary>
         private static class Styles
         {
-            #region Fields
-
             /// <summary>
             /// The style of browse button.
             /// </summary>
-            public static readonly GUIStyle BrowseButtonStyle = new GUIStyle(EditorStyles.miniButton)
+            public static readonly GUIStyle BrowseButtonStyle = new(EditorStyles.miniButton)
             {
                 fixedWidth = 75,
                 fixedHeight = EditorStyles.miniButtonRight.fixedHeight
@@ -103,7 +89,7 @@ namespace UniSharperEditor
             /// <summary>
             /// The style of path field.
             /// </summary>
-            public static readonly GUIStyle PathFieldStyle = new GUIStyle(EditorStyles.textField)
+            public static readonly GUIStyle PathFieldStyle = new(EditorStyles.textField)
             {
                 normal = {
                     background = EditorStyles.textField.normal.background,
@@ -111,10 +97,6 @@ namespace UniSharperEditor
                     textColor = Color.grey
                 }
             };
-
-            #endregion Fields
         }
-
-        #endregion Classes
     }
 }

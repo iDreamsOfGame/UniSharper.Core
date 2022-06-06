@@ -1,3 +1,6 @@
+// Copyright (c) Jerry Lee. All rights reserved. Licensed under the MIT License.
+// See LICENSE in the project root for license information.
+
 using System;
 
 namespace UnityEngine
@@ -13,11 +16,8 @@ namespace UnityEngine
         /// <param name="from">Which vector start from.</param>
         /// <param name="angle">The angle value to rotate.</param>
         /// <returns>The target vector through rotating a start vector.</returns>
-        public static Vector2 Rotate(Vector2 from, float angle)
-        {
-            return Quaternion.AngleAxis(angle, Vector3.forward) * from;
-        }
-        
+        public static Vector2 Rotate(Vector2 from, float angle) => Quaternion.AngleAxis(angle, Vector3.forward) * from;
+
         /// <summary>
         /// Generates quadratic bezier points.
         /// </summary>
