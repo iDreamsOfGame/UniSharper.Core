@@ -22,9 +22,7 @@ namespace UniSharperEditor
         public static string ConvertToAbsolutePath(params string[] paths)
         {
             if (paths == null)
-            {
                 throw new ArgumentNullException(nameof(paths));
-            }
 
             var newPaths = new string[paths.Length + 1];
             newPaths[0] = Directory.GetCurrentDirectory();
@@ -45,7 +43,7 @@ namespace UniSharperEditor
 
             var currentDirectory = ReSharpPathUtility.UnifyToAltDirectorySeparatorChar(Directory.GetCurrentDirectory());
             var absolutePath = ReSharpPathUtility.UnifyToAltDirectorySeparatorChar(path);
-            return absolutePath.KmpIndexOf(currentDirectory) != -1 
+            return absolutePath.KmpIndexOf(currentDirectory) != -1
                 ? ReSharpPathUtility.UnifyToAltDirectorySeparatorChar(absolutePath.Substring(currentDirectory.Length + 1))
                 : path;
         }
@@ -59,9 +57,7 @@ namespace UniSharperEditor
         public static bool IsAssetPath(string path)
         {
             if (string.IsNullOrEmpty(path))
-            {
                 throw new ArgumentNullException(nameof(path));
-            }
 
             var newPath = ReSharpPathUtility.UnifyToAltDirectorySeparatorChar(path);
             return newPath.StartsWith(EditorEnvironment.AssetsFolderName + Path.AltDirectorySeparatorChar) || newPath.StartsWith(ReSharpPathUtility.UnifyToAltDirectorySeparatorChar(Directory.GetCurrentDirectory()));

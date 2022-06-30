@@ -29,27 +29,15 @@ namespace UniSharperEditor
 
             // Search file in project folder.
             var fileNameWithoutExtensions = Path.GetFileNameWithoutExtension(fileName);
-            var list = AssetDatabaseUtility.LoadEditorResources<TextAsset>(fileNameWithoutExtensions);
+            var assets = AssetDatabaseUtility.LoadEditorResources<TextAsset>(fileNameWithoutExtensions);
 
-            if (list is { Length: > 0 })
-                return list[0].text;
+            if (assets is { Length: > 0 })
+                return assets[0].text;
 
             // Search file in package directory.
-            var rootPath = Path.Combine(Directory.GetCurrentDirectory(), "Library", "PackageCache");
-            var searchDirResults = Directory.GetDirectories(rootPath, $"{packageName}*", SearchOption.TopDirectoryOnly);
-
-            if (searchDirResults.Length > 0)
-            {
-                var dirPath = searchDirResults[0];
-                var searchFileResults = Directory.GetFiles(dirPath, fileName, SearchOption.AllDirectories);
-
-                if (searchFileResults.Length > 0)
-                {
-                    return File.ReadAllText(searchFileResults[0]);
-                }
-            }
-
-            return string.Empty;
+            var packagePath = $"Package/{packageName}";
+            assets = AssetDatabaseUtility.LoadEditorResources<TextAsset>(fileNameWithoutExtensions, packagePath);
+            return assets is { Length: > 0 } ? assets[0].text : string.Empty;
         }
 
         /// <summary>

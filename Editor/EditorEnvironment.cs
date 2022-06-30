@@ -15,6 +15,11 @@ namespace UniSharperEditor
         public const string AssetsFolderName = "Assets";
 
         /// <summary>
+        /// The folder name of 'Packages'.
+        /// </summary>
+        public const string PackagesFolderName = "Packages";
+
+        /// <summary>
         /// The default folder name of 'Scripts'.
         /// </summary>
         public const string DefaultScriptsFolderName = "Scripts";
