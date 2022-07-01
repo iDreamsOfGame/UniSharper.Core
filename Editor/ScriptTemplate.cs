@@ -19,7 +19,7 @@ namespace UniSharperEditor
         /// <param name="fileName">The file name of script template. </param>
         /// <param name="packageName">The package name of script template. </param>
         /// <returns>The text content of script template file. </returns>
-        public static string LoadScriptTemplateFile(string fileName, string packageName)
+        public static string LoadScriptTemplateFile(string fileName, string packageName = null)
         {
             if (fileName == null)
                 throw new ArgumentNullException(nameof(fileName));
@@ -27,15 +27,17 @@ namespace UniSharperEditor
             if (packageName == null)
                 throw new ArgumentNullException(nameof(packageName));
 
-            // Search file in project folder.
+            // Search file in 'Assets' folder.
             var fileNameWithoutExtensions = Path.GetFileNameWithoutExtension(fileName);
             var assets = AssetDatabaseUtility.LoadEditorResources<TextAsset>(fileNameWithoutExtensions);
-
             if (assets is { Length: > 0 })
                 return assets[0].text;
-
+            
+            if (string.IsNullOrEmpty(packageName)) 
+                return string.Empty;
+            
             // Search file in package directory.
-            var packagePath = $"Package/{packageName}";
+            var packagePath = $"{EditorEnvironment.PackagesFolderName}/{packageName}";
             assets = AssetDatabaseUtility.LoadEditorResources<TextAsset>(fileNameWithoutExtensions, packagePath);
             return assets is { Length: > 0 } ? assets[0].text : string.Empty;
         }
