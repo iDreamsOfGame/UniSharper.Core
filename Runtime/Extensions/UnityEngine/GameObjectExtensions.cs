@@ -20,9 +20,9 @@ namespace UnityEngine
         /// </param>
         public static void CopyAllComponentsValues(this GameObject gameObject, GameObject targetGameObject, bool excludeTransform = true)
         {
-            if (!targetGameObject) 
+            if (!targetGameObject)
                 return;
-            
+
             var components = gameObject.GetAllComponents();
 
             for (int i = 0, length = components.Length; i < length; ++i)
@@ -49,7 +49,7 @@ namespace UnityEngine
         {
             if (string.IsNullOrEmpty(targetName))
                 return null;
-            
+
             var transform = gameObject.transform;
 
             foreach (Transform childTransform in transform)
@@ -98,7 +98,7 @@ namespace UnityEngine
         /// <returns>The <see cref="Component"/> get or added.</returns>
         public static Component GetOrAddComponent(this GameObject gameObject, Type type)
         {
-            var component = gameObject.GetComponent(type);
+            gameObject.TryGetComponent(type, out var component);
             if (!component)
                 component = gameObject.AddComponent(type);
 
@@ -118,7 +118,7 @@ namespace UnityEngine
         {
             if (!gameObject)
                 return false;
-            
+
             var objectLayerMaskValue = 1 << gameObject.layer;
             return (layerMask.value & objectLayerMaskValue) > 0;
         }
@@ -134,10 +134,10 @@ namespace UnityEngine
         /// </returns>
         public static bool RemoveComponent<T>(this GameObject gameObject, float delay = 0.0f) where T : Component
         {
-            var component = gameObject.GetComponent<T>();
-            if (!component) 
+            gameObject.TryGetComponent<T>(out var component);
+            if (!component)
                 return false;
-            
+
             Object.Destroy(component, delay);
             return true;
         }
@@ -152,10 +152,10 @@ namespace UnityEngine
         /// </returns>
         public static bool RemoveComponentImmediate<T>(this GameObject gameObject) where T : Component
         {
-            var component = gameObject.GetComponent<T>();
+            gameObject.TryGetComponent<T>(out var component);
             if (!component)
                 return false;
-            
+
             Object.DestroyImmediate(component);
             return true;
         }
@@ -169,9 +169,9 @@ namespace UnityEngine
         /// <param name="includeInactive">if set to <c>true</c> include inactive <see cref="GameObject"/>.</param>
         public static void SetChildrenLayer(this GameObject gameObject, int layer = -1, bool includeParent = true, bool includeInactive = true)
         {
-            if (layer < 0) 
+            if (layer < 0)
                 return;
-            
+
             if (includeParent)
             {
                 if (!(!gameObject.activeSelf && !includeInactive))
@@ -203,9 +203,9 @@ namespace UnityEngine
         /// <param name="includeInactive">if set to <c>true</c> include inactive <see cref="GameObject"/>.</param>
         public static void SetChildrenLayer(this GameObject gameObject, string layerName, bool includeParent = true, bool includeInactive = true)
         {
-            if (string.IsNullOrEmpty(layerName)) 
+            if (string.IsNullOrEmpty(layerName))
                 return;
-            
+
             var layer = LayerMask.NameToLayer(layerName);
             gameObject.SetChildrenLayer(layer, includeParent, includeInactive);
         }

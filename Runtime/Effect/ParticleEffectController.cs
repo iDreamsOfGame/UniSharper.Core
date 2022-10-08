@@ -55,13 +55,11 @@ namespace UniSharper.Effect
             {
                 if (particleSystemRoot)
                     return particleSystemRoot;
-
-                particleSystemRoot = GetComponent<ParticleSystem>();
+                
+                TryGetComponent(out particleSystemRoot);
 
                 if (!particleSystemRoot)
-                {
                     particleSystemRoot = transform.GetComponentInChildren<ParticleSystem>(true);
-                }
 
                 return particleSystemRoot;
             }

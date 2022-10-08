@@ -55,9 +55,9 @@ namespace UniSharperEditor.Rendering
         /// <param name="prefabs">The <see cref="System.Array"/> of <see cref="PrefabLightmapData"/>.</param>
         private static void BakePrefabLightmaps(PrefabLightmapData[] prefabs)
         {
-            if (prefabs == null || prefabs.Length == 0) 
+            if (prefabs == null || prefabs.Length == 0)
                 return;
-            
+
             for (int i = 0, length = prefabs.Length; i < length; i++)
             {
                 var data = prefabs[i];
@@ -92,19 +92,19 @@ namespace UniSharperEditor.Rendering
         /// <param name="lightmapColors">The <see cref="List{Texture2D}"/> to store <see cref="LightmapData.lightmapColor"/>.</param>
         /// <param name="lightmapDirs">The <see cref="List{Texture2D}"/> to store <see cref="LightmapData.lightmapDir"/>.</param>
         /// <param name="shadowMasks">The <see cref="List{Texture2D}"/> to store <see cref="LightmapData.shadowMask"/>.</param>
-        private static void GenerateLightmapInfo(GameObject gameObject, List<LightmapRendererInfo> rendererInfos, List<Texture2D> lightmapColors,
-            List<Texture2D> lightmapDirs, List<Texture2D> shadowMasks)
+        private static void GenerateLightmapInfo(GameObject gameObject,
+            List<LightmapRendererInfo> rendererInfos,
+            List<Texture2D> lightmapColors,
+            List<Texture2D> lightmapDirs,
+            List<Texture2D> shadowMasks)
         {
             var renderers = gameObject.GetComponentsInChildren<MeshRenderer>();
 
             foreach (var renderer in renderers)
             {
-                var excludedRenderer = renderer.gameObject.GetComponent<PrefabLightmapExcludedRenderer>();
-
-                if (excludedRenderer != null)
-                {
+                renderer.gameObject.TryGetComponent<PrefabLightmapExcludedRenderer>(out var excludedRenderer);
+                if (excludedRenderer)
                     continue;
-                }
 
                 var info = new LightmapRendererInfo
                 {
@@ -139,7 +139,7 @@ namespace UniSharperEditor.Rendering
         {
             if (prefabs == null || prefabs.Length == 0)
                 return;
-            
+
             foreach (var lightmap in prefabs)
             {
                 var renderers = lightmap.gameObject.GetComponentsInChildren<MeshRenderer>();
@@ -147,10 +147,10 @@ namespace UniSharperEditor.Rendering
                 foreach (var renderer in renderers)
                 {
                     var gameObject = renderer.gameObject;
-                    var excludedRenderer = gameObject.GetComponent<PrefabLightmapExcludedRenderer>();
-                    if (excludedRenderer != null) 
+                    gameObject.TryGetComponent<PrefabLightmapExcludedRenderer>(out var excludedRenderer);
+                    if (excludedRenderer)
                         continue;
-                        
+
                     if (!GameObjectUtility.AreStaticEditorFlagsSet(gameObject, StaticEditorFlags.ContributeGI))
                     {
                         GameObjectUtility.SetStaticEditorFlags(gameObject, StaticEditorFlags.ContributeGI);
@@ -179,9 +179,9 @@ namespace UniSharperEditor.Rendering
         private static bool ValidatePrefabLightmapsBaking()
         {
             var prefabs = Object.FindObjectsOfType<PrefabLightmapData>();
-            if (prefabs == null || prefabs.Length == 0) 
+            if (prefabs == null || prefabs.Length == 0)
                 return false;
-            
+
             foreach (var item in prefabs)
             {
                 var root = PrefabUtility.GetCorrespondingObjectFromSource(item.gameObject);

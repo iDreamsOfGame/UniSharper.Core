@@ -20,7 +20,7 @@ namespace UniSharper.Audio
             get
             {
                 if (!audioSource)
-                    audioSource = GetComponent<AudioSource>();
+                    TryGetComponent(out audioSource);
 
                 return audioSource;
             }
