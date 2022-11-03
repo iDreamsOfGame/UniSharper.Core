@@ -29,14 +29,14 @@ namespace UniSharperEditor
             using (new EditorGUIFieldScope(labelWidth))
             {
                 EditorGUILayout.LabelField(label, new GUIContent(text), Styles.PathFieldStyle);
-                var buttonClicked = GUILayout.Button("Browse...", Styles.BrowseButtonStyle);
-
-                if (!buttonClicked)
-                    return text;
-                
-                var newPath = UnityEditorUtility.OpenFilePanelWithFilters(title, directory, filters);
-                if (!string.IsNullOrEmpty(newPath))
-                    text = newPath;
+                if (GUILayout.Button("Browse...", Styles.BrowseButtonStyle))
+                {
+                    var newPath = UnityEditorUtility.OpenFilePanelWithFilters(title, directory, filters);
+                    if (!string.IsNullOrEmpty(newPath))
+                        text = newPath;
+                    
+                    GUIUtility.ExitGUI();
+                }
             }
 
             return text;
@@ -59,14 +59,14 @@ namespace UniSharperEditor
             using (new EditorGUIFieldScope(labelWidth))
             {
                 EditorGUILayout.LabelField(label, new GUIContent(text), Styles.PathFieldStyle);
-                var buttonClicked = GUILayout.Button("Browse...", Styles.BrowseButtonStyle);
-
-                if (!buttonClicked)
-                    return text;
-                
-                var newPath = UnityEditorUtility.OpenFolderPanel(title, folder, defaultName);
-                if (!string.IsNullOrEmpty(newPath))
-                    text = newPath;
+                if (GUILayout.Button("Browse...", Styles.BrowseButtonStyle))
+                {
+                    var newPath = UnityEditorUtility.OpenFolderPanel(title, folder, defaultName);
+                    if (!string.IsNullOrEmpty(newPath))
+                        text = newPath;
+                    
+                    GUIUtility.ExitGUI();
+                }
             }
 
             return text;

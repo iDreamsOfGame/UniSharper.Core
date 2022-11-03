@@ -68,6 +68,7 @@ namespace UniSharperEditor.Rendering
             if (GUILayout.Button(addButtonText))
             {
                 scenes.Add(null);
+                GUIUtility.ExitGUI();
             }
 
             GUILayout.Space(8);
@@ -75,6 +76,7 @@ namespace UniSharperEditor.Rendering
             if (GUILayout.Button(generateButtonText))
             {
                 GenerateLighting();
+                GUIUtility.ExitGUI();
             }
 
             GUILayout.EndScrollView();
