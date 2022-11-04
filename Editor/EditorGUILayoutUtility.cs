@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Jerry Lee. All rights reserved. Licensed under the MIT License. See LICENSE in the
 // project root for license information.
 
+using System;
 using UnityEditor;
 using UnityEngine;
 using UnityEditorUtility = UnityEditor.EditorUtility;
@@ -29,13 +30,18 @@ namespace UniSharperEditor
             using (new EditorGUIFieldScope(labelWidth))
             {
                 EditorGUILayout.LabelField(label, new GUIContent(text), Styles.PathFieldStyle);
-                if (GUILayout.Button("Browse...", Styles.BrowseButtonStyle))
+                try
                 {
-                    var newPath = UnityEditorUtility.OpenFilePanelWithFilters(title, directory, filters);
-                    if (!string.IsNullOrEmpty(newPath))
-                        text = newPath;
-                    
-                    GUIUtility.ExitGUI();
+                    if (GUILayout.Button("Browse...", Styles.BrowseButtonStyle))
+                    {
+                        var newPath = UnityEditorUtility.OpenFilePanelWithFilters(title, directory, filters);
+                        if (!string.IsNullOrEmpty(newPath))
+                            text = newPath;
+                    }
+                }
+                catch (Exception)
+                {
+                    // ignored
                 }
             }
 
@@ -59,13 +65,20 @@ namespace UniSharperEditor
             using (new EditorGUIFieldScope(labelWidth))
             {
                 EditorGUILayout.LabelField(label, new GUIContent(text), Styles.PathFieldStyle);
-                if (GUILayout.Button("Browse...", Styles.BrowseButtonStyle))
+                try
                 {
-                    var newPath = UnityEditorUtility.OpenFolderPanel(title, folder, defaultName);
-                    if (!string.IsNullOrEmpty(newPath))
-                        text = newPath;
-                    
-                    GUIUtility.ExitGUI();
+                    if (GUILayout.Button("Browse...", Styles.BrowseButtonStyle))
+                    {
+                        var newPath = UnityEditorUtility.OpenFolderPanel(title, folder, defaultName);
+                        if (!string.IsNullOrEmpty(newPath))
+                            text = newPath;
+
+                        GUIUtility.ExitGUI();
+                    }
+                }
+                catch (Exception)
+                {
+                    // ignored
                 }
             }
 
