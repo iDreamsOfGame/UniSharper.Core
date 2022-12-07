@@ -9,7 +9,7 @@ namespace UniSharperEditor
     /// <summary>
     /// Editor utility functions.
     /// </summary>
-    public static class EditorUtility
+    public static class UniEditorUtility
     {
         /// <summary>
         /// Clears all the console information.

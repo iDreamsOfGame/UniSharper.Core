@@ -1,9 +1,21 @@
+## [1.12.0] - 2022-12-07
+
+### Added
+
+- Adds so many extension methods and utility methods.
+
+### Fixed
+
+- Fixed some bugs.
+
+
+
 ## [1.11.0] - 2021-07-15
 
 ### Added
 
 - Adds attributes **TagFieldAttribute**, **SortingLayerFieldAttribute**, **LayerFieldAttribute**.
-- Adds utility method **Vector2Utility.Rotate**
+- Adds utility method **Vector2Utility.Rotate**.
 
 
 

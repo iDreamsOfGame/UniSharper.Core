@@ -10,7 +10,7 @@ namespace UniSharperEditor
     /// <summary>
     /// AssetDatabase utility functions.
     /// </summary>
-    public static class AssetDatabaseUtility
+    public static class UniAssetDatabase
     {
         /// <summary>
         /// Load editor resources

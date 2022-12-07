@@ -29,7 +29,7 @@ namespace UniSharperEditor
 
             // Search file in 'Assets' folder.
             var fileNameWithoutExtensions = Path.GetFileNameWithoutExtension(fileName);
-            var assets = AssetDatabaseUtility.LoadEditorResources<TextAsset>(fileNameWithoutExtensions);
+            var assets = UniAssetDatabase.LoadEditorResources<TextAsset>(fileNameWithoutExtensions);
             if (assets is { Length: > 0 })
                 return assets[0].text;
             
@@ -38,7 +38,7 @@ namespace UniSharperEditor
             
             // Search file in package directory.
             var packagePath = $"{EditorEnvironment.PackagesFolderName}/{packageName}";
-            assets = AssetDatabaseUtility.LoadEditorResources<TextAsset>(fileNameWithoutExtensions, packagePath);
+            assets = UniAssetDatabase.LoadEditorResources<TextAsset>(fileNameWithoutExtensions, packagePath);
             return assets is { Length: > 0 } ? assets[0].text : string.Empty;
         }
 
