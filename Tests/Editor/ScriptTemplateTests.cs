@@ -1,13 +1,15 @@
 using NUnit.Framework;
-using UniSharperEditor;
 
-public class ScriptTemplateTests
+namespace UniSharperEditor.Tests
 {
-    [Test]
-    public void LoadScriptTemplateFileTest()
+    public class ScriptTemplateTests
     {
-        const string packageName = "io.github.idreamsofgame.resharp.core";
-        var content = ScriptTemplate.LoadScriptTemplateFile("package", packageName);
-        Assert.AreNotEqual(string.Empty, content);
+        [Test]
+        public void LoadScriptTemplateFileTest()
+        {
+            const string packageName = "io.github.idreamsofgame.resharp.core";
+            var content = ScriptTemplate.LoadScriptTemplateFile("package", packageName);
+            Assert.AreNotEqual(string.Empty, content);
+        }
     }
 }

@@ -1,5 +1,6 @@
 {
     "name": "Unity.UniSharper.Editor",
+    "rootNamespace": "UniSharperEditor",
     "references": [
         "Unity.UniSharper"
     ],

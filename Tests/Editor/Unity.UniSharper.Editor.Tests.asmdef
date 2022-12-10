@@ -1,6 +1,6 @@
 {
     "name": "Unity.UniSharper.Editor.Tests",
-    "rootNamespace": "",
+    "rootNamespace": "UniSharperEditor.Tests",
     "references": [
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",

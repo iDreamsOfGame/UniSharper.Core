@@ -1,9 +1,10 @@
 {
     "name": "Unity.UniSharper.Tests",
-    "rootNamespace": "Unity.UniSharper.Tests",
+    "rootNamespace": "UniSharper.Tests",
     "references": [
         "UnityEngine.TestRunner",
-        "UnityEditor.TestRunner"
+        "UnityEditor.TestRunner",
+        "Unity.UniSharper"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

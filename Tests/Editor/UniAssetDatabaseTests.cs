@@ -1,15 +1,17 @@
 using NUnit.Framework;
-using UniSharperEditor;
 using UnityEngine;
 
-public class UniAssetDatabaseTests
+namespace UniSharperEditor.Tests
 {
-    [Test]
-    public void LoadEditorResourceInPackageFolder()
+    public class UniAssetDatabaseTests
     {
-        const string packageName = "io.github.idreamsofgame.resharp.core";
-        var searchInFolder = $"{EditorEnvironment.PackagesFolderName}/{packageName}";
-        var assets = UniAssetDatabase.LoadEditorResources<TextAsset>("package", searchInFolder);
-        Assert.Greater(assets.Length, 0);
+        [Test]
+        public void LoadEditorResourceInPackageFolder()
+        {
+            const string packageName = "io.github.idreamsofgame.resharp.core";
+            var searchInFolder = $"{EditorEnvironment.PackagesFolderName}/{packageName}";
+            var assets = UniAssetDatabase.LoadEditorResources<TextAsset>("package", searchInFolder);
+            Assert.Greater(assets.Length, 0);
+        }
     }
 }
