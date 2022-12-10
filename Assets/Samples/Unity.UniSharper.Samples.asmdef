@@ -1,5 +1,6 @@
 {
     "name": "Unity.UniSharper.Samples",
+    "rootNamespace": "UniSharper.Samples",
     "references": [
         "Unity.UniSharper"
     ],
