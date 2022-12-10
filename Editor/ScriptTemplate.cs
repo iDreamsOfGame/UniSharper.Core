@@ -61,6 +61,11 @@ namespace UniSharperEditor
             /// The format string for property member.
             /// </summary>
             public const string PropertyMember = "\t\t/// <summary>\r\n\t\t/// {0}\r\n\t\t/// </summary>\r\n\t\tpublic {1} {2} {{ get; set; }}";
+            
+            /// <summary>
+            /// The format string for property member with only getter.
+            /// </summary>
+            public const string OnlyGetterPropertyMember = "\t\t/// <summary>\r\n\t\t/// {0}\r\n\t\t/// </summary>\r\n\t\tpublic {1} {2} => {3};";
         }
 
         /// <summary>
