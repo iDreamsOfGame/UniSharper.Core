@@ -37,18 +37,18 @@
       }
     },
     "io.github.idreamsofgame.resharp.core": {
-      "version": "1.2.0",
+      "version": "1.2.1",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
-      "url": "https://package.openupm.cn"
+      "url": "https://package.openupm.com"
     },
     "jillejr.newtonsoft.json-for-unity": {
       "version": "13.0.102",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
-      "url": "https://package.openupm.cn"
+      "url": "https://package.openupm.com"
     },
     "com.unity.modules.androidjni": {
       "version": "1.0.0",
