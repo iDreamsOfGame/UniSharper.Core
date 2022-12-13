@@ -1,3 +1,6 @@
+// Copyright (c) Jerry Lee. All rights reserved. Licensed under the MIT License.
+// See LICENSE in the project root for license information.
+
 using UnityEngine;
 
 namespace UniSharper.Extensions
@@ -17,7 +20,7 @@ namespace UniSharper.Extensions
             if (string.IsNullOrEmpty(s))
                 return default;
 
-            var values = StringUtility.GetColorRgbaValues(s);
+            var values = StringUtility.GetColorRgbaStringValues(s);
             if (values.Length < 4)
                 return default;
             
@@ -42,7 +45,7 @@ namespace UniSharper.Extensions
                 return false;
             }
 
-            var values = StringUtility.GetColorRgbaValues(s);
+            var values = StringUtility.GetColorRgbaStringValues(s);
             if (values.Length < 4)
             {
                 result = default;

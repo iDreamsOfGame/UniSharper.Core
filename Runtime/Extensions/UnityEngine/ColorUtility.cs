@@ -20,7 +20,7 @@ namespace UniSharper.Extensions
             if (string.IsNullOrEmpty(s))
                 return default;
 
-            var values = StringUtility.GetColorRgbaValues(s);
+            var values = StringUtility.GetColorRgbaStringValues(s);
             switch (values.Length)
             {
                 case < 3:
@@ -57,7 +57,7 @@ namespace UniSharper.Extensions
                 return false;
             }
 
-            var values = StringUtility.GetColorRgbaValues(s);
+            var values = StringUtility.GetColorRgbaStringValues(s);
             switch (values.Length)
             {
                 case < 3:

@@ -20,7 +20,7 @@ namespace UniSharper.Extensions
             if (string.IsNullOrEmpty(s))
                 return default;
 
-            var pairs = StringUtility.GetKeyValuePairsInBrackets(s);
+            var pairs = StringUtility.GetKeyValueStringPairsInBrackets(s);
             if (pairs.Count < 4)
                 return default;
             
@@ -49,7 +49,7 @@ namespace UniSharper.Extensions
                 return false;
             }
 
-            var pairs = StringUtility.GetKeyValuePairsInBrackets(s);
+            var pairs = StringUtility.GetKeyValueStringPairsInBrackets(s);
             if (pairs.Count < 4)
             {
                 result = default;
