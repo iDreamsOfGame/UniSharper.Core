@@ -1,13 +1,44 @@
 ﻿// Copyright (c) Jerry Lee. All rights reserved. Licensed under the MIT License.
 // See LICENSE in the project root for license information.
 
-namespace UnityEngine
+using System.Text;
+using UnityEngine;
+
+namespace UniSharper.Extensions
 {
     /// <summary>
     /// Extension methods collection of <see cref="UnityEngine.Transform"/>.
     /// </summary>
     public static class TransformExtensions
     {
+        /// <summary>
+        /// Get the path of <see cref="UnityEngine.Transform"/> in hierarchy. 
+        /// </summary>
+        /// <param name="transform">The <see cref="UnityEngine.Transform"/> instance. </param>
+        /// <returns>The path of <see cref="UnityEngine.Transform"/> in hierarchy. </returns>
+        public static string GetPath(this Transform transform)
+        {
+            if (!transform)
+                return string.Empty;
+
+            var builder = new StringBuilder(transform.name);
+            var root = transform.root;
+            var parent = transform.parent;
+
+            // 过滤掉无法编辑的对象
+            if(root.gameObject.hideFlags.HasFlag(HideFlags.NotEditable))
+                root = root.GetChild(0);
+
+            while (parent && parent != root)
+            {
+                builder.Insert(0, '/');
+                builder.Insert(0, parent.name);
+                parent = parent.parent;
+            }
+
+            return builder.ToString();
+        }
+        
         /// <summary>
         /// Finds the <see cref="Transform"/> in children.
         /// </summary>

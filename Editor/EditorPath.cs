@@ -3,7 +3,7 @@
 
 using System;
 using System.IO;
-using ReSharpPathUtility = System.IO.PathUtility;
+using ReSharp.Extensions;
 
 namespace UniSharperEditor
 {
@@ -27,7 +27,7 @@ namespace UniSharperEditor
             var newPaths = new string[paths.Length + 1];
             newPaths[0] = Directory.GetCurrentDirectory();
             paths.CopyTo(newPaths, 1);
-            return ReSharpPathUtility.UnifyToAltDirectorySeparatorChar(Path.Combine(newPaths));
+            return PathUtility.UnifyToAltDirectorySeparatorChar(Path.Combine(newPaths));
         }
 
         /// <summary>
@@ -41,10 +41,10 @@ namespace UniSharperEditor
             if (string.IsNullOrEmpty(path))
                 throw new ArgumentNullException(nameof(path));
 
-            var currentDirectory = ReSharpPathUtility.UnifyToAltDirectorySeparatorChar(Directory.GetCurrentDirectory());
-            var absolutePath = ReSharpPathUtility.UnifyToAltDirectorySeparatorChar(path);
+            var currentDirectory = PathUtility.UnifyToAltDirectorySeparatorChar(Directory.GetCurrentDirectory());
+            var absolutePath = PathUtility.UnifyToAltDirectorySeparatorChar(path);
             return absolutePath.KmpIndexOf(currentDirectory) != -1
-                ? ReSharpPathUtility.UnifyToAltDirectorySeparatorChar(absolutePath.Substring(currentDirectory.Length + 1))
+                ? PathUtility.UnifyToAltDirectorySeparatorChar(absolutePath.Substring(currentDirectory.Length + 1))
                 : path;
         }
 
@@ -59,8 +59,8 @@ namespace UniSharperEditor
             if (string.IsNullOrEmpty(path))
                 throw new ArgumentNullException(nameof(path));
 
-            var newPath = ReSharpPathUtility.UnifyToAltDirectorySeparatorChar(path);
-            return newPath.StartsWith(EditorEnvironment.AssetsFolderName + Path.AltDirectorySeparatorChar) || newPath.StartsWith(ReSharpPathUtility.UnifyToAltDirectorySeparatorChar(Directory.GetCurrentDirectory()));
+            var newPath = PathUtility.UnifyToAltDirectorySeparatorChar(path);
+            return newPath.StartsWith(EditorEnvironment.AssetsFolderName + Path.AltDirectorySeparatorChar) || newPath.StartsWith(PathUtility.UnifyToAltDirectorySeparatorChar(Directory.GetCurrentDirectory()));
         }
     }
 }

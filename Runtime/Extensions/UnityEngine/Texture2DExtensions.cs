@@ -2,8 +2,10 @@
 // See LICENSE in the project root for license information.
 
 using System;
+using UnityEngine;
+using UnityObject = UnityEngine.Object;
 
-namespace UnityEngine
+namespace UniSharper.Extensions
 {
     /// <summary>
     /// Extension methods collection of <see cref="UnityEngine.Texture2D"/>.
@@ -44,7 +46,7 @@ namespace UnityEngine
                 shader.SetTexture(kernel, "canvas", renderTexture);
                 shader.Dispatch(kernel, source.width, source.height, 1);
                 var output = renderTexture.ToTexture(new Rect(0, 0, renderTexture.width, renderTexture.height));
-                Object.Destroy(renderTexture);
+                UnityObject.Destroy(renderTexture);
                 return output;
             }
             else
@@ -75,6 +77,69 @@ namespace UnityEngine
                 output.Apply();
                 return output;
             }
+        }
+        
+        /// <summary>
+        /// Resize the texture and generate new texture instance.
+        /// </summary>
+        /// <param name="source">The original texture. </param>
+        /// <param name="width">The width of new texture. </param>
+        /// <param name="height">The height of new texture. </param>
+        /// <param name="preserveAspect">If keep the aspect of original texture. </param>
+        /// <param name="mipmap">Generate mipmap or not. </param>
+        /// <param name="filter">The filter mode of texture. </param>
+        /// <returns></returns>
+        public static Texture2D Resize(this Texture2D source,
+            int width,
+            int height,
+            bool preserveAspect,
+            bool mipmap = true,
+            FilterMode filter = FilterMode.Bilinear)
+        {
+            var targetWidth = width;
+            var targetHeight = height;
+
+            if (preserveAspect)
+            {
+                var scaleWidth = width / (float)source.width;
+                var scaleHeight = height / (float)source.height;
+                var scale = Mathf.Min(scaleWidth, scaleHeight);
+                targetWidth = Mathf.FloorToInt(source.width * scale);
+                targetHeight = Mathf.FloorToInt(source.height * scale);
+            }
+
+            // Create a temporary RenderTexture with the target size
+            var renderTexture = RenderTexture.GetTemporary(targetWidth, targetHeight, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Default);
+
+            // Set the active RenderTexture to the temporary texture so we can read from it
+            var previous = RenderTexture.active;
+            RenderTexture.active = renderTexture;
+
+            // Copy the texture data on the GPU - this is where the magic happens [(;]
+            Graphics.Blit(source, renderTexture);
+            
+            // Create new texture
+            var newTexture = new Texture2D(source.width, source.height, source.format, false);
+            newTexture.Reinitialize(targetWidth, targetHeight, newTexture.format, mipmap);
+            newTexture.filterMode = filter;
+
+            try
+            {
+                // Reads the pixel values from the temporary RenderTexture onto the resized texture
+                newTexture.ReadPixels(new Rect(0f, 0f, targetWidth, targetHeight), 0, 0);
+                
+                // Actually upload the changed pixels to the graphics card
+                newTexture.Apply();
+            }
+            catch
+            {
+                Debug.LogError("Read/Write is not enabled on texture " + source.name);
+            }
+
+            RenderTexture.active = previous;
+            RenderTexture.ReleaseTemporary(renderTexture);
+
+            return newTexture;
         }
     }
 }

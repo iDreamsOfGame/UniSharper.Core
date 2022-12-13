@@ -11,6 +11,11 @@ namespace UniSharper
     public static class NetworkUtility
     {
         private const string AndroidJavaClassName = "io.github.idreamsofgame.unisharper.core.NetUtils";
+        
+        /// <summary>
+        /// If the internet is reachable.
+        /// </summary>
+        public static bool IsInternetReachable => Application.internetReachability != NetworkReachability.NotReachable;
 
         /// <summary>
         /// Opens the URL specified.

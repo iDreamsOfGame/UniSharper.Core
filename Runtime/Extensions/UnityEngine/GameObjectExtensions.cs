@@ -2,8 +2,10 @@
 // See LICENSE in the project root for license information.
 
 using System;
+using UnityEngine;
+using UnityObject = UnityEngine.Object;
 
-namespace UnityEngine
+namespace UniSharper.Extensions
 {
     /// <summary>
     /// Extension methods collection of <see cref="UnityEngine.GameObject"/>.
@@ -138,7 +140,7 @@ namespace UnityEngine
             if (!component)
                 return false;
 
-            Object.Destroy(component, delay);
+            UnityObject.Destroy(component, delay);
             return true;
         }
 
@@ -156,7 +158,7 @@ namespace UnityEngine
             if (!component)
                 return false;
 
-            Object.DestroyImmediate(component);
+            UnityObject.DestroyImmediate(component);
             return true;
         }
 

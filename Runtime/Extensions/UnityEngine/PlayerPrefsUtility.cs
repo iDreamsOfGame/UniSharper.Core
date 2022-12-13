@@ -3,8 +3,9 @@
 
 using System;
 using Newtonsoft.Json;
+using UnityEngine;
 
-namespace UnityEngine
+namespace UniSharper.Extensions
 {
     /// <summary>
     /// This class provides some useful <see cref="UnityEngine.PlayerPrefs"/> utilities.

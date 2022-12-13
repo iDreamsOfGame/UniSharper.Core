@@ -3,8 +3,9 @@
 
 using System;
 using System.Reflection;
+using UnityEngine;
 
-namespace UnityEngine
+namespace UniSharper.Extensions
 {
     /// <summary>
     /// Extension methods collection of <see cref="UnityEngine.Component"/>.

@@ -1,9 +1,9 @@
 // Copyright (c) Jerry Lee. All rights reserved. Licensed under the MIT License. See LICENSE in the
 // project root for license information.
 
-using System;
+using ReSharp.Extensions;
 using UnityEditor;
-using Object = UnityEngine.Object;
+using UnityObject = UnityEngine.Object;
 
 namespace UniSharperEditor
 {
@@ -19,7 +19,7 @@ namespace UniSharperEditor
         /// <param name="searchInFolder">The folder where the search will start. </param>
         /// <typeparam name="T">The type definition of resources.</typeparam>
         /// <returns>The editor resources, if exists; otherwise return null.</returns>
-        public static T[] LoadEditorResources<T>(string name, string searchInFolder = EditorEnvironment.AssetsFolderName) where T : Object
+        public static T[] LoadEditorResources<T>(string name, string searchInFolder = EditorEnvironment.AssetsFolderName) where T : UnityObject
         {
             var type = typeof(T).Name.ToCamelCase();
             var searchInFolders = string.IsNullOrEmpty(searchInFolder) ? null : new[] { searchInFolder };

@@ -1,0 +1,81 @@
+// Copyright (c) Jerry Lee. All rights reserved. Licensed under the MIT License.
+// See LICENSE in the project root for license information.
+
+using UnityEngine;
+
+namespace UniSharper.Extensions
+{
+    public static class Vector3IntUtility
+    {
+        /// <summary>
+        /// Converts the string representation of a <see cref="Vector3Int"/> equivalent.
+        /// </summary>
+        /// <param name="s">The string representation of a <see cref="Vector3Int"/> equivalent. </param>
+        /// <returns>A <see cref="Vector3Int"/> equivalent to the <c>s</c>. </returns>
+        public static Vector3Int Parse(string s)
+        {
+            if (string.IsNullOrEmpty(s))
+                return default;
+
+            var values = StringUtility.GetStringValuesInBrackets(s);
+            switch (values.Length)
+            {
+                case < 2:
+                    return default;
+                case > 2:
+                {
+                    int.TryParse(values[0], out var x);
+                    int.TryParse(values[1], out var y);
+                    int.TryParse(values[2], out var z);
+                    return new Vector3Int(x, y, z);
+                }
+                default:
+                {
+                    int.TryParse(values[0], out var x);
+                    int.TryParse(values[1], out var y);
+                    return new Vector3Int(x, y);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Converts the string representation of a <see cref="Vector3Int"/> equivalent. A return value indicates whether the conversion succeeded.
+        /// </summary>
+        /// <param name="s">The string representation of a <see cref="Vector3Int"/> equivalent. </param>
+        /// <param name="result">A <see cref="Vector3Int"/> equivalent to the <c>s</c>. </param>
+        /// <returns><c>true</c> if s was converted successfully; otherwise, <c>false</c>. </returns>
+        public static bool TryParse(string s, out Vector3Int result)
+        {
+            if (string.IsNullOrEmpty(s))
+            {
+                result = default;
+                return false;
+            }
+
+            var values = StringUtility.GetStringValuesInBrackets(s);
+            switch (values.Length)
+            {
+                case < 2:
+                    result = default;
+                    return false;
+                case > 2:
+                {
+                    int.TryParse(values[0], out var x);
+                    int.TryParse(values[1], out var y);
+                    int.TryParse(values[2], out var z);
+                    result = new Vector3Int(x, y, z);
+                    break;
+                }
+                default:
+                {
+                    int.TryParse(values[0], out var x);
+                    int.TryParse(values[1], out var y);
+                    result = new Vector3Int(x, y);
+                    break;
+                }
+            }
+
+            return true;
+        }
+    }
+}

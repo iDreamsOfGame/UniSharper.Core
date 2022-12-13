@@ -2,8 +2,9 @@
 // See LICENSE in the project root for license information.
 
 using System.Collections.Generic;
+using UniSharper.Extensions;
 
-namespace UnityEngine
+namespace UniSharper.Preferences
 {
     public class PlayerPreferences<T> : IPlayerPreferences
     {

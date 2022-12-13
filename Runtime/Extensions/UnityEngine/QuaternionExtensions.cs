@@ -1,7 +1,9 @@
 ﻿// Copyright (c) Jerry Lee. All rights reserved. Licensed under the MIT License.
 // See LICENSE in the project root for license information.
 
-namespace UnityEngine
+using UnityEngine;
+
+namespace UniSharper.Extensions
 {
     /// <summary>
     /// Extension methods collection of <see cref="UnityEngine.Quaternion"/>.

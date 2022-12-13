@@ -1,7 +1,7 @@
 // Copyright (c) Jerry Lee. All rights reserved. Licensed under the MIT License.
 // See LICENSE in the project root for license information.
 
-namespace UnityEngine
+namespace UniSharper.Preferences
 {
     /// <summary>
     /// This class provides methods to get or save player preferences data identified by <c>key</c> contains <c>Namespace</c>.

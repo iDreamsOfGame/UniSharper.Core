@@ -2,6 +2,7 @@
 // project root for license information.
 
 using System;
+using ReSharp.Extensions;
 using UniSharper;
 using UnityEditor;
 using UnityEngine;

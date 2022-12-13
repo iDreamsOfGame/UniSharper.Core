@@ -2,8 +2,9 @@
 // See LICENSE in the project root for license information.
 
 using System;
+using UnityEngine.Networking;
 
-namespace UnityEngine.Networking
+namespace UniSharper.Extensions
 {
     /// <summary>
     /// Extension methods collection of <see cref="UnityEngine.Networking.UnityWebRequest"/>.
