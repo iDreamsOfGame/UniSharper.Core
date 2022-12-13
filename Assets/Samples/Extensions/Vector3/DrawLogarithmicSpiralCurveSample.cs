@@ -1,3 +1,4 @@
+using UniSharper.Extensions;
 using UnityEngine;
 
 namespace UniSharper.Samples

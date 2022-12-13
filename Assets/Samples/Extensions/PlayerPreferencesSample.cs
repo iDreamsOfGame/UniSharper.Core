@@ -1,4 +1,5 @@
 using Newtonsoft.Json;
+using UniSharper.Preferences;
 using UnityEngine;
 
 namespace UniSharper.Samples
