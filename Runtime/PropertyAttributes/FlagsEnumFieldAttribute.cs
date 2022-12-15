@@ -9,7 +9,6 @@ namespace UniSharper
     /// <summary>
     /// Represents the enumeration property with Flags attribute declaration.
     /// </summary>
-    /// <seealso cref="PropertyAttribute"/>
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
     public class FlagsEnumFieldAttribute : PropertyAttribute
     {

@@ -2,7 +2,10 @@
 // See LICENSE in the project root for license information.
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+// ReSharper disable PossibleMultipleEnumeration
 
 namespace UniSharper.Extensions
 {
@@ -55,6 +58,39 @@ namespace UniSharper.Extensions
             float.TryParse(values[1], out var y);
             result = new Vector2(x, y);
             return true;
+        }
+        
+        /// <summary>
+        /// Calculates the average of multiple <see cref="Vector2"/> s.
+        /// </summary>
+        /// <param name="points">The source <see cref="Vector2"/> s.</param>
+        /// <returns>The average of multiple <see cref="Vector2"/> s.</returns>
+        public static Vector2 CalculateAverage(IEnumerable<Vector2> points)
+        {
+            var sum = points.Aggregate(Vector2.zero, (current, point) => current + point);
+            return sum / points.Count();
+        }
+        
+        /// <summary>
+        /// Calculates the variance of multiple <see cref="Vector2"/> s.
+        /// </summary>
+        /// <param name="points">The source <see cref="Vector2"/> s.</param>
+        /// <returns>The variance of multiple <see cref="Vector2"/> s.</returns>
+        public static Vector2 CalculateVariance(IEnumerable<Vector2> points)
+        {
+            var squareSum = Vector2.zero;
+            var average = CalculateAverage(points);
+            foreach (var point in points)
+            {
+                var x = Mathf.Pow(point.x - average.x, 2);
+                var y = Mathf.Pow(point.y - average.y, 2);
+                squareSum += new Vector2(x, y);
+            }
+
+            var result = squareSum / points.Count();
+            result.x = Mathf.Sqrt(result.x);
+            result.y = Mathf.Sqrt(result.y);
+            return result;
         }
 
         /// <summary>

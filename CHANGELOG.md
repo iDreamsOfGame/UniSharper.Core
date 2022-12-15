@@ -1,3 +1,23 @@
+# Changelog
+
+All notable changes to this project will be documented in this file.
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+
+
+## [1.13.0] - 2022-12-15
+
+### Added
+
+- Adds **DisplayScreen** to access display screen information.
+- Adds **MobileDevice** to implement mobile specific function.
+- Adds some extension functions and utility classes.
+- Adds **MissingScriptsCleaner** to clear missing scripts on **GameObject**.
+- Adds editor feature **Copy Path in Hierarchy**.
+
+
+
 ## [1.12.0] - 2022-12-07
 
 ### Added

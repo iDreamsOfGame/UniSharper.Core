@@ -9,7 +9,7 @@ using UnityEngine;
 namespace UniSharperEditor
 {
     /// <summary>
-    /// Property drawer for <see cref="LayerFieldAttribute"/>.
+    /// Property drawer for <see cref="UniSharper.LayerFieldAttribute"/>.
     /// </summary>
     /// <seealso cref="PropertyDrawer"/>
     [CustomPropertyDrawer(typeof(LayerFieldAttribute))]

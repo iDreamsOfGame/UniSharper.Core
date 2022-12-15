@@ -9,7 +9,6 @@ namespace UniSharper
     /// <summary>
     /// Represents the sorting layer field that you select sorting layer name from Tags and Layers settings of Project in the Inspector window.
     /// </summary>
-    /// <seealso cref="PropertyAttribute"/>
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
     public class SortingLayerFieldAttribute : PropertyAttribute
     {

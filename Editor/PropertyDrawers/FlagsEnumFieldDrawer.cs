@@ -10,7 +10,7 @@ using UnityEngine;
 namespace UniSharperEditor
 {
     /// <summary>
-    /// Property drawer for <see cref="FlagsEnumFieldAttribute"/>.
+    /// Property drawer for <see cref="UniSharper.FlagsEnumFieldAttribute"/>.
     /// </summary>
     /// <seealso cref="PropertyDrawer"/>
     [CustomPropertyDrawer(typeof(FlagsEnumFieldAttribute))]

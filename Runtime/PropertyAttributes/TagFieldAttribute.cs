@@ -9,12 +9,11 @@ namespace UniSharper
     /// <summary>
     /// Represents the tag field that you select tag name from Tags and Layers settings of Project in the Inspector window.
     /// </summary>
-    /// <seealso cref="PropertyAttribute"/>
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
     public class TagFieldAttribute : PropertyAttribute
     {
         /// <summary>
-        /// Constructor.
+        /// Initializes a new instance of the <see cref="TagFieldAttribute"/> class.
         /// </summary>
         /// <param name="useDefaultTagFieldDrawer">Determine whether use the default tag filed drawer.</param>
         public TagFieldAttribute(bool useDefaultTagFieldDrawer = true)

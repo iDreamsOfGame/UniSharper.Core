@@ -9,7 +9,7 @@ using UnityEngine;
 namespace UniSharperEditor
 {
     /// <summary>
-    /// Property drawer for <see cref="SortingLayerFieldAttribute"/>.
+    /// Property drawer for <see cref="UniSharper.SortingLayerFieldAttribute"/>.
     /// </summary>
     /// <seealso cref="PropertyDrawer"/>
     [CustomPropertyDrawer(typeof(SortingLayerFieldAttribute))]

@@ -3,7 +3,7 @@
 
 using UnityEngine;
 
-namespace UniSharper
+namespace UniSharper.Extensions
 {
     /// <summary>
     /// Provides utilities to handle network operation. This class cannot be inherited.

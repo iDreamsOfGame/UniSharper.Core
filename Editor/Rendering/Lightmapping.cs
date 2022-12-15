@@ -2,9 +2,11 @@
 // project root for license information.
 
 using System.Collections.Generic;
+using System.Linq;
 using UniSharper.Rendering;
 using UnityEditor;
 using UnityEngine;
+using UnityPrefabUtility = UnityEditor.PrefabUtility;
 
 namespace UniSharperEditor.Rendering
 {
@@ -75,7 +77,7 @@ namespace UniSharperEditor.Rendering
                 data.ShadowMasks = shadowMasks.ToArray();
 
                 // Save prefab.
-                PrefabUtility.SavePrefabAsset(gameObject);
+                UnityPrefabUtility.SavePrefabAsset(gameObject);
 
                 // Apply lightmap.
                 PrefabLightmapData.ApplyStaticLightmap(data);
@@ -182,17 +184,8 @@ namespace UniSharperEditor.Rendering
             if (prefabs == null || prefabs.Length == 0)
                 return false;
 
-            foreach (var item in prefabs)
-            {
-                var root = PrefabUtility.GetCorrespondingObjectFromSource(item.gameObject);
-
-                if (root != null)
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            return prefabs.Select(item => UnityPrefabUtility.GetCorrespondingObjectFromSource(item.gameObject))
+                .Any(root => root != null);
         }
     }
 }

@@ -8,7 +8,7 @@ using UnityEngine;
 namespace UniSharperEditor
 {
     /// <summary>
-    /// Property drawer for <see cref="ReadOnlyFieldAttribute"/>.
+    /// Property drawer for <see cref="UniSharper.ReadOnlyFieldAttribute"/>.
     /// </summary>
     /// <seealso cref="PropertyDrawer"/>
     [CustomPropertyDrawer(typeof(ReadOnlyFieldAttribute))]

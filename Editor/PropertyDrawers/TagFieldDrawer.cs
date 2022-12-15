@@ -9,7 +9,7 @@ using UnityEngine;
 namespace UniSharperEditor
 {
     /// <summary>
-    /// Property drawer for <see cref="TagFieldAttribute"/>.
+    /// Property drawer for <see cref="UniSharper.TagFieldAttribute"/>.
     /// </summary>
     /// <seealso cref="PropertyDrawer"/>
     [CustomPropertyDrawer(typeof(TagFieldAttribute))]
