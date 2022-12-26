@@ -14,6 +14,10 @@ namespace UniSharper.Tests
         
         private const string InvalidString = "1.0)";
         
+        private const string ValidElementsString = "(1.0, 1.0, 1.0, 1.0)|(2.0, 2.0, 2.0, 2.0)";
+
+        private const string InvalidElementsString = "1.0)(2";
+        
         private static readonly Vector4 CorrectValue = Vector4.one;
 
         private static readonly Vector4 CorrectValue2 = Vector3.one;
@@ -66,6 +70,27 @@ namespace UniSharper.Tests
         public void TryParseFailTest()
         {
             var result = Vector4Utility.TryParse(InvalidString, out _);
+            Assert.AreEqual(false, result);
+        }
+        
+        [Test]
+        public void ParseArrayTest()
+        {
+            var result = Vector4Utility.ParseArray(ValidElementsString);
+            Assert.True(result[0].Equals(CorrectValue) && result[1].Equals(CorrectValue * 2));
+        }
+
+        [Test]
+        public void TryParseArraySuccessTest()
+        {
+            var result = Vector4Utility.TryParseArray(ValidElementsString, out var value);
+            Assert.True(result.Equals(true) && value[0].Equals(CorrectValue) && value[1].Equals(CorrectValue * 2));
+        }
+
+        [Test]
+        public void TryParseArrayFailTest()
+        {
+            var result = Vector4Utility.TryParseArray(InvalidElementsString, out _, string.Empty);
             Assert.AreEqual(false, result);
         }
     }

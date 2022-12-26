@@ -58,14 +58,25 @@ namespace UniSharperEditor
             public const string EnumProperty = "\t\t/// <summary>\r\n\t\t/// {0}\r\n\t\t/// </summary>\r\n\t\tpublic {1} {2} => ({1}){3};";
 
             /// <summary>
-            /// The format string for property member.
+            /// The format string for private field.
             /// </summary>
-            public const string PropertyMember = "\t\t/// <summary>\r\n\t\t/// {0}\r\n\t\t/// </summary>\r\n\t\tpublic {1} {2} {{ get; set; }}";
+            public const string PrivateField = "\t\tprivate {0} {1};";
             
             /// <summary>
-            /// The format string for property member with only getter.
+            /// The format string for auto-implemented property.
             /// </summary>
-            public const string OnlyGetterPropertyMember = "\t\t/// <summary>\r\n\t\t/// {0}\r\n\t\t/// </summary>\r\n\t\tpublic {1} {2} => {3};";
+            public const string AutoImplementedProperty = "\t\t/// <summary>\r\n\t\t/// {0}\r\n\t\t/// </summary>\r\n\t\tpublic {1} {2} {{ get; set; }}";
+            
+            /// <summary>
+            /// The format string for expression-bodied getter property.
+            /// </summary>
+            public const string ExpressionBodiedGetterProperty = "\t\t/// <summary>\r\n\t\t/// {0}\r\n\t\t/// </summary>\r\n\t\tpublic {1} {2} => {3};";
+            
+            /// <summary>
+            /// The format string for only getter property.
+            /// </summary>
+            public const string OnlyGetterProperty = "\t\t/// <summary>\r\n\t\t/// {0}\r\n\t\t/// </summary>\r\n\t\tpublic {1} {2}"
+                                                           + "\r\n\t\t{{\r\n\t\t\tget\r\n\t\t\t{{\r\n\t\t\t\t{3}\r\n\t\t\t}}\r\n\t\t}}";
         }
 
         /// <summary>

@@ -1,6 +1,8 @@
 // Copyright (c) Jerry Lee. All rights reserved. Licensed under the MIT License.
 // See LICENSE in the project root for license information.
 
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace UniSharper.Extensions
@@ -57,6 +59,63 @@ namespace UniSharper.Extensions
             float.TryParse(values[2], out var z);
             float.TryParse(values[3], out var w);
             result = new Quaternion(x, y, z, w);
+            return true;
+        }
+        
+        /// <summary>
+        /// Converts the string representation of an <see cref="Quaternion"/> array equivalent.
+        /// </summary>
+        /// <param name="s">The string representation of an <see cref="Quaternion"/> array equivalent. </param>
+        /// <param name="arrayElementSeparator">A string that delimits the element string in this string.</param>
+        /// <returns>An <see cref="Quaternion"/> array equivalent to the <c>s</c>. </returns>
+        public static Quaternion[] ParseArray(string s, string arrayElementSeparator = "|")
+        {
+            if (string.IsNullOrEmpty(s) || string.IsNullOrEmpty(arrayElementSeparator))
+                return default;
+            
+            var elementStrings = s.Trim().Split(arrayElementSeparator, StringSplitOptions.RemoveEmptyEntries);
+            if (elementStrings.Length == 0)
+                return default;
+
+            var result = new Quaternion[elementStrings.Length];
+            for (var i = 0; i < result.Length; i++)
+            {
+                result[i] = Parse(elementStrings[i]);
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Converts the string representation of an <see cref="Quaternion"/> array equivalent. A return value indicates whether the conversion succeeded.
+        /// </summary>
+        /// <param name="s">The string representation of an <see cref="Quaternion"/> array equivalent. </param>
+        /// <param name="result">An <see cref="Quaternion"/> array equivalent to the <c>s</c>. </param>
+        /// <param name="arrayElementSeparator">A string that delimits the element string in this string.</param>
+        /// <returns><c>true</c> if s was converted successfully; otherwise, <c>false</c>. </returns>
+        public static bool TryParseArray(string s, out Quaternion[] result, string arrayElementSeparator = "|")
+        {
+            if (string.IsNullOrEmpty(s) || string.IsNullOrEmpty(arrayElementSeparator))
+            {
+                result = default;
+                return false;
+            }
+
+            var elementStrings = s.Trim().Split(arrayElementSeparator, StringSplitOptions.RemoveEmptyEntries);
+            if (elementStrings.Length == 0)
+            {
+                result = default;
+                return false;
+            }
+
+            var list = new List<Quaternion>(elementStrings.Length);
+            foreach (var elementString in elementStrings)
+            {
+                if(TryParse(elementString, out var element))
+                    list.Add(element);
+            }
+            
+            result = list.ToArray();
             return true;
         }
     }
