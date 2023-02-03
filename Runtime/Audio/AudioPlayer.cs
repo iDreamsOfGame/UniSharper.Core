@@ -19,7 +19,7 @@ namespace UniSharper.Audio
         {
             get
             {
-                if (!audioSource)
+                if (!audioSource && gameObject)
                     TryGetComponent(out audioSource);
 
                 return audioSource;
