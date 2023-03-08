@@ -10,7 +10,7 @@ namespace UniSharperEditor
     /// <summary>
     /// Provides utilities to handle prefab operation. 
     /// </summary>
-    public static class PrefabUtility
+    public static class UniPrefabUtility
     {
         /// <summary>
         /// Gets all prefabs under the specific path.
