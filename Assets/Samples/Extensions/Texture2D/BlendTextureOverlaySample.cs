@@ -1,7 +1,8 @@
 ﻿using UniSharper.Extensions;
 using UnityEngine;
 using UnityEngine.UI;
-// ReSharper disable All
+
+// ReSharper disable PossibleLossOfFraction
 
 namespace UniSharper.Samples
 {
