@@ -2,7 +2,8 @@
 // See LICENSE in the project root for license information.
 
 using UnityEngine;
-// ReSharper disable All
+
+// ReSharper disable StaticMemberInGenericType
 
 namespace UniSharper.Patterns
 {
@@ -14,7 +15,7 @@ namespace UniSharper.Patterns
     public abstract class SingletonMonoBehaviour<T> : MonoBehaviour where T : MonoBehaviour
     {
         private static bool instantiated;
-        
+
         private static bool destroyed;
 
         private static T instance;

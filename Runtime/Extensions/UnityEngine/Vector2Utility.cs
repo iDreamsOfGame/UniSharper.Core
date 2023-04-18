@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+
 // ReSharper disable PossibleMultipleEnumeration
 // ReSharper disable MethodOverloadWithOptionalParameter
 
@@ -71,7 +72,7 @@ namespace UniSharper.Extensions
         {
             if (string.IsNullOrEmpty(s) || string.IsNullOrEmpty(arrayElementSeparator))
                 return default;
-            
+
             var elementStrings = s.Trim().Split(arrayElementSeparator, StringSplitOptions.RemoveEmptyEntries);
             if (elementStrings.Length == 0)
                 return default;
@@ -110,14 +111,14 @@ namespace UniSharper.Extensions
             var list = new List<Vector2>(elementStrings.Length);
             foreach (var elementString in elementStrings)
             {
-                if(TryParse(elementString, out var element))
+                if (TryParse(elementString, out var element))
                     list.Add(element);
             }
-            
+
             result = list.ToArray();
             return true;
         }
-        
+
         /// <summary>
         /// Calculates the average of multiple <see cref="Vector2"/> s.
         /// </summary>
@@ -128,7 +129,7 @@ namespace UniSharper.Extensions
             var sum = points.Aggregate(Vector2.zero, (current, point) => current + point);
             return sum / points.Count();
         }
-        
+
         /// <summary>
         /// Calculates the variance of multiple <see cref="Vector2"/> s.
         /// </summary>

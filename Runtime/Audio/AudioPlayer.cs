@@ -1,6 +1,7 @@
 // Copyright (c) Jerry Lee. All rights reserved. Licensed under the MIT License.
 // See LICENSE in the project root for license information.
 
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -19,9 +20,16 @@ namespace UniSharper.Audio
         {
             get
             {
-                if (!audioSource && gameObject)
-                    TryGetComponent(out audioSource);
-
+                try
+                {
+                    if (!audioSource && gameObject)
+                        TryGetComponent(out audioSource);
+                }
+                catch (Exception e)
+                {
+                    Debug.LogWarning(e.ToString());
+                }
+                
                 return audioSource;
             }
         }
@@ -38,23 +46,26 @@ namespace UniSharper.Audio
 
         public bool Mute
         {
-            get => audioSource && audioSource.mute;
+            get => AudioSource && AudioSource.mute;
             set
             {
-                if (!audioSource)
+                if (!AudioSource)
                     return;
 
-                if (audioSource.mute != value)
-                    audioSource.mute = value;
+                if (AudioSource.mute != value)
+                    AudioSource.mute = value;
             }
         }
 
         public void Play(float delay = 0f, bool muted = false, bool isLoop = false)
         {
+            if (!AudioSource)
+                return;
+
             IsLoop = isLoop;
             AudioSource.mute = muted;
 
-            if (!AudioSource || !AudioSource.clip)
+            if (!AudioSource.clip)
                 return;
 
             AudioSource.PlayDelayed(delay);
@@ -62,20 +73,23 @@ namespace UniSharper.Audio
 
         public void PlayOneShot(float delay = 0f, bool muted = false)
         {
+            if (!AudioSource)
+                return;
+
             IsLoop = false;
             AudioSource.mute = muted;
 
-            if (!AudioSource || !AudioSource.clip)
+            if (!AudioSource.clip)
                 return;
 
             StartCoroutine(PlayOneShotDelayed(delay));
         }
-        
+
         public void Pause()
         {
             if (!AudioSource)
                 return;
-            
+
             AudioSource.Pause();
         }
 
@@ -83,7 +97,7 @@ namespace UniSharper.Audio
         {
             if (!AudioSource)
                 return;
-            
+
             AudioSource.UnPause();
         }
 
@@ -91,15 +105,15 @@ namespace UniSharper.Audio
         {
             if (!AudioSource)
                 return;
-            
+
             AudioSource.Stop();
         }
 
         private IEnumerator PlayOneShotDelayed(float delay)
         {
             yield return new WaitForSeconds(delay);
-            
-            if(AudioSource)
+
+            if (AudioSource && AudioSource.clip)
                 AudioSource.PlayOneShot(AudioSource.clip);
         }
     }
