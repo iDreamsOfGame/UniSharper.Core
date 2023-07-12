@@ -36,13 +36,12 @@ namespace UniSharperEditor
                 switch (EditorUserBuildSettings.activeBuildTarget)
                 {
                     case BuildTarget.Android:
-                        PlayerSettings.Android.bundleVersionCode++;
+                        int.TryParse(value, out var versionCode);
+                        PlayerSettings.Android.bundleVersionCode = versionCode;
                         break;
 
                     case BuildTarget.iOS:
-                        int.TryParse(PlayerSettings.iOS.buildNumber, out var versionCode);
-                        versionCode++;
-                        PlayerSettings.iOS.buildNumber = versionCode.ToString();
+                        PlayerSettings.iOS.buildNumber = value;
                         break;
                 }
 
