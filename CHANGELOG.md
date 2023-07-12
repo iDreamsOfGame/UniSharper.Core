@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+## [1.14.0] - 2023-07-12
+
+### Added
+
+- Adds utility class **ScriptingSymbolsUtility** to handle **scripting symbols**.
+
+
+
 ## [1.13.0] - 2022-12-15
 
 ### Added
