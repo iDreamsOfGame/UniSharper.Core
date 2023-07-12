@@ -15,7 +15,10 @@ namespace UniSharperEditor
     /// </summary>
     public static class ScriptingSymbolsUtility
     {
-        private const char DefineSeparator = ';';
+        /// <summary>
+        /// The separator for separating defines.
+        /// </summary>
+        public const char DefinesSeparator = ';';
         
         /// <summary>
         /// Gets or sets the user-specified symbols for script compilation for the active build target.
@@ -54,6 +57,7 @@ namespace UniSharperEditor
             var buildTargetGroup = BuildPipeline.GetBuildTargetGroup(buildTarget);
             var nameBuildTarget = NamedBuildTarget.FromBuildTargetGroup(buildTargetGroup);
             PlayerSettings.SetScriptingDefineSymbols(nameBuildTarget, value);
+            AssetDatabase.SaveAssets();
         }
         
         /// <summary>
@@ -66,7 +70,7 @@ namespace UniSharperEditor
             var scriptingDefineSymbols = GetScriptingSymbols(buildTarget);
             var scriptingSymbols = string.IsNullOrEmpty(scriptingDefineSymbols) 
                 ? Array.Empty<string>() 
-                : scriptingDefineSymbols.Split(DefineSeparator, StringSplitOptions.RemoveEmptyEntries);
+                : scriptingDefineSymbols.Split(DefinesSeparator, StringSplitOptions.RemoveEmptyEntries);
             return new List<string>(scriptingSymbols);
         }
 
@@ -80,6 +84,7 @@ namespace UniSharperEditor
         /// <summary>
         /// Determines whether the user-specified defines for script compilation contains a specific define for the specific build target.
         /// </summary>
+        /// <param name="buildTarget">The specific build target. </param>
         /// <param name="define">The specific define to locate in the user-specified defines for script compilation for the specific build target. </param>
         /// <returns><c>true</c> if the specific define is found in the user-specified defines for script compilation for the specific build target; otherwise, <c>false</c>. </returns>
         public static bool ContainsDefine(BuildTarget buildTarget, string define)
@@ -104,6 +109,7 @@ namespace UniSharperEditor
         /// <summary>
         /// Adds a specific define to the user-specified defines for script compilation for the specific build target.
         /// </summary>
+        /// <param name="buildTarget">The specific build target. </param>
         /// <param name="define">The specific define to add to the user-specified defines for script compilation for the specific build target. </param>
         public static void AddDefine(BuildTarget buildTarget, string define)
         {
@@ -113,6 +119,31 @@ namespace UniSharperEditor
             var defines = GetDefines(buildTarget);
             defines.AddUnique(define.TrimAll());
             SetScriptingSymbols(buildTarget, ToScriptingSymbols(defines));
+        }
+
+        /// <summary>
+        /// Adds specific defines to the user-specified defines for script compilation for the active build target.
+        /// </summary>
+        /// <param name="define">The specific defines to add to the user-specified defines for script compilation for the active build target. </param>
+        public static void AddDefines(IEnumerable<string> defines)
+        {
+            AddDefines(EditorUserBuildSettings.activeBuildTarget, defines);
+        }
+
+        /// <summary>
+        /// Adds specific defines to the user-specified defines for script compilation for the specific build target.
+        /// </summary>
+        /// <param name="buildTarget">The specific build target. </param>
+        /// <param name="define">The specific defines to add to the user-specified defines for script compilation for the specific build target. </param>
+        public static void AddDefines(BuildTarget buildTarget, IEnumerable<string> defines)
+        {
+            if (defines == null)
+                return;
+
+            foreach (var define in defines)
+            {
+                AddDefine(buildTarget, define);
+            }
         }
 
         /// <summary>
@@ -127,6 +158,7 @@ namespace UniSharperEditor
         /// <summary>
         /// Removes the first occurrence of a specific define from the user-specified defines for script compilation for the specific build target.
         /// </summary>
+        /// <param name="buildTarget">The specific build target. </param>
         /// <param name="define">The specific define to remove from the user-specified defines for script compilation for the specific build target. </param>
         public static void RemoveDefine(BuildTarget buildTarget, string define)
         {
@@ -138,6 +170,53 @@ namespace UniSharperEditor
             SetScriptingSymbols(buildTarget, ToScriptingSymbols(defines));
         }
 
-        private static string ToScriptingSymbols(IReadOnlyCollection<string> defines) => defines == null || defines.Count == 0 ? string.Empty : string.Join(DefineSeparator, defines);
+        /// <summary>
+        /// Removes specific defines from the user-specified defines for script compilation for the active build target.
+        /// </summary>
+        /// <param name="defines">The specific defines to be removed from the user-specified defines for script compilation for the active build target. </param>
+        public static void RemoveDefines(IEnumerable<string> defines)
+        {
+            RemoveDefines(EditorUserBuildSettings.activeBuildTarget, defines);
+        }
+
+        /// <summary>
+        /// Removes specific defines from the user-specified defines for script compilation for the specific build target.
+        /// </summary>
+        /// <param name="buildTarget">The specific build target. </param>
+        /// <param name="defines">The specific defines to be removed from the user-specified defines for script compilation for the specific build target. </param>
+        public static void RemoveDefines(BuildTarget buildTarget, IEnumerable<string> defines)
+        {
+            if (buildTarget == BuildTarget.NoTarget || defines == null)
+                return;
+
+            var scriptingDefines = GetDefines(buildTarget);
+            foreach (var define in defines)
+            {
+                scriptingDefines.Remove(define.TrimAll());
+            }
+            SetScriptingSymbols(buildTarget, ToScriptingSymbols(scriptingDefines));
+        }
+
+        /// <summary>
+        /// Clears all user-specified defines for script compilation for the active build target.
+        /// </summary>
+        public static void ClearAllDefines()
+        {
+            ClearAllDefines(EditorUserBuildSettings.activeBuildTarget);
+        }
+
+        /// <summary>
+        /// Clears all user-specified defines for script compilation for the specific build target.
+        /// </summary>
+        /// <param name="buildTarget">The specific build target. </param>
+        public static void ClearAllDefines(BuildTarget buildTarget)
+        {
+            if (buildTarget == BuildTarget.NoTarget)
+                return;
+
+            SetScriptingSymbols(buildTarget, string.Empty);
+        }
+
+        private static string ToScriptingSymbols(IReadOnlyCollection<string> defines) => defines == null || defines.Count == 0 ? string.Empty : string.Join(DefinesSeparator, defines);
     }
 }
