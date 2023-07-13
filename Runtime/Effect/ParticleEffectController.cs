@@ -85,6 +85,7 @@ namespace UniSharper.Effect
             if (!ParticleSystemRoot.isStopped) 
                 return;
             
+            PlaybackTime = 0;
             ParticleSystemRoot.Play();
             FireEventStarted();
             started = true;
