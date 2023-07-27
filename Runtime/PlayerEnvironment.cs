@@ -19,7 +19,7 @@ namespace UniSharper
         /// <value>The newline string defined for windows.</value>
         public const string WindowsNewLine = "\r\n";
 
-        private const string AndroidDeviceInfoClassFullPath = "io.github.idreamsofgame.unisharper.core.DeviceInfo";
+        private const string AndroidDeviceInfoClassFullPath = "io.github.idreamsofgame.unisharper.plugin.DeviceInfo";
 
         /// <summary>
         /// Gets a value indicating whether the runtime platform is Android.

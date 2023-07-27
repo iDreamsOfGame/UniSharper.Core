@@ -10,7 +10,7 @@ namespace UniSharper.Extensions
     /// </summary>
     public static class NetworkUtility
     {
-        private const string AndroidJavaClassName = "io.github.idreamsofgame.unisharper.core.NetUtils";
+        private const string AndroidJavaClassName = "io.github.idreamsofgame.unisharper.plugin.NetUtils";
         
         /// <summary>
         /// If the internet is reachable.
