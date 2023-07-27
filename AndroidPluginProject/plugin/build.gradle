@@ -1,0 +1,66 @@
+plugins {
+    id 'com.android.library'
+}
+
+def unityPluginAssetsFolderPath = '../../UnityProject/Assets/UniSharper.Core/Plugins/Android/'
+def pluginAarFileName = 'unisharper-plugin.aar'
+
+android {
+    namespace 'io.github.idreamsofgame.unisharper.plugin'
+    compileSdk 33
+
+    defaultConfig {
+        minSdk 22
+        targetSdk 33
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            android.libraryVariants.all { variant ->
+                variant.outputs.all {
+                    outputFileName = "${pluginAarFileName}"
+                }
+            }
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.8.0'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    compileOnly fileTree(dir: './libs', include: ['*.aar', '*.jar'], exclude: [])
+}
+
+afterEvaluate {
+    generateReleaseBuildConfig.enabled = false
+    generateDebugBuildConfig.enabled = false
+    generateReleaseResValues.enabled = false
+    generateDebugResValues.enabled = false
+}
+
+// 删除Unity工程下的Android Plugin资源
+tasks.register("deleteOldAarPluginInUnityPluginsFolder", Delete) {
+    delete "${unityPluginAssetsFolderPath}${pluginAarFileName}"
+}
+
+// 导出Android Plugin到Unity插件目录
+tasks.register("exportAarToUnityPluginsFolder", Copy) {
+    dependsOn("deleteOldAarPluginInUnityPluginsFolder", clean, build)
+    tasks.findByName('build').mustRunAfter 'clean'
+    from('build/outputs/aar/')
+    into("${unityPluginAssetsFolderPath}")
+    include("${pluginAarFileName}")
+}
