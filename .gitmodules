@@ -1,4 +1,0 @@
-[submodule "upm"]
-	path = Assets/UniSharper.Core
-	url = https://github.com/iDreamsOfGAme/UniSharper.Core.git
-	branch = upm
