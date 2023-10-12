@@ -468,6 +468,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 868032674}
+  cube: {fileID: 1034407082}
   rawImage1: {fileID: 31920747}
   rawImage2: {fileID: 764077554}
   rawImage3: {fileID: 384880100}
