@@ -1,5 +1,6 @@
 {
     "name": "Unity.UniSharper",
+    "rootNamespace": "UniSharper",
     "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],

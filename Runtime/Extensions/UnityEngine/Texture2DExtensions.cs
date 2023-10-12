@@ -12,6 +12,16 @@ namespace UniSharper.Extensions
     /// </summary>
     public static class Texture2DExtensions
     {
+        private static readonly int SourcePropertyId = Shader.PropertyToID("source");
+        
+        private static readonly int OverlayPropertyId = Shader.PropertyToID("overlay");
+        
+        private static readonly int OverlayDimensionsPropertyId = Shader.PropertyToID("overlay_dimensions");
+        
+        private static readonly int OverlayPositionPropertyId = Shader.PropertyToID("overlay_position");
+        
+        private static readonly int CanvasPropertyId = Shader.PropertyToID("canvas");
+        
         /// <summary>
         /// Blend other texture as overlay.
         /// </summary>
@@ -39,11 +49,11 @@ namespace UniSharper.Extensions
 
                 var shader = Resources.Load<ComputeShader>("Shaders/BlendTextureOverlay");
                 var kernel = shader.FindKernel("blendTextureOverlay");
-                shader.SetTexture(kernel, "source", source);
-                shader.SetTexture(kernel, "overlay", overlay);
-                shader.SetInts("overlayDimensions", overlay.width, overlay.height);
-                shader.SetInts("overlayPosition", overlayPosition.x, overlayPosition.y);
-                shader.SetTexture(kernel, "canvas", renderTexture);
+                shader.SetTexture(kernel, SourcePropertyId, source);
+                shader.SetTexture(kernel, OverlayPropertyId, overlay);
+                shader.SetInts(OverlayDimensionsPropertyId, overlay.width, overlay.height);
+                shader.SetInts(OverlayPositionPropertyId, overlayPosition.x, overlayPosition.y);
+                shader.SetTexture(kernel, CanvasPropertyId, renderTexture);
                 shader.Dispatch(kernel, source.width, source.height, 1);
                 var output = renderTexture.ToTexture(new Rect(0, 0, renderTexture.width, renderTexture.height));
                 UnityObject.Destroy(renderTexture);

@@ -3,7 +3,7 @@
 
 using UnityEngine;
 
-namespace UniSharper.Core.Runtime
+namespace UniSharper
 {
     /// <summary>
     /// Provides access to Android widgets.

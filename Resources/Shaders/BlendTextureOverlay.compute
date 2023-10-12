@@ -6,20 +6,20 @@
 RWTexture2D<float4> canvas;
 Texture2D source;
 Texture2D overlay;
-uint2 overlayDimensions;
-uint2 overlayPosition;
+uint2 overlay_dimensions;
+uint2 overlay_position;
 
 [numthreads(8,8,1)]
-void blendTextureOverlay(uint3 threadID : SV_DispatchThreadID)
+void blendTextureOverlay(uint3 thread_id : SV_DispatchThreadID)
 {
-    const float4 clearColor = float4(0, 0, 0, 0);
-    uint2 overlayPixelPosition = threadID.xy - overlayPosition.xy;
-    float4 overlayColor = clearColor;
+    const float4 clear_color = float4(0, 0, 0, 0);
+    uint2 overlay_pixel_position = thread_id.xy - overlay_position.xy;
+    float4 overlay_color = clear_color;
 
-    if(0 <= overlayPixelPosition.x && overlayPixelPosition.x <= overlayDimensions.x && 0 <= overlayPixelPosition.y && overlayPixelPosition.y <= overlayDimensions.y) 
+    if(overlay_pixel_position.x <= overlay_dimensions.x && overlay_pixel_position.y <= overlay_dimensions.y) 
     {
-        overlayColor = overlay[overlayPixelPosition];
+        overlay_color = overlay[overlay_pixel_position];
     }
 
-    canvas[threadID.xy] = source[threadID.xy].rgba + overlayColor;
+    canvas[thread_id.xy] = source[thread_id.xy].rgba + overlay_color;
 }
