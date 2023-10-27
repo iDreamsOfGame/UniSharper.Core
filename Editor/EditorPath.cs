@@ -21,8 +21,8 @@ namespace UniSharperEditor
         /// <exception cref="ArgumentNullException">path</exception>
         public static string ConvertToAbsolutePath(params string[] paths)
         {
-            if (paths == null)
-                throw new ArgumentNullException(nameof(paths));
+            if (paths == null || paths.Length == 0)
+                return string.Empty;
 
             var newPaths = new string[paths.Length + 1];
             newPaths[0] = Directory.GetCurrentDirectory();
@@ -39,12 +39,12 @@ namespace UniSharperEditor
         public static string ConvertToAssetPath(string path)
         {
             if (string.IsNullOrEmpty(path))
-                throw new ArgumentNullException(nameof(path));
+                return string.Empty;
 
             var currentDirectory = PathUtility.UnifyToAltDirectorySeparatorChar(Directory.GetCurrentDirectory());
             var absolutePath = PathUtility.UnifyToAltDirectorySeparatorChar(path);
             return absolutePath.KmpIndexOf(currentDirectory) != -1
-                ? PathUtility.UnifyToAltDirectorySeparatorChar(absolutePath.Substring(currentDirectory.Length + 1))
+                ? PathUtility.UnifyToAltDirectorySeparatorChar(absolutePath[(currentDirectory.Length + 1)..])
                 : path;
         }
 
@@ -57,10 +57,32 @@ namespace UniSharperEditor
         public static bool IsAssetPath(string path)
         {
             if (string.IsNullOrEmpty(path))
-                throw new ArgumentNullException(nameof(path));
+                return false;
 
             var newPath = PathUtility.UnifyToAltDirectorySeparatorChar(path);
             return newPath.StartsWith(EditorEnvironment.AssetsFolderName + Path.AltDirectorySeparatorChar) || newPath.StartsWith(PathUtility.UnifyToAltDirectorySeparatorChar(Directory.GetCurrentDirectory()));
+        }
+
+        /// <summary>
+        /// Gets the path of package.
+        /// </summary>
+        /// <param name="packageName">The name of package. </param>
+        /// <returns>The path of the package. </returns>
+        public static string GetPackagePath(string packageName) =>
+            string.IsNullOrEmpty(packageName) ? string.Empty : Path.Combine(EditorEnvironment.PackagesFolderName, packageName);
+
+        /// <summary>
+        /// Gets the absolute path of the package.
+        /// </summary>
+        /// <param name="packageName">The name of package. </param>
+        /// <returns>The absolute path of the package. </returns>
+        public static string GetPackageFullPath(string packageName)
+        {
+            if (string.IsNullOrEmpty(packageName))
+                return string.Empty;
+
+            var packagePath = GetPackagePath(packageName);
+            return string.IsNullOrEmpty(packagePath) ? string.Empty : Path.GetFullPath(packagePath);
         }
     }
 }
