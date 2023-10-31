@@ -2,7 +2,7 @@
   "name": "io.github.idreamsofgame.unisharper.core",
   "displayName": "UniSharper.Core",
   "description": "UniSharper.Core is a unity package that contains scripts, plugins and assets for general unity application development.",
-  "version": "1.14.7",
+  "version": "1.14.9",
   "unity": "2018.3",
   "author": {
     "name": "iDreamsOfGame",
