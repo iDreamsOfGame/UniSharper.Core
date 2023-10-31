@@ -98,9 +98,19 @@ namespace UniSharperEditor
             directoryFileNamesMap ??= new Dictionary<string, string[]>();
             var key = $"{property.serializedObject.GetHashCode()}.{property.propertyPath}.{Path.Combine(dirPath, searchPattern)}";
 
-            if (!directoryFileNamesMap.ContainsKey(key))
+            if (!directoryFileNamesMap.ContainsKey(key) && Directory.Exists(dirPath))
             {
-                var files = Directory.GetFiles(dirPath, searchPattern, searchOption);
+                string[] files;
+                
+                try
+                {
+                    files = Directory.GetFiles(dirPath, searchPattern, searchOption);
+                }
+                catch (Exception)
+                {
+                    files = Array.Empty<string>();
+                }
+                
                 if (files.Length > 0)
                 {
                     var fileNames = new string[files.Length];
