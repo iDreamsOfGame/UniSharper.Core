@@ -19,7 +19,10 @@ namespace UniSharperEditor
     {
         private class InternalPostprocessor : AssetPostprocessor
         {
-            private static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths)
+            private static void OnPostprocessAllAssets(string[] importedAssets,
+                string[] deletedAssets,
+                string[] movedAssets,
+                string[] movedFromAssetPaths)
             {
                 directoryFileNamesMap?.Clear();
             }
@@ -38,16 +41,32 @@ namespace UniSharperEditor
             if (property.propertyType == SerializedPropertyType.String)
             {
                 EditorGUI.BeginProperty(position, label, property);
-                
+
                 var fieldAttribute = (DirectoryFilesFieldAttribute)attribute;
-                if (!string.IsNullOrEmpty(fieldAttribute.DirectoryPath))
+                var directoryPaths = fieldAttribute.DirectoryPaths;
+                var searchPattern = fieldAttribute.SearchPattern;
+                var searchOption = fieldAttribute.SearchOption;
+                var withExtension = fieldAttribute.WithExtension;
+                var orderByDescending = fieldAttribute.OrderByDescending;
+                if (directoryPaths != null)
                 {
-                    var directoryFiles = GetDirectoryFileNames(fieldAttribute.DirectoryPath, fieldAttribute.SearchPattern, fieldAttribute.SearchOption);
-                    if (directoryFiles.Length > 0)
+                    var directoryFiles = new List<string>();
+                    
+                    foreach (var directoryPath in directoryPaths)
                     {
-                        var index = !string.IsNullOrEmpty(property.stringValue) ? Array.IndexOf(directoryFiles, property.stringValue) : 0;
+                        var fileNames = GetDirectoryFileNames(property, directoryPath, searchPattern, searchOption, withExtension);
+                        directoryFiles.AddRange(fileNames);
+                    }
+                    
+                    if (directoryFiles.Count > 0)
+                    {
+                        directoryFiles.Sort();
+                        if (orderByDescending)
+                            directoryFiles.Reverse();
+                        
+                        var index = !string.IsNullOrEmpty(property.stringValue) ? directoryFiles.IndexOf(property.stringValue) : 0;
                         index = Math.Max(index, 0);
-                        index = EditorGUI.Popup(position, label.text, index, directoryFiles);
+                        index = EditorGUI.Popup(position, label.text, index, directoryFiles.ToArray());
                         property.stringValue = directoryFiles[index];
                     }
                     else
@@ -65,14 +84,19 @@ namespace UniSharperEditor
             }
             else
             {
+                property.stringValue = string.Empty;
                 EditorGUI.PropertyField(position, property, label);
             }
         }
-        
-        private static string[] GetDirectoryFileNames(string dirPath, string searchPattern, SearchOption searchOption = SearchOption.TopDirectoryOnly)
+
+        private static string[] GetDirectoryFileNames(SerializedProperty property,
+            string dirPath,
+            string searchPattern,
+            SearchOption searchOption = SearchOption.TopDirectoryOnly,
+            bool withExtension = false)
         {
             directoryFileNamesMap ??= new Dictionary<string, string[]>();
-            var key = Path.Combine(dirPath, searchPattern);
+            var key = $"{property.serializedObject.GetHashCode()}.{property.propertyPath}.{Path.Combine(dirPath, searchPattern)}";
 
             if (!directoryFileNamesMap.ContainsKey(key))
             {
@@ -82,8 +106,9 @@ namespace UniSharperEditor
                     var fileNames = new string[files.Length];
                     for (var i = 0; i < fileNames.Length; i++)
                     {
-                        fileNames[i] = Path.GetFileNameWithoutExtension(files[i]);
+                        fileNames[i] = withExtension ? Path.GetFileName(files[i]) : Path.GetFileNameWithoutExtension(files[i]);
                     }
+
                     directoryFileNamesMap.Add(key, fileNames);
                 }
             }

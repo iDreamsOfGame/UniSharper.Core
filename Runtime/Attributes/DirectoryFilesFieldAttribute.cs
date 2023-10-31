@@ -13,29 +13,56 @@ namespace UniSharper
         /// <summary>
         /// Initializes a new instance of the <see cref="DirectoryFilesFieldAttribute"/> class.
         /// </summary>
-        /// <param name="directoryPath">The path of target directory. </param>
+        /// <param name="directoryPaths">The paths of target directories. </param>
         /// <param name="searchPattern">The search pattern. </param>
         /// <param name="searchOption">The search option. </param>
-        public DirectoryFilesFieldAttribute(string directoryPath, string searchPattern, SearchOption searchOption = SearchOption.TopDirectoryOnly)
+        /// <param name="withExtension">If <c>true</c>, shows filename with extension; <c>false</c> show filename without extension. </param>
+        /// <param name="orderByDescending">If <c>true</c>, sorts the elements of result in descending order; <c>false</c> sorts in ascending order. </param>
+        public DirectoryFilesFieldAttribute(string[] directoryPaths,
+            string searchPattern,
+            SearchOption searchOption = SearchOption.TopDirectoryOnly,
+            bool withExtension = false,
+            bool orderByDescending = false)
         {
-            DirectoryPath = Path.Combine(Directory.GetCurrentDirectory(), directoryPath);
+            if (directoryPaths != null)
+            {
+                var length = directoryPaths.Length;
+                DirectoryPaths = new string[length];
+                for (var i = 0; i < length; i++)
+                {
+                    DirectoryPaths[i] = Path.GetFullPath(directoryPaths[i]);
+                }
+            }
+            
             SearchPattern = searchPattern;
             SearchOption = searchOption;
+            WithExtension = withExtension;
+            OrderByDescending = orderByDescending;
         }
-        
+
         /// <summary>
-        /// The path of target directory.
+        /// The paths of target directories.
         /// </summary>
-        public string DirectoryPath { get; }
-        
+        public string[] DirectoryPaths { get; }
+
         /// <summary>
         /// The search pattern.
         /// </summary>
         public string SearchPattern { get; }
-        
+
         /// <summary>
         /// The search option.
         /// </summary>
         public SearchOption SearchOption { get; }
+
+        /// <summary>
+        /// Whether shows filename with extension.
+        /// </summary>
+        public bool WithExtension { get; }
+
+        /// <summary>
+        /// Whether sorts the elements of result in descending order. 
+        /// </summary>
+        public bool OrderByDescending { get; }
     }
 }
