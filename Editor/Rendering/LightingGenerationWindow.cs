@@ -19,7 +19,7 @@ namespace UniSharperEditor.Rendering
 
         private Vector2 scrollPosition;
 
-        [MenuItem("UniSharper/Rendering/Generate Lighting for Scenes", false, 1)]
+        [MenuItem("UniSharper/Rendering/Generate Lighting for Scenes...", false, 1)]
         public static void ShowWindow()
         {
             const string title = "Lighting Generation";

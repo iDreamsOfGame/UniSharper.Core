@@ -23,11 +23,8 @@ namespace UniSharperEditor
         {
             if (paths == null || paths.Length == 0)
                 return string.Empty;
-
-            var newPaths = new string[paths.Length + 1];
-            newPaths[0] = Directory.GetCurrentDirectory();
-            paths.CopyTo(newPaths, 1);
-            return PathUtility.UnifyToAltDirectorySeparatorChar(Path.Combine(newPaths));
+            
+            return PathUtility.UnifyToAltDirectorySeparatorChar(Path.GetFullPath(Path.Combine(paths)));
         }
 
         /// <summary>
