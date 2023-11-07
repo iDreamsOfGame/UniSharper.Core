@@ -13,14 +13,8 @@ namespace UniSharper
     public abstract class SettingsScriptableObject<T> : ScriptableObject where T : ScriptableObject
     {
 #if UNITY_EDITOR
-        public static T Load(string path)
-        {
-            if (!string.IsNullOrEmpty(path))
-                return default;
+        public static T Load(string path) => string.IsNullOrEmpty(path) || !File.Exists(path) ? default : UnityEditor.AssetDatabase.LoadAssetAtPath<T>(path);
 
-            return File.Exists(path) ? UnityEditor.AssetDatabase.LoadAssetAtPath<T>(path) : default;
-        }
-        
         /// <summary>
         /// Save settings data.
         /// </summary>
