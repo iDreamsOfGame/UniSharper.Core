@@ -10,17 +10,42 @@ namespace UniSharperEditor
     public static class EditorEnvironment
     {
         /// <summary>
-        /// The folder name of 'Assets'.
+        /// The folder name of <c>Assets</c>.
         /// </summary>
         public const string AssetsFolderName = "Assets";
 
         /// <summary>
-        /// The folder name of 'Packages'.
+        /// The folder name of <c>Library</c>.
+        /// </summary>
+        public const string LibraryFolderName = "Library";
+
+        /// <summary>
+        /// The folder name of <c>Logs</c>.
+        /// </summary>
+        public const string LogsFolderName = "Logs";
+
+        /// <summary>
+        /// The folder name of <c>Packages</c>.
         /// </summary>
         public const string PackagesFolderName = "Packages";
 
         /// <summary>
-        /// The default folder name of 'Scripts'.
+        /// The folder name of <c>ProjectSettings</c>.
+        /// </summary>
+        public const string ProjectSettingsFolderName = "ProjectSettings";
+
+        /// <summary>
+        /// The folder name of <c>Temp</c>.
+        /// </summary>
+        public const string TempFolderName = "Temp";
+
+        /// <summary>
+        /// The folder name of <c>UserSettings</c>.
+        /// </summary>
+        public const string UserSettingsFolderName = "UserSettings";
+
+        /// <summary>
+        /// The default folder name of <c>Scripts</c>.
         /// </summary>
         public const string DefaultScriptsFolderName = "Scripts";
     }
