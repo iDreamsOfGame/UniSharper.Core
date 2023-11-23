@@ -1,9 +1,10 @@
 ﻿// Copyright (c) Jerry Lee. All rights reserved. Licensed under the MIT License. See LICENSE in the
 // project root for license information.
 
-using System;
 using System.IO;
-using ReSharp.Extensions;
+using System.Linq;
+using UnityEditor;
+using PackageInfo = UnityEditor.PackageManager.PackageInfo;
 
 namespace UniSharperEditor
 {
@@ -14,72 +15,97 @@ namespace UniSharperEditor
     public static class EditorPath
     {
         /// <summary>
-        /// Converts to absolute path.
+        /// Converts absolute path to the path relative to the project <c>Assets</c> folder or any <c>Package</c> folder.
         /// </summary>
-        /// <param name="paths">An array of parts of the path.</param>
-        /// <returns>The absolute path of the asset path.</returns>
-        /// <exception cref="ArgumentNullException">path</exception>
-        public static string ConvertToAbsolutePath(params string[] paths)
-        {
-            if (paths == null || paths.Length == 0)
-                return string.Empty;
-            
-            return PathUtility.UnifyToAltDirectorySeparatorChar(Path.GetFullPath(Path.Combine(paths)));
-        }
-
-        /// <summary>
-        /// Converts absolute path to the path relative to the project folder.
-        /// </summary>
-        /// <param name="path">The path need to be converted.</param>
-        /// <returns>The asset path to the project.</returns>
-        /// <exception cref="ArgumentNullException">path</exception>
+        /// <param name="path">The absolute path need to be converted.</param>
+        /// <returns>The path relative to the project <c>Assets</c> folder or any <c>Package</c> folder. </returns>
         public static string ConvertToAssetPath(string path)
         {
             if (string.IsNullOrEmpty(path))
-                return string.Empty;
+                return null;
 
-            var currentDirectory = PathUtility.UnifyToAltDirectorySeparatorChar(Directory.GetCurrentDirectory());
-            var absolutePath = PathUtility.UnifyToAltDirectorySeparatorChar(path);
-            return absolutePath.KmpIndexOf(currentDirectory) != -1
-                ? PathUtility.UnifyToAltDirectorySeparatorChar(absolutePath[(currentDirectory.Length + 1)..])
-                : path;
+            // Already asset path, directly return path.
+            if (path.StartsWith(EditorEnvironment.AssetsFolderName + Path.AltDirectorySeparatorChar))
+            {
+                if (!string.IsNullOrEmpty(AssetDatabase.AssetPathToGUID(path)))
+                    return path;
+            }
+
+            var currentDirectory = Directory.GetCurrentDirectory();
+            var assetsFolderFullPath = Path.GetFullPath(EditorEnvironment.AssetsFolderName);
+            
+            // Check whether the absolute path is under the assets folder.
+            if (path.StartsWith(assetsFolderFullPath))
+            {
+                var result = path[(currentDirectory.Length + 1)..];
+                if (!string.IsNullOrEmpty(AssetDatabase.AssetPathToGUID(result)))
+                    return result;
+            }
+
+            // Check whether the absolute path is under any package folder.
+            var packageInfoCollection = PackageInfo.GetAllRegisteredPackages();
+            if (path.StartsWith(EditorEnvironment.PackagesFolderName + Path.AltDirectorySeparatorChar))
+            {
+                var paths = path.Split(Path.AltDirectorySeparatorChar);
+                if (paths.Length > 1)
+                {
+                    var packagePath = Path.Combine(EditorEnvironment.PackagesFolderName, paths[1]);
+                    if (packageInfoCollection.Any(packageInfo => packageInfo.assetPath.Equals(packagePath)))
+                        return path;
+                }
+            }
+            
+            if (packageInfoCollection is { Length: > 0 })
+                return (from packageInfo in packageInfoCollection where path.StartsWith(packageInfo.resolvedPath) 
+                    select Path.Combine(packageInfo.assetPath, path[(packageInfo.resolvedPath.Length + 1)..])).FirstOrDefault();
+
+            return null;
         }
 
         /// <summary>
-        /// Determines whether the specified path is a Asset path relative to the project folder.
+        /// Determines whether the specified path is under project <c>Assets</c> folder or any <c>Package</c> folder.
         /// </summary>
         /// <param name="path">The path.</param>
-        /// <returns><c>true</c> if [is asset path] [the specified path]; otherwise, <c>false</c>.</returns>
-        /// <exception cref="ArgumentNullException">path</exception>
+        /// <returns><c>true</c> if the specified path is under project <c>Assets</c> folder or any <c>Package</c> folder; otherwise, <c>false</c>.</returns>
         public static bool IsAssetPath(string path)
         {
             if (string.IsNullOrEmpty(path))
                 return false;
 
-            var newPath = PathUtility.UnifyToAltDirectorySeparatorChar(path);
-            return newPath.StartsWith(EditorEnvironment.AssetsFolderName + Path.AltDirectorySeparatorChar) || newPath.StartsWith(PathUtility.UnifyToAltDirectorySeparatorChar(Directory.GetCurrentDirectory()));
+            var assetPath = ConvertToAssetPath(path);
+            return !string.IsNullOrEmpty(assetPath);
         }
 
         /// <summary>
-        /// Gets the path of package.
+        /// Gets the asset path of package.
         /// </summary>
         /// <param name="packageName">The name of package. </param>
-        /// <returns>The path of the package. </returns>
-        public static string GetPackagePath(string packageName) =>
-            string.IsNullOrEmpty(packageName) ? string.Empty : Path.Combine(EditorEnvironment.PackagesFolderName, packageName);
-
-        /// <summary>
-        /// Gets the absolute path of the package.
-        /// </summary>
-        /// <param name="packageName">The name of package. </param>
-        /// <returns>The absolute path of the package. </returns>
-        public static string GetPackageFullPath(string packageName)
+        /// <returns>The asset path of the package. </returns>
+        public static string GetPackageAssetPath(string packageName)
         {
             if (string.IsNullOrEmpty(packageName))
-                return string.Empty;
+                return null;
+            
+            var packageInfoCollection = PackageInfo.GetAllRegisteredPackages();
+            return packageInfoCollection is { Length: > 0 } 
+                ? (from packageInfo in packageInfoCollection where packageInfo.name.Equals(packageName) select packageInfo.assetPath).FirstOrDefault() 
+                : null;
+        }
 
-            var packagePath = GetPackagePath(packageName);
-            return string.IsNullOrEmpty(packagePath) ? string.Empty : Path.GetFullPath(packagePath);
+        /// <summary>
+        /// Gets the local path of the package on disk.
+        /// </summary>
+        /// <param name="packageName">The name of package. </param>
+        /// <returns>The local path of the package on disk. </returns>
+        public static string GetPackageResolvedPath(string packageName)
+        {
+            if (string.IsNullOrEmpty(packageName))
+                return null;
+
+            var packageInfoCollection = PackageInfo.GetAllRegisteredPackages();
+            return packageInfoCollection is { Length: > 0 }
+                ? (from packageInfo in packageInfoCollection where packageInfo.name.Equals(packageName) select packageInfo.resolvedPath).FirstOrDefault()
+                : null;
         }
     }
 }
