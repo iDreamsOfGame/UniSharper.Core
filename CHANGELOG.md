@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+## [1.16.0] - 2023-11-24
+
+### Added
+
+- Adds class **SearchPattern** that include common files search patterns.
+
+
+
 ## [1.15.0] - 2023-11-24
 
 ### Added
