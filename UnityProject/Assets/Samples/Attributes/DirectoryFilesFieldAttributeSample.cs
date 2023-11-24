@@ -7,10 +7,10 @@ namespace UniSharper.Samples
 {
     internal class DirectoryFilesFieldAttributeSample : MonoBehaviour
     {
-        [SerializeField, DirectoryFilesField(new[] { "Assets" }, "*.cs", SearchOption.AllDirectories, true)]
+        [SerializeField, DirectoryFilesField("Assets", "*.cs", SearchOption.AllDirectories, true)]
         private string fileName;
 
-        [SerializeField, DirectoryFilesField(new[] { "Assets" }, "*.cs", SearchOption.AllDirectories)]
+        [SerializeField, DirectoryFilesField("Assets", "*.cs", SearchOption.AllDirectories)]
         private string fileNameWithoutExtension;
 
         [SerializeField, DirectoryFilesField(new[] { "Assets", "Packages/com.unity.ugui" }, "*.cs", SearchOption.AllDirectories, true)]
