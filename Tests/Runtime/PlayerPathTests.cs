@@ -1,6 +1,5 @@
 using System.IO;
 using NUnit.Framework;
-using UniSharper.UniSharper.Core.Runtime;
 
 namespace UniSharper.Tests
 {

@@ -3,7 +3,7 @@
 
 using System.IO;
 
-namespace UniSharper.UniSharper.Core.Runtime
+namespace UniSharper
 {
     /// <summary>
     /// Performs operations on <see cref="System.String"/> instances that contain file or directory path information in Unity player.
