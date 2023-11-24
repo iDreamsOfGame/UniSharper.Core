@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+## [1.15.0] - 2023-11-24
+
+### Added
+
+- Adds utility class **PlayerPath** to performs operations on string instances that contain file or directory path information in Unity player.
+
+
+
 ## [1.14.0] - 2023-07-12
 
 ### Added

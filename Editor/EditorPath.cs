@@ -3,14 +3,14 @@
 
 using System.IO;
 using System.Linq;
+using UniSharper;
 using UnityEditor;
 using PackageInfo = UnityEditor.PackageManager.PackageInfo;
 
 namespace UniSharperEditor
 {
     /// <summary>
-    /// Performs operations on <see cref="System.String"/> instances that contain file or directory
-    /// path information in Unity editor.
+    /// Performs operations on <see cref="System.String"/> instances that contain file or directory path information in Unity editor.
     /// </summary>
     public static class EditorPath
     {
@@ -41,11 +41,11 @@ namespace UniSharperEditor
             var path = Path.Combine(paths);
 
             // Check whether the path is asset path under the project. 
-            if (path.StartsWith(EditorEnvironment.AssetsFolderName + Path.AltDirectorySeparatorChar))
+            if (path.StartsWith(PlayerEnvironment.AssetsFolderName + Path.AltDirectorySeparatorChar))
                 return Path.Combine(Directory.GetCurrentDirectory(), path);
             
             // Check whether the path is asset path under any package of the project. 
-            if (path.StartsWith(EditorEnvironment.PackagesFolderName + Path.AltDirectorySeparatorChar))
+            if (path.StartsWith(PlayerEnvironment.PackagesFolderName + Path.AltDirectorySeparatorChar))
             {
                 var packageInfoCollection = PackageInfo.GetAllRegisteredPackages();
                 if (packageInfoCollection is { Length: > 0 })
@@ -69,14 +69,14 @@ namespace UniSharperEditor
             var path = Path.Combine(paths);
 
             // Check whether the path is asset path under the project. 
-            if (path.StartsWith(EditorEnvironment.AssetsFolderName + Path.AltDirectorySeparatorChar))
+            if (path.StartsWith(PlayerEnvironment.AssetsFolderName + Path.AltDirectorySeparatorChar))
             {
                 if (!string.IsNullOrEmpty(AssetDatabase.AssetPathToGUID(path)))
                     return Path.Combine(Directory.GetCurrentDirectory(), path);
             }
             
             // Check whether the path is asset path under any package of the project. 
-            if (path.StartsWith(EditorEnvironment.PackagesFolderName + Path.AltDirectorySeparatorChar))
+            if (path.StartsWith(PlayerEnvironment.PackagesFolderName + Path.AltDirectorySeparatorChar))
             {
                 var packageInfoCollection = PackageInfo.GetAllRegisteredPackages();
                 if (packageInfoCollection is { Length: > 0 })
@@ -98,14 +98,14 @@ namespace UniSharperEditor
                 return null;
 
             // Already asset path, directly return path.
-            if (path.StartsWith(EditorEnvironment.AssetsFolderName + Path.AltDirectorySeparatorChar))
+            if (path.StartsWith(PlayerEnvironment.AssetsFolderName + Path.AltDirectorySeparatorChar))
             {
                 if (!string.IsNullOrEmpty(AssetDatabase.AssetPathToGUID(path)))
                     return path;
             }
 
             var currentDirectory = Directory.GetCurrentDirectory();
-            var assetsFolderFullPath = Path.GetFullPath(EditorEnvironment.AssetsFolderName);
+            var assetsFolderFullPath = Path.GetFullPath(PlayerEnvironment.AssetsFolderName);
             
             // Check whether the absolute path is under the assets folder.
             if (path.StartsWith(assetsFolderFullPath))
@@ -117,12 +117,12 @@ namespace UniSharperEditor
 
             // Check whether the absolute path is under any package folder.
             var packageInfoCollection = PackageInfo.GetAllRegisteredPackages();
-            if (path.StartsWith(EditorEnvironment.PackagesFolderName + Path.AltDirectorySeparatorChar))
+            if (path.StartsWith(PlayerEnvironment.PackagesFolderName + Path.AltDirectorySeparatorChar))
             {
                 var paths = path.Split(Path.AltDirectorySeparatorChar);
                 if (paths.Length > 1)
                 {
-                    var packagePath = Path.Combine(EditorEnvironment.PackagesFolderName, paths[1]);
+                    var packagePath = Path.Combine(PlayerEnvironment.PackagesFolderName, paths[1]);
                     if (packageInfoCollection.Any(packageInfo => packageInfo.assetPath.Equals(packagePath)))
                         return path;
                 }

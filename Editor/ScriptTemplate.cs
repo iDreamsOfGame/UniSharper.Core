@@ -3,7 +3,7 @@
 
 using System;
 using System.IO;
-
+using UniSharper;
 using UnityEngine;
 
 namespace UniSharperEditor
@@ -37,7 +37,7 @@ namespace UniSharperEditor
                 return string.Empty;
             
             // Search file in package directory.
-            var packagePath = $"{EditorEnvironment.PackagesFolderName}/{packageName}";
+            var packagePath = $"{PlayerEnvironment.PackagesFolderName}/{packageName}";
             assets = UniAssetDatabase.LoadEditorResources<TextAsset>(fileNameWithoutExtensions, packagePath);
             return assets is { Length: > 0 } ? assets[0].text : string.Empty;
         }

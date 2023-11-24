@@ -10,11 +10,6 @@ namespace UniSharperEditor
     public static class EditorEnvironment
     {
         /// <summary>
-        /// The folder name of <c>Assets</c>.
-        /// </summary>
-        public const string AssetsFolderName = "Assets";
-
-        /// <summary>
         /// The folder name of <c>Library</c>.
         /// </summary>
         public const string LibraryFolderName = "Library";
@@ -23,11 +18,6 @@ namespace UniSharperEditor
         /// The folder name of <c>Logs</c>.
         /// </summary>
         public const string LogsFolderName = "Logs";
-
-        /// <summary>
-        /// The folder name of <c>Packages</c>.
-        /// </summary>
-        public const string PackagesFolderName = "Packages";
 
         /// <summary>
         /// The folder name of <c>ProjectSettings</c>.

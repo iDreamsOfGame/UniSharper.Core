@@ -1,5 +1,6 @@
 using System.IO;
 using NUnit.Framework;
+using UniSharper;
 
 namespace UniSharperEditor.Tests
 {
@@ -20,36 +21,36 @@ namespace UniSharperEditor.Tests
         [Test]
         public void IsAssetPathTest1()
         {
-            var result = EditorPath.IsAssetPath(Path.Combine(EditorEnvironment.AssetsFolderName, FakePackageName));
+            var result = EditorPath.IsAssetPath(Path.Combine(PlayerEnvironment.AssetsFolderName, FakePackageName));
             Assert.IsFalse(result);
         }
         
         [Test]
         public void IsAssetPathTest2()
         {
-            var result = EditorPath.IsAssetPath(Path.Combine(EditorEnvironment.AssetsFolderName, TestAssetFolderName, TestAssetFileName));
+            var result = EditorPath.IsAssetPath(Path.Combine(PlayerEnvironment.AssetsFolderName, TestAssetFolderName, TestAssetFileName));
             Assert.IsTrue(result);
         }
         
         [Test]
         public void IsAssetPathTest3()
         {
-            var result = EditorPath.IsAssetPath(Path.Combine(Directory.GetCurrentDirectory(), EditorEnvironment.AssetsFolderName, TestAssetFolderName, TestAssetFileName));
+            var result = EditorPath.IsAssetPath(Path.Combine(Directory.GetCurrentDirectory(), PlayerEnvironment.AssetsFolderName, TestAssetFolderName, TestAssetFileName));
             Assert.IsTrue(result);
         }
 
         [Test]
         public void GetFullPathTest1()
         {
-            var fullPath = EditorPath.GetFullPath(EditorEnvironment.AssetsFolderName, FakePackageName);
-            var expected = Path.Combine(Directory.GetCurrentDirectory(), EditorEnvironment.AssetsFolderName, FakePackageName);
+            var fullPath = EditorPath.GetFullPath(PlayerEnvironment.AssetsFolderName, FakePackageName);
+            var expected = Path.Combine(Directory.GetCurrentDirectory(), PlayerEnvironment.AssetsFolderName, FakePackageName);
             Assert.AreEqual(expected, fullPath);
         }
         
         [Test]
         public void GetFullPathTest2()
         {
-            var assetPath = Path.Combine(EditorEnvironment.AssetsFolderName, TestAssetFolderName, TestAssetFileName);
+            var assetPath = Path.Combine(PlayerEnvironment.AssetsFolderName, TestAssetFolderName, TestAssetFileName);
             var fullPath = EditorPath.GetFullPath(assetPath);
             var actual = Path.Combine(Directory.GetCurrentDirectory(), assetPath);
             Assert.AreEqual(actual, fullPath);
@@ -58,7 +59,7 @@ namespace UniSharperEditor.Tests
         [Test]
         public void GetFullPathTest3()
         {
-            var assetPath = Path.Combine(EditorEnvironment.PackagesFolderName, TestPackageName, TestPackageFileName);
+            var assetPath = Path.Combine(PlayerEnvironment.PackagesFolderName, TestPackageName, TestPackageFileName);
             var fullPath = EditorPath.GetFullPath(assetPath);
             var actual = Path.Combine(Directory.GetCurrentDirectory(), EditorEnvironment.LibraryFolderName, PackageCacheFolderName, $"{TestPackageName}@1.0.0", TestPackageFileName);
             Assert.AreEqual(actual, fullPath);
@@ -67,14 +68,14 @@ namespace UniSharperEditor.Tests
         [Test]
         public void GetPhysicalPathTest1()
         {
-            var fullPath = EditorPath.GetPhysicalPath(EditorEnvironment.AssetsFolderName, FakePackageName);
+            var fullPath = EditorPath.GetPhysicalPath(PlayerEnvironment.AssetsFolderName, FakePackageName);
             Assert.AreEqual(null, fullPath);
         }
 
         [Test]
         public void GetPhysicalPathTest2()
         {
-            var assetPath = Path.Combine(EditorEnvironment.AssetsFolderName, TestAssetFolderName, TestAssetFileName);
+            var assetPath = Path.Combine(PlayerEnvironment.AssetsFolderName, TestAssetFolderName, TestAssetFileName);
             var fullPath = EditorPath.GetPhysicalPath(assetPath);
             var actual = Path.Combine(Directory.GetCurrentDirectory(), assetPath);
             Assert.AreEqual(actual, fullPath);
@@ -83,7 +84,7 @@ namespace UniSharperEditor.Tests
         [Test]
         public void GetPhysicalPathTest3()
         {
-            var assetPath = Path.Combine(EditorEnvironment.PackagesFolderName, TestPackageName, TestPackageFileName);
+            var assetPath = Path.Combine(PlayerEnvironment.PackagesFolderName, TestPackageName, TestPackageFileName);
             var fullPath = EditorPath.GetPhysicalPath(assetPath);
             var actual = Path.Combine(Directory.GetCurrentDirectory(), EditorEnvironment.LibraryFolderName, PackageCacheFolderName, $"{TestPackageName}@1.0.0", TestPackageFileName);
             Assert.AreEqual(actual, fullPath);
@@ -92,7 +93,7 @@ namespace UniSharperEditor.Tests
         [Test]
         public void GetAssetPathTest1()
         {
-            var assetPath = Path.Combine(EditorEnvironment.AssetsFolderName, TestAssetFolderName, TestAssetFileName);
+            var assetPath = Path.Combine(PlayerEnvironment.AssetsFolderName, TestAssetFolderName, TestAssetFileName);
             var actual = EditorPath.GetAssetPath(assetPath);
             Assert.AreEqual(assetPath, actual);
         }
@@ -100,16 +101,16 @@ namespace UniSharperEditor.Tests
         [Test]
         public void GetAssetPathTest2()
         {
-            var absolutePath = Path.Combine(Directory.GetCurrentDirectory(), EditorEnvironment.AssetsFolderName, TestAssetFolderName, TestAssetFileName);
+            var absolutePath = Path.Combine(Directory.GetCurrentDirectory(), PlayerEnvironment.AssetsFolderName, TestAssetFolderName, TestAssetFileName);
             var actual = EditorPath.GetAssetPath(absolutePath);
-            var expected = Path.Combine(EditorEnvironment.AssetsFolderName, TestAssetFolderName, TestAssetFileName);
+            var expected = Path.Combine(PlayerEnvironment.AssetsFolderName, TestAssetFolderName, TestAssetFileName);
             Assert.AreEqual(expected, actual);
         }
 
         [Test]
         public void GetAssetPathTest3()
         {
-            var assetPath = Path.Combine(EditorEnvironment.PackagesFolderName, TestPackageName, TestPackageFileName);
+            var assetPath = Path.Combine(PlayerEnvironment.PackagesFolderName, TestPackageName, TestPackageFileName);
             var actual = EditorPath.GetAssetPath(assetPath);
             Assert.AreEqual(assetPath, actual);
         }
@@ -126,7 +127,7 @@ namespace UniSharperEditor.Tests
         [Test]
         public void GetAssetPathTest5()
         {
-            var path = Path.Combine(EditorEnvironment.PackagesFolderName, FakePackageName);
+            var path = Path.Combine(PlayerEnvironment.PackagesFolderName, FakePackageName);
             var actual = EditorPath.GetAssetPath(path);
             Assert.AreEqual(null, actual);
         }
@@ -134,21 +135,21 @@ namespace UniSharperEditor.Tests
         [Test]
         public void TryGetAssetPathTest1()
         {
-            var result = EditorPath.TryGetAssetPath(Path.Combine(EditorEnvironment.AssetsFolderName, FakePackageName), out _);
+            var result = EditorPath.TryGetAssetPath(Path.Combine(PlayerEnvironment.AssetsFolderName, FakePackageName), out _);
             Assert.IsFalse(result);
         }
         
         [Test]
         public void TryGetAssetPathTest2()
         {
-            var result = EditorPath.TryGetAssetPath(Path.Combine(EditorEnvironment.AssetsFolderName, TestAssetFolderName, TestAssetFileName), out _);
+            var result = EditorPath.TryGetAssetPath(Path.Combine(PlayerEnvironment.AssetsFolderName, TestAssetFolderName, TestAssetFileName), out _);
             Assert.IsTrue(result);
         }
         
         [Test]
         public void TryGetAssetPathTest3()
         {
-            var result = EditorPath.TryGetAssetPath(Path.Combine(Directory.GetCurrentDirectory(), EditorEnvironment.AssetsFolderName, TestAssetFolderName, TestAssetFileName), out _);
+            var result = EditorPath.TryGetAssetPath(Path.Combine(Directory.GetCurrentDirectory(), PlayerEnvironment.AssetsFolderName, TestAssetFolderName, TestAssetFileName), out _);
             Assert.IsTrue(result);
         }
 
@@ -156,7 +157,7 @@ namespace UniSharperEditor.Tests
         public void GetPackageAssetPathTest1()
         {
             var assetPath = EditorPath.GetPackageAssetPath(TestPackageName);
-            var expected = Path.Combine(EditorEnvironment.PackagesFolderName, TestPackageName);
+            var expected = Path.Combine(PlayerEnvironment.PackagesFolderName, TestPackageName);
             Assert.AreEqual(expected, assetPath);
         }
 

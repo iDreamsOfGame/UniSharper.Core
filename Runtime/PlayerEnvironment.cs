@@ -14,6 +14,16 @@ namespace UniSharper
     public static class PlayerEnvironment
     {
         /// <summary>
+        /// The folder name of <c>Assets</c>.
+        /// </summary>
+        public const string AssetsFolderName = "Assets";
+        
+        /// <summary>
+        /// The folder name of <c>Packages</c>.
+        /// </summary>
+        public const string PackagesFolderName = "Packages";
+        
+        /// <summary>
         /// Gets the newline string defined for windows.
         /// </summary>
         /// <value>The newline string defined for windows.</value>
