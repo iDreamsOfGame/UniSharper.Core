@@ -7,16 +7,16 @@ namespace UniSharper.Samples
 {
     internal class DirectoryFilesFieldAttributeSample : MonoBehaviour
     {
-        [SerializeField, DirectoryFilesField("Assets", "*.cs", SearchOption.AllDirectories, true)]
+        [SerializeField, DirectoryFilesField(PlayerEnvironment.AssetsFolderName, SearchPattern.CSharpScriptFiles, SearchOption.AllDirectories, true)]
         private string fileName;
 
-        [SerializeField, DirectoryFilesField("Assets", "*.cs", SearchOption.AllDirectories)]
+        [SerializeField, DirectoryFilesField(PlayerEnvironment.AssetsFolderName, SearchPattern.CSharpScriptFiles, SearchOption.AllDirectories)]
         private string fileNameWithoutExtension;
 
-        [SerializeField, DirectoryFilesField(new[] { "Assets", "Packages/com.unity.ugui" }, "*.cs", SearchOption.AllDirectories, true)]
+        [SerializeField, DirectoryFilesField(new[] { PlayerEnvironment.AssetsFolderName, "Packages/com.unity.ugui" }, SearchPattern.CSharpScriptFiles, SearchOption.AllDirectories, true)]
         private string fileNameInDirectories;
         
-        [SerializeField, DirectoryFilesField(new[] { "Assets", "Packages/com.unity.ugui" }, "*.cs", SearchOption.AllDirectories, true, true)]
+        [SerializeField, DirectoryFilesField(new[] { PlayerEnvironment.AssetsFolderName, "Packages/com.unity.ugui" }, SearchPattern.CSharpScriptFiles, SearchOption.AllDirectories, true, true)]
         private string fileNameInDirectoriesWithDescendingOrder;
     }
 }
