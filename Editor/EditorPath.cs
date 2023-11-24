@@ -15,11 +15,53 @@ namespace UniSharperEditor
     public static class EditorPath
     {
         /// <summary>
-        /// Gets the physical path of the path combined.
+        /// Determines whether the specified path is under project <c>Assets</c> folder or any <c>Package</c> folder.
+        /// </summary>
+        /// <param name="path">The physical path of the asset or asset path to the project. </param>
+        /// <returns><c>true</c> if the specified path is under project <c>Assets</c> folder or any <c>Package</c> folder; otherwise, <c>false</c>.</returns>
+        public static bool IsAssetPath(string path)
+        {
+            if (string.IsNullOrEmpty(path))
+                return false;
+
+            var assetPath = GetAssetPath(path);
+            return !string.IsNullOrEmpty(assetPath);
+        }
+        
+        /// <summary>
+        /// Gets the physical path of the asset path that combined by an array. 
         /// </summary>
         /// <param name="paths">An array of parts of the path. </param>
-        /// <returns>The physical path of the path combined. </returns>
+        /// <returns>The physical path of the asset path that combined by an array. </returns>
         public static string GetFullPath(params string[] paths)
+        {
+            if (paths is not { Length: > 0 })
+                return null;
+
+            var path = Path.Combine(paths);
+
+            // Check whether the path is asset path under the project. 
+            if (path.StartsWith(EditorEnvironment.AssetsFolderName + Path.AltDirectorySeparatorChar))
+                return Path.Combine(Directory.GetCurrentDirectory(), path);
+            
+            // Check whether the path is asset path under any package of the project. 
+            if (path.StartsWith(EditorEnvironment.PackagesFolderName + Path.AltDirectorySeparatorChar))
+            {
+                var packageInfoCollection = PackageInfo.GetAllRegisteredPackages();
+                if (packageInfoCollection is { Length: > 0 })
+                    return (from packageInfo in packageInfoCollection where path.StartsWith(packageInfo.assetPath) 
+                        select Path.Combine(path.Replace(packageInfo.assetPath, packageInfo.resolvedPath))).FirstOrDefault();
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Gets the physical path of the asset path that combined by an array. The asset must be include in project, otherwise return <c>null</c>.
+        /// </summary>
+        /// <param name="paths">An array of parts of the path. </param>
+        /// <returns>The physical path of the asset path that combined by an array. </returns>
+        public static string GetPhysicalPath(params string[] paths)
         {
             if (paths is not { Length: > 0 })
                 return null;
@@ -46,25 +88,11 @@ namespace UniSharperEditor
         }
         
         /// <summary>
-        /// Determines whether the specified path is under project <c>Assets</c> folder or any <c>Package</c> folder.
-        /// </summary>
-        /// <param name="path">The path.</param>
-        /// <returns><c>true</c> if the specified path is under project <c>Assets</c> folder or any <c>Package</c> folder; otherwise, <c>false</c>.</returns>
-        public static bool IsAssetPath(string path)
-        {
-            if (string.IsNullOrEmpty(path))
-                return false;
-
-            var assetPath = ConvertToAssetPath(path);
-            return !string.IsNullOrEmpty(assetPath);
-        }
-        
-        /// <summary>
         /// Converts absolute path to the path relative to the project <c>Assets</c> folder or any <c>Package</c> folder.
         /// </summary>
         /// <param name="path">The absolute path need to be converted.</param>
         /// <returns>The path relative to the project <c>Assets</c> folder or any <c>Package</c> folder. </returns>
-        public static string ConvertToAssetPath(string path)
+        public static string GetAssetPath(string path)
         {
             if (string.IsNullOrEmpty(path))
                 return null;
@@ -115,7 +143,7 @@ namespace UniSharperEditor
         /// <returns><c>true</c> if conversion is successful; otherwise, <c>false</c>.</returns>
         public static bool TryGetAssetPath(string path, out string assetPath)
         {
-            assetPath = ConvertToAssetPath(path);
+            assetPath = GetAssetPath(path);
             return !string.IsNullOrEmpty(assetPath);
         }
 
