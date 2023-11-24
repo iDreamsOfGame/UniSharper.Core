@@ -32,5 +32,10 @@ namespace UniSharper
         /// The search pattern of new format excel files.
         /// </summary>
         public const string ExcelXFiles = "*.xlsx";
+
+        /// <summary>
+        /// The search pattern of C Sharp script files.
+        /// </summary>
+        public const string CSharpScriptFiles = "*.cs";
     }
 }
