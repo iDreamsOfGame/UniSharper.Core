@@ -5,9 +5,36 @@ namespace UniSharperEditor.Tests
 {
     public class EditorPathTests
     {
-        private const string TestPackageName = "io.github.idreamsofgame.resharp.core";
+        private const string TestPackageName = "com.unity.modules.ui";
+
+        private const string TestPackageFile = "package.json";
 
         private const string FakePackageName = "com.xxxx.xxx.package1";
+
+        [Test]
+        public void GetFullPathTest1()
+        {
+            var fullPath = EditorPath.GetFullPath(EditorEnvironment.AssetsFolderName, FakePackageName);
+            Assert.AreEqual(null, fullPath);
+        }
+
+        [Test]
+        public void GetFullPathTest2()
+        {
+            var assetPath = Path.Combine(EditorEnvironment.AssetsFolderName, "UniSharper.Core", "README.md");
+            var fullPath = EditorPath.GetFullPath(assetPath);
+            var actual = Path.Combine(Directory.GetCurrentDirectory(), assetPath);
+            Assert.AreEqual(actual, fullPath);
+        }
+
+        [Test]
+        public void GetFullPathTest3()
+        {
+            var assetPath = Path.Combine(EditorEnvironment.PackagesFolderName, TestPackageName, TestPackageFile);
+            var fullPath = EditorPath.GetFullPath(assetPath);
+            var actual = Path.Combine(Directory.GetCurrentDirectory(), EditorEnvironment.LibraryFolderName, "PackageCache", $"{TestPackageName}@1.0.0", TestPackageFile);
+            Assert.AreEqual(actual, fullPath);
+        }
 
         [Test]
         public void ConvertToAssetPathTest1()
@@ -29,7 +56,7 @@ namespace UniSharperEditor.Tests
         [Test]
         public void ConvertToAssetPathTest3()
         {
-            var assetPath = Path.Combine(EditorEnvironment.PackagesFolderName, TestPackageName, "Plugins", "ReSharp.Core.xml");
+            var assetPath = Path.Combine(EditorEnvironment.PackagesFolderName, TestPackageName, TestPackageFile);
             var actual = EditorPath.ConvertToAssetPath(assetPath);
             Assert.AreEqual(assetPath, actual);
         }
@@ -37,16 +64,16 @@ namespace UniSharperEditor.Tests
         [Test]
         public void ConvertToAssetPathTest4()
         {
-            var absolutePath = Path.Combine(EditorPath.GetPackageResolvedPath(TestPackageName), "Plugins", "ReSharp.Core.xml");
+            var absolutePath = Path.Combine(EditorPath.GetPackageResolvedPath(TestPackageName), TestPackageFile);
             var actual = EditorPath.ConvertToAssetPath(absolutePath);
-            var expected = Path.Combine(EditorPath.GetPackageAssetPath(TestPackageName), "Plugins", "ReSharp.Core.xml");
+            var expected = Path.Combine(EditorPath.GetPackageAssetPath(TestPackageName), TestPackageFile);
             Assert.AreEqual(expected, actual);
         }
 
         [Test]
         public void ConvertToAssetPathTest5()
         {
-            var path = Path.Combine(Directory.GetCurrentDirectory(), EditorEnvironment.AssetsFolderName, FakePackageName);
+            var path = Path.Combine(EditorEnvironment.PackagesFolderName, FakePackageName);
             var actual = EditorPath.ConvertToAssetPath(path);
             Assert.AreEqual(null, actual);
         }

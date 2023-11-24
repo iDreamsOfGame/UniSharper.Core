@@ -15,6 +15,51 @@ namespace UniSharperEditor
     public static class EditorPath
     {
         /// <summary>
+        /// Gets the physical path of the path combined.
+        /// </summary>
+        /// <param name="paths">An array of parts of the path. </param>
+        /// <returns>The physical path of the path combined. </returns>
+        public static string GetFullPath(params string[] paths)
+        {
+            if (paths is not { Length: > 0 })
+                return null;
+
+            var path = Path.Combine(paths);
+
+            // Check whether the path is asset path under the project. 
+            if (path.StartsWith(EditorEnvironment.AssetsFolderName + Path.AltDirectorySeparatorChar))
+            {
+                if (!string.IsNullOrEmpty(AssetDatabase.AssetPathToGUID(path)))
+                    return Path.Combine(Directory.GetCurrentDirectory(), path);
+            }
+            
+            // Check whether the path is asset path under any package of the project. 
+            if (path.StartsWith(EditorEnvironment.PackagesFolderName + Path.AltDirectorySeparatorChar))
+            {
+                var packageInfoCollection = PackageInfo.GetAllRegisteredPackages();
+                if (packageInfoCollection is { Length: > 0 })
+                    return (from packageInfo in packageInfoCollection where path.StartsWith(packageInfo.assetPath) 
+                        select Path.Combine(path.Replace(packageInfo.assetPath, packageInfo.resolvedPath))).FirstOrDefault();
+            }
+
+            return null;
+        }
+        
+        /// <summary>
+        /// Determines whether the specified path is under project <c>Assets</c> folder or any <c>Package</c> folder.
+        /// </summary>
+        /// <param name="path">The path.</param>
+        /// <returns><c>true</c> if the specified path is under project <c>Assets</c> folder or any <c>Package</c> folder; otherwise, <c>false</c>.</returns>
+        public static bool IsAssetPath(string path)
+        {
+            if (string.IsNullOrEmpty(path))
+                return false;
+
+            var assetPath = ConvertToAssetPath(path);
+            return !string.IsNullOrEmpty(assetPath);
+        }
+        
+        /// <summary>
         /// Converts absolute path to the path relative to the project <c>Assets</c> folder or any <c>Package</c> folder.
         /// </summary>
         /// <param name="path">The absolute path need to be converted.</param>
@@ -63,16 +108,14 @@ namespace UniSharperEditor
         }
 
         /// <summary>
-        /// Determines whether the specified path is under project <c>Assets</c> folder or any <c>Package</c> folder.
+        /// Tries get the path relative to the project <c>Assets</c> folder or any <c>Package</c> folder.
         /// </summary>
-        /// <param name="path">The path.</param>
-        /// <returns><c>true</c> if the specified path is under project <c>Assets</c> folder or any <c>Package</c> folder; otherwise, <c>false</c>.</returns>
-        public static bool IsAssetPath(string path)
+        /// <param name="path">The absolute path need to be converted. </param>
+        /// <param name="assetPath">The path relative to the project <c>Assets</c> folder or any <c>Package</c> folder. </param>
+        /// <returns><c>true</c> if conversion is successful; otherwise, <c>false</c>.</returns>
+        public static bool TryGetAssetPath(string path, out string assetPath)
         {
-            if (string.IsNullOrEmpty(path))
-                return false;
-
-            var assetPath = ConvertToAssetPath(path);
+            assetPath = ConvertToAssetPath(path);
             return !string.IsNullOrEmpty(assetPath);
         }
 
