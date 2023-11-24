@@ -43,7 +43,7 @@ namespace UniSharperEditor
                 EditorGUI.BeginProperty(position, label, property);
 
                 var fieldAttribute = (DirectoryFilesFieldAttribute)attribute;
-                var directoryPaths = fieldAttribute.DirectoryPaths;
+                var directoryPaths = fieldAttribute.Directories;
                 var searchPattern = fieldAttribute.SearchPattern;
                 var searchOption = fieldAttribute.SearchOption;
                 var withExtension = fieldAttribute.WithExtension;
