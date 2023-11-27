@@ -9,14 +9,19 @@ namespace UniSharper
     public sealed class SearchPattern
     {
         /// <summary>
-        /// The search pattern of binary files.
+        /// The search pattern of Unity scene files.
         /// </summary>
-        public const string BinaryFiles = "*.bytes";
+        public const string UnitySceneFiles = "*.unity";
+        
+        /// <summary>
+        /// The search pattern of Unity binary files.
+        /// </summary>
+        public const string UnityBinaryFiles = "*.bytes";
 
         /// <summary>
-        /// The search pattern of prefab files.
+        /// The search pattern of Unity prefab files.
         /// </summary>
-        public const string PrefabFiles = "*.prefab";
+        public const string UnityPrefabFiles = "*.prefab";
 
         /// <summary>
         /// The search pattern of PNG image files.
