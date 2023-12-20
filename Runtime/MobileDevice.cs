@@ -22,14 +22,10 @@ namespace UniSharper
         {
 #if UNITY_ANDROID
             if (!NetworkUtility.OpenURL(googlePlayReviewInAppUrl))
-            {
                 NetworkUtility.OpenURL(googlePlayReviewInBrowserUrl);
-            }
 #elif UNITY_IOS
             if (!UnityEngine.iOS.Device.RequestStoreReview())
-            {
                 NetworkUtility.OpenURL(appStoreReviewUrl);
-            }
 #endif
         }
     }

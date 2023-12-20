@@ -6,7 +6,7 @@ namespace UniSharper
     /// <summary>
     /// The collection of search pattern constant.
     /// </summary>
-    public sealed class SearchPattern
+    public sealed class SearchPatterns
     {
         /// <summary>
         /// The search pattern of Unity scene files.
@@ -22,6 +22,16 @@ namespace UniSharper
         /// The search pattern of Unity prefab files.
         /// </summary>
         public const string UnityPrefabFiles = "*.prefab";
+        
+        /// <summary>
+        /// The search pattern of JPG image files.
+        /// </summary>
+        public const string JpgImageFiles = "*.jpg";
+        
+        /// <summary>
+        /// The search pattern of JPEG image files.
+        /// </summary>
+        public const string JpegImageFiles = "*.jpeg";
 
         /// <summary>
         /// The search pattern of PNG image files.
