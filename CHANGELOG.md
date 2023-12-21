@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+## [1.18.0] - 2023-12-21
+
+### Added
+
+- Adds **Sprite-Flash.shader** and **Sprite-Flash.mat**.
+
+
+
 ## [1.17.0] - 2023-12-20
 
 ### Added
