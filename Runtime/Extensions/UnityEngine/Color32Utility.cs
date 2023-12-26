@@ -85,6 +85,26 @@ namespace UniSharper.Extensions
 
             return result;
         }
+        
+        /// <summary>
+        /// Converts the collection of <see cref="byte"/> representation of an <see cref="Color32"/> array equivalent.
+        /// </summary>
+        /// <param name="values">The collection of <see cref="byte"/> representation of an <see cref="Color32"/> array equivalent.</param>
+        /// <returns>An <see cref="Color32"/> array equivalent to the <c>values</c>. </returns>
+        public static Color32[] ParseArray(IList<byte> values)
+        {
+            var list = new List<Color32>();
+            for (var i = 0; i < values.Count; i += 4)
+            {
+                var r = values[i];
+                var g = values[i + 1];
+                var b = values[i + 2];
+                var a = values[i + 3];
+                list.Add(new Color32(r, g, b, a));
+            }
+
+            return list.ToArray();
+        }
 
         /// <summary>
         /// Converts the string representation of an <see cref="Color32"/> array equivalent. A return value indicates whether the conversion succeeded.
@@ -116,6 +136,31 @@ namespace UniSharper.Extensions
             }
             
             result = list.ToArray();
+            return true;
+        }
+        
+        /// <summary>
+        /// Converts the collection of <see cref="byte"/> representation of an <see cref="Color32"/> array equivalent.
+        /// A return value indicates whether the conversion succeeded.
+        /// </summary>
+        /// <param name="values">The collection of <see cref="byte"/> representation of an <see cref="Color32"/> array equivalent. </param>
+        /// <param name="result">An <see cref="Color32"/> array equivalent to the <c>values</c>. </param>
+        /// <returns><c>true</c> if <c>values</c> was converted successfully; otherwise, <c>false</c>. </returns>
+        public static bool TryParseArray(IList<byte> values, out Color32[] result)
+        {
+            if (values is not { Count: > 0 })
+            {
+                result = default;
+                return false;
+            }
+
+            if (values.Count % 4 != 0)
+            {
+                result = default;
+                return false;
+            }
+
+            result = ParseArray(values);
             return true;
         }
     }

@@ -18,6 +18,10 @@ namespace UniSharper.Tests
         
         private static readonly RectInt CorrectValue2 = new(2, 2, 200, 200);
         
+        private static readonly int[] ValidElementValues = { 1, 1, 100, 100, 2, 2, 200, 200 };
+        
+        private static readonly int[] InvalidElementValues = { 1, 1, 1, 2, 2, 2 };
+        
         [Test]
         public void ParseTest()
         {
@@ -40,23 +44,44 @@ namespace UniSharper.Tests
         }
         
         [Test]
-        public void ParseArrayTest()
+        public void ParseArrayTest1()
         {
             var result = RectIntUtility.ParseArray(ValidElementsString);
             Assert.True(result[0].Equals(CorrectValue) && result[1].Equals(CorrectValue2));
         }
 
         [Test]
-        public void TryParseArraySuccessTest()
+        public void TryParseArraySuccessTest1()
         {
             var result = RectIntUtility.TryParseArray(ValidElementsString, out var value);
             Assert.True(result.Equals(true) && value[0].Equals(CorrectValue) && value[1].Equals(CorrectValue2));
         }
 
         [Test]
-        public void TryParseArrayFailTest()
+        public void TryParseArrayFailTest1()
         {
             var result = RectIntUtility.TryParseArray(InvalidElementsString, out _, string.Empty);
+            Assert.AreEqual(false, result);
+        }
+        
+        [Test]
+        public void ParseArrayTest2()
+        {
+            var result = RectIntUtility.ParseArray(ValidElementValues);
+            Assert.True(result[0].Equals(CorrectValue) && result[1].Equals(CorrectValue2));
+        }
+
+        [Test]
+        public void TryParseArraySuccessTest2()
+        {
+            var result = RectIntUtility.TryParseArray(ValidElementValues, out var value);
+            Assert.True(result.Equals(true) && value[0].Equals(CorrectValue) && value[1].Equals(CorrectValue2));
+        }
+
+        [Test]
+        public void TryParseArrayFailTest2()
+        {
+            var result = RectIntUtility.TryParseArray(InvalidElementValues, out _);
             Assert.AreEqual(false, result);
         }
     }

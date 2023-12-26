@@ -85,6 +85,26 @@ namespace UniSharper.Extensions
 
             return result;
         }
+        
+        /// <summary>
+        /// Converts the collection of <see cref="float"/> representation of an <see cref="Quaternion"/> array equivalent.
+        /// </summary>
+        /// <param name="values">The collection of <see cref="float"/> representation of an <see cref="Quaternion"/> array equivalent.</param>
+        /// <returns>An <see cref="Quaternion"/> array equivalent to the <c>values</c>. </returns>
+        public static Quaternion[] ParseArray(IList<float> values)
+        {
+            var list = new List<Quaternion>();
+            for (var i = 0; i < values.Count; i += 4)
+            {
+                var x = values[i];
+                var y = values[i + 1];
+                var z = values[i + 2];
+                var w = values[i + 3];
+                list.Add(new Quaternion(x, y, z, w));
+            }
+
+            return list.ToArray();
+        }
 
         /// <summary>
         /// Converts the string representation of an <see cref="Quaternion"/> array equivalent. A return value indicates whether the conversion succeeded.
@@ -116,6 +136,31 @@ namespace UniSharper.Extensions
             }
             
             result = list.ToArray();
+            return true;
+        }
+        
+        /// <summary>
+        /// Converts the collection of <see cref="float"/> representation of an <see cref="Quaternion"/> array equivalent.
+        /// A return value indicates whether the conversion succeeded.
+        /// </summary>
+        /// <param name="values">The collection of <see cref="float"/> representation of an <see cref="Quaternion"/> array equivalent. </param>
+        /// <param name="result">An <see cref="Quaternion"/> array equivalent to the <c>values</c>. </param>
+        /// <returns><c>true</c> if <c>values</c> was converted successfully; otherwise, <c>false</c>. </returns>
+        public static bool TryParseArray(IList<float> values, out Quaternion[] result)
+        {
+            if (values is not { Count: > 0 })
+            {
+                result = default;
+                return false;
+            }
+
+            if (values.Count % 4 != 0)
+            {
+                result = default;
+                return false;
+            }
+
+            result = ParseArray(values);
             return true;
         }
     }

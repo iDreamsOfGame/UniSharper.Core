@@ -83,6 +83,23 @@ namespace UniSharper.Extensions
         }
         
         /// <summary>
+        /// Converts the collection of <see cref="int"/> representation of an <see cref="RangeInt"/> array equivalent.
+        /// </summary>
+        /// <param name="values">The collection of <see cref="int"/> representation of an <see cref="RangeInt"/> array equivalent.</param>
+        /// <returns>An <see cref="RangeInt"/> array equivalent to the <c>values</c>. </returns>
+        public static RangeInt[] ParseArray(IList<int> values)
+        {
+            var list = new List<RangeInt>();
+            for (var i = 0; i < values.Count; i += 2)
+            {
+                var start = values[i];
+                var length = values[i + 1];
+                list.Add(new RangeInt(start, length));
+            }
+            return list.ToArray();
+        }
+        
+        /// <summary>
         /// Converts the string representation of an <see cref="RangeInt"/> array equivalent. A return value indicates whether the conversion succeeded.
         /// </summary>
         /// <param name="s">The string representation of an <see cref="RangeInt"/> array equivalent. </param>
@@ -112,6 +129,31 @@ namespace UniSharper.Extensions
             }
             
             result = list.ToArray();
+            return true;
+        }
+        
+        /// <summary>
+        /// Converts the collection of <see cref="int"/> representation of an <see cref="RangeInt"/> array equivalent.
+        /// A return value indicates whether the conversion succeeded.
+        /// </summary>
+        /// <param name="values">The collection of <see cref="int"/> representation of an <see cref="RangeInt"/> array equivalent. </param>
+        /// <param name="result">An <see cref="RangeInt"/> array equivalent to the <c>values</c>. </param>
+        /// <returns><c>true</c> if <c>values</c> was converted successfully; otherwise, <c>false</c>. </returns>
+        public static bool TryParseArray(IList<int> values, out RangeInt[] result)
+        {
+            if (values is not { Count: > 0 })
+            {
+                result = default;
+                return false;
+            }
+
+            if (values.Count % 2 != 0)
+            {
+                result = default;
+                return false;
+            }
+
+            result = ParseArray(values);
             return true;
         }
     }

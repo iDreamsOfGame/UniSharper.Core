@@ -17,6 +17,10 @@ namespace UniSharper.Tests
         private static readonly Color32 CorrectValue = Color.white;
         
         private static readonly Color32 CorrectValue2 = Color.blue;
+        
+        private static readonly byte[] ValidElementValues = { 255, 255, 255, 255, 0, 0, 255, 255 };
+        
+        private static readonly byte[] InvalidElementValues = { 255, 255, 255, 0, 0, 0 };
 
         [Test]
         public void ParseTest()
@@ -40,23 +44,44 @@ namespace UniSharper.Tests
         }
         
         [Test]
-        public void ParseArrayTest()
+        public void ParseArrayTest1()
         {
             var result = Color32Utility.ParseArray(ValidElementsString);
             Assert.True(result[0].Equals(CorrectValue) && result[1].Equals(CorrectValue2));
         }
 
         [Test]
-        public void TryParseArraySuccessTest()
+        public void TryParseArraySuccessTest1()
         {
             var result = Color32Utility.TryParseArray(ValidElementsString, out var value);
             Assert.True(result.Equals(true) && value[0].Equals(CorrectValue) && value[1].Equals(CorrectValue2));
         }
 
         [Test]
-        public void TryParseArrayFailTest()
+        public void TryParseArrayFailTest1()
         {
             var result = Color32Utility.TryParseArray(InvalidElementsString, out _, string.Empty);
+            Assert.AreEqual(false, result);
+        }
+        
+        [Test]
+        public void ParseArrayTest2()
+        {
+            var result = Color32Utility.ParseArray(ValidElementValues);
+            Assert.True(result[0].Equals(CorrectValue) && result[1].Equals(CorrectValue2));
+        }
+
+        [Test]
+        public void TryParseArraySuccessTest2()
+        {
+            var result = Color32Utility.TryParseArray(ValidElementValues, out var value);
+            Assert.True(result.Equals(true) && value[0].Equals(CorrectValue) && value[1].Equals(CorrectValue2));
+        }
+
+        [Test]
+        public void TryParseArrayFailTest2()
+        {
+            var result = Color32Utility.TryParseArray(InvalidElementValues, out _);
             Assert.AreEqual(false, result);
         }
     }

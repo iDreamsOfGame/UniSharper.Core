@@ -17,6 +17,10 @@ namespace UniSharper.Tests
         private static readonly Quaternion CorrectValue = Quaternion.identity;
 
         private static readonly Quaternion CorrectValue2 = new(0, 0, 0, 2);
+        
+        private static readonly float[] ValidElementValues = { 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 2.0f };
+        
+        private static readonly float[] InvalidElementValues = { 1.0f, 1.0f, 1.0f, 2.0f, 2.0f, 2.0f };
 
         [Test]
         public void ParseTest()
@@ -40,23 +44,44 @@ namespace UniSharper.Tests
         }
         
         [Test]
-        public void ParseArrayTest()
+        public void ParseArrayTest1()
         {
             var result = QuaternionUtility.ParseArray(ValidElementsString);
             Assert.True(result[0].Equals(CorrectValue) && result[1].Equals(CorrectValue2));
         }
 
         [Test]
-        public void TryParseArraySuccessTest()
+        public void TryParseArraySuccessTest1()
         {
             var result = QuaternionUtility.TryParseArray(ValidElementsString, out var value);
             Assert.True(result.Equals(true) && value[0].Equals(CorrectValue) && value[1].Equals(CorrectValue2));
         }
 
         [Test]
-        public void TryParseArrayFailTest()
+        public void TryParseArrayFailTest1()
         {
             var result = QuaternionUtility.TryParseArray(InvalidElementsString, out _, string.Empty);
+            Assert.AreEqual(false, result);
+        }
+        
+        [Test]
+        public void ParseArrayTest2()
+        {
+            var result = QuaternionUtility.ParseArray(ValidElementValues);
+            Assert.True(result[0].Equals(CorrectValue) && result[1].Equals(CorrectValue2));
+        }
+
+        [Test]
+        public void TryParseArraySuccessTest2()
+        {
+            var result = QuaternionUtility.TryParseArray(ValidElementValues, out var value);
+            Assert.True(result.Equals(true) && value[0].Equals(CorrectValue) && value[1].Equals(CorrectValue2));
+        }
+
+        [Test]
+        public void TryParseArrayFailTest2()
+        {
+            var result = QuaternionUtility.TryParseArray(InvalidElementValues, out _);
             Assert.AreEqual(false, result);
         }
     }

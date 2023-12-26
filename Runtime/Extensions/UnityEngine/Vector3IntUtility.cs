@@ -105,6 +105,24 @@ namespace UniSharper.Extensions
         }
         
         /// <summary>
+        /// Converts the collection of <see cref="int"/> representation of an <see cref="Vector3Int"/> array equivalent.
+        /// </summary>
+        /// <param name="values">The collection of <see cref="int"/> representation of an <see cref="Vector3Int"/> array equivalent.</param>
+        /// <returns>An <see cref="Vector3Int"/> array equivalent to the <c>values</c>. </returns>
+        public static Vector3Int[] ParseArray(IList<int> values)
+        {
+            var list = new List<Vector3Int>();
+            for (var i = 0; i < values.Count; i += 3)
+            {
+                var x = values[i];
+                var y = values[i + 1];
+                var z = values[i + 2];
+                list.Add(new Vector3Int(x, y, z));
+            }
+            return list.ToArray();
+        }
+        
+        /// <summary>
         /// Converts the string representation of an <see cref="Vector3Int"/> array equivalent. A return value indicates whether the conversion succeeded.
         /// </summary>
         /// <param name="s">The string representation of an <see cref="Vector3Int"/> array equivalent. </param>
@@ -134,6 +152,31 @@ namespace UniSharper.Extensions
             }
             
             result = list.ToArray();
+            return true;
+        }
+        
+        /// <summary>
+        /// Converts the collection of <see cref="int"/> representation of an <see cref="Vector3Int"/> array equivalent.
+        /// A return value indicates whether the conversion succeeded.
+        /// </summary>
+        /// <param name="values">The collection of <see cref="int"/> representation of an <see cref="Vector3Int"/> array equivalent. </param>
+        /// <param name="result">An <see cref="Vector3Int"/> array equivalent to the <c>values</c>. </param>
+        /// <returns><c>true</c> if <c>values</c> was converted successfully; otherwise, <c>false</c>. </returns>
+        public static bool TryParseArray(IList<int> values, out Vector3Int[] result)
+        {
+            if (values is not { Count: > 0 })
+            {
+                result = default;
+                return false;
+            }
+
+            if (values.Count % 3 != 0)
+            {
+                result = default;
+                return false;
+            }
+
+            result = ParseArray(values);
             return true;
         }
     }

@@ -93,6 +93,25 @@ namespace UniSharper.Extensions
 
             return result;
         }
+        
+        /// <summary>
+        /// Converts the collection of <see cref="int"/> representation of an <see cref="RectInt"/> array equivalent.
+        /// </summary>
+        /// <param name="values">The collection of <see cref="int"/> representation of an <see cref="RectInt"/> array equivalent.</param>
+        /// <returns>An <see cref="RectInt"/> array equivalent to the <c>values</c>. </returns>
+        public static RectInt[] ParseArray(IList<int> values)
+        {
+            var list = new List<RectInt>();
+            for (var i = 0; i < values.Count; i += 4)
+            {
+                var xMin = values[i];
+                var yMin = values[i + 1];
+                var width = values[i + 2];
+                var height = values[i + 3];
+                list.Add(new RectInt(xMin, yMin, width, height));
+            }
+            return list.ToArray();
+        }
 
         /// <summary>
         /// Converts the string representation of an <see cref="RectInt"/> array equivalent. A return value indicates whether the conversion succeeded.
@@ -124,6 +143,31 @@ namespace UniSharper.Extensions
             }
             
             result = list.ToArray();
+            return true;
+        }
+        
+        /// <summary>
+        /// Converts the collection of <see cref="int"/> representation of an <see cref="RectInt"/> array equivalent.
+        /// A return value indicates whether the conversion succeeded.
+        /// </summary>
+        /// <param name="values">The collection of <see cref="int"/> representation of an <see cref="RectInt"/> array equivalent. </param>
+        /// <param name="result">An <see cref="RectInt"/> array equivalent to the <c>values</c>. </param>
+        /// <returns><c>true</c> if <c>values</c> was converted successfully; otherwise, <c>false</c>. </returns>
+        public static bool TryParseArray(IList<int> values, out RectInt[] result)
+        {
+            if (values is not { Count: > 0 })
+            {
+                result = default;
+                return false;
+            }
+
+            if (values.Count % 4 != 0)
+            {
+                result = default;
+                return false;
+            }
+
+            result = ParseArray(values);
             return true;
         }
     }

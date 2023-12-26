@@ -40,7 +40,7 @@ namespace UniSharper.Extensions
         /// </summary>
         /// <param name="s">The string representation of a <see cref="Vector2"/> equivalent. </param>
         /// <param name="result">A <see cref="Vector2"/> equivalent to the <c>s</c>. </param>
-        /// <returns><c>true</c> if s was converted successfully; otherwise, <c>false</c>. </returns>
+        /// <returns><c>true</c> if <c>s</c> was converted successfully; otherwise, <c>false</c>. </returns>
         public static bool TryParse(string s, out Vector2 result)
         {
             if (string.IsNullOrEmpty(s))
@@ -92,7 +92,7 @@ namespace UniSharper.Extensions
         /// <param name="s">The string representation of an <see cref="Vector2"/> array equivalent. </param>
         /// <param name="result">An <see cref="Vector2"/> array equivalent to the <c>s</c>. </param>
         /// <param name="arrayElementSeparator">A string that delimits the element string in this string.</param>
-        /// <returns><c>true</c> if s was converted successfully; otherwise, <c>false</c>. </returns>
+        /// <returns><c>true</c> if <c>s</c> was converted successfully; otherwise, <c>false</c>. </returns>
         public static bool TryParseArray(string s, out Vector2[] result, string arrayElementSeparator = "|")
         {
             if (string.IsNullOrEmpty(s) || string.IsNullOrEmpty(arrayElementSeparator))
@@ -116,6 +116,49 @@ namespace UniSharper.Extensions
             }
 
             result = list.ToArray();
+            return true;
+        }
+
+        /// <summary>
+        /// Converts the collection of <see cref="float"/> representation of an <see cref="Vector2"/> array equivalent.
+        /// </summary>
+        /// <param name="values">The collection of <see cref="float"/> representation of an <see cref="Vector2"/> array equivalent.</param>
+        /// <returns>An <see cref="Vector2"/> array equivalent to the <c>values</c>. </returns>
+        public static Vector2[] ParseArray(IList<float> values)
+        {
+            var list = new List<Vector2>();
+            for (var i = 0; i < values.Count; i += 2)
+            {
+                var x = values[i];
+                var y = values[i + 1];
+                list.Add(new Vector2(x, y));
+            }
+
+            return list.ToArray();
+        }
+
+        /// <summary>
+        /// Converts the collection of <see cref="float"/> representation of an <see cref="Vector2"/> array equivalent.
+        /// A return value indicates whether the conversion succeeded.
+        /// </summary>
+        /// <param name="values">The collection of <see cref="float"/> representation of an <see cref="Vector2"/> array equivalent. </param>
+        /// <param name="result">An <see cref="Vector2"/> array equivalent to the <c>values</c>. </param>
+        /// <returns><c>true</c> if <c>values</c> was converted successfully; otherwise, <c>false</c>. </returns>
+        public static bool TryParseArray(IList<float> values, out Vector2[] result)
+        {
+            if (values is not { Count: > 0 })
+            {
+                result = default;
+                return false;
+            }
+
+            if (values.Count % 2 != 0)
+            {
+                result = default;
+                return false;
+            }
+
+            result = ParseArray(values);
             return true;
         }
 
