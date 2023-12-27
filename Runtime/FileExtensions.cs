@@ -9,6 +9,11 @@ namespace UniSharper
     public sealed class FileExtensions
     {
         /// <summary>
+        /// The extension of Unity meta file.
+        /// </summary>
+        public const string UnityMetaFile = ".meta";
+        
+        /// <summary>
         /// The extension of Unity scene file.
         /// </summary>
         public const string UnitySceneFile = ".unity";
@@ -52,5 +57,10 @@ namespace UniSharper
         /// The extension of C Sharp script file.
         /// </summary>
         public const string CSharpScriptFile = ".cs";
+
+        /// <summary>
+        /// The extension of database file.
+        /// </summary>
+        public const string DatabaseFile = ".db";
     }
 }
