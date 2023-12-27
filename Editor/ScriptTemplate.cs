@@ -24,9 +24,6 @@ namespace UniSharperEditor
             if (fileName == null)
                 throw new ArgumentNullException(nameof(fileName));
 
-            if (packageName == null)
-                throw new ArgumentNullException(nameof(packageName));
-
             // Search file in 'Assets' folder.
             var fileNameWithoutExtensions = Path.GetFileNameWithoutExtension(fileName);
             var assets = UniAssetDatabase.LoadEditorResources<TextAsset>(fileNameWithoutExtensions);
