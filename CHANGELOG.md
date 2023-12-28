@@ -6,6 +6,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+## [1.20.0] - 2023-12-28
+
+### Changed
+
+- Changes package dependency from **jillejr.newtonsoft.json-for-unity** to **com.unity.nuget.newtonsoft-json**.
+
+### Added
+
+- Adds package dependency **jillejr.newtonsoft.json-for-unity.converters**.
+
+
+
 ## [1.18.0] - 2023-12-21
 
 ### Added
