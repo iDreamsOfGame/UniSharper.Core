@@ -32,7 +32,7 @@ MonoBehaviour:
     m_Scopes:
     - com.openupm
     - io.github.idreamsofgame.resharp.core
-    - jillejr.newtonsoft.json-for-unity
+    - jillejr.newtonsoft.json-for-unity.converters
     m_IsDefault: 0
     m_Capabilities: 0
     m_ConfigSource: 4
