@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Jerry Lee. All rights reserved. Licensed under the MIT License.
 // See LICENSE in the project root for license information.
 
+// ReSharper disable RedundantUsingDirective
+
 using System.Globalization;
 using ReSharp.Security.Cryptography;
 using UnityEngine;
@@ -29,7 +31,9 @@ namespace UniSharper
         /// <value>The newline string defined for windows.</value>
         public const string WindowsNewLine = "\r\n";
 
+#if !UNITY_EDITOR && UNITY_ANDROID
         private const string AndroidDeviceInfoClassFullPath = "io.github.idreamsofgame.unisharper.plugin.DeviceInfo";
+#endif
 
         /// <summary>
         /// Gets a value indicating whether the runtime platform is Android.
@@ -71,12 +75,17 @@ namespace UniSharper
         /// Gets a unique device identifier. It is guaranteed to be unique for every device (Read Only).
         /// </summary>
         /// <value>A unique device identifier.</value>
-        public static string UniqueDeviceIdentifier =>
-            Application.platform switch
+        public static string UniqueDeviceIdentifier
+        {
+            get
             {
-                RuntimePlatform.Android => GetAndroidDeviceIdentifier(),
-                _ => SystemInfo.deviceUniqueIdentifier
-            };
+#if !UNITY_EDITOR && UNITY_ANDROID
+                return GetAndroidDeviceIdentifier();
+#endif
+                
+                return SystemInfo.deviceUniqueIdentifier;
+            }
+        }
 
         /// <summary>
         /// Gets the SDK version of the software currently running on Android.
@@ -104,13 +113,19 @@ namespace UniSharper
             }
         }
 
-        public static string CountryCode =>
-            Application.platform switch
+        public static string CountryCode
+        {
+            get
             {
-                RuntimePlatform.Android => GetAndroidCountryCode(),
-                _ => RegionInfo.CurrentRegion.Name
-            };
+#if !UNITY_EDITOR && UNITY_ANDROID
+                return GetAndroidCountryCode();
+#endif
+                
+                return RegionInfo.CurrentRegion.Name;
+            }
+        }
 
+#if !UNITY_EDITOR && UNITY_ANDROID
         private static string GetAndroidDeviceIdentifier()
         {
             using var deviceInfo = new AndroidJavaClass(AndroidDeviceInfoClassFullPath);
@@ -125,5 +140,6 @@ namespace UniSharper
             const string methodName = "getCountryCode";
             return deviceInfo.CallStatic<string>(methodName);
         }
+#endif
     }
 }

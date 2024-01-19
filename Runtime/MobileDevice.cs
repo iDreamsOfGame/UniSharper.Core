@@ -1,9 +1,9 @@
 // Copyright (c) Jerry Lee. All rights reserved. Licensed under the MIT License. See LICENSE in the
 // project root for license information.
 
-#if UNITY_ANDROID || UNITY_IOS
+// ReSharper disable once RedundantUsingDirective
+
 using UniSharper.Extensions;
-#endif
 
 namespace UniSharper
 {
