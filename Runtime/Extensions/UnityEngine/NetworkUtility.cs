@@ -10,7 +10,9 @@ namespace UniSharper.Extensions
     /// </summary>
     public static class NetworkUtility
     {
+#if UNITY_ANDROID
         private const string AndroidJavaClassName = "io.github.idreamsofgame.unisharper.plugin.NetUtils";
+#endif
         
         /// <summary>
         /// If the internet is reachable.
@@ -24,21 +26,20 @@ namespace UniSharper.Extensions
         /// <returns><c>true</c>, If can open the url; <c>false</c> can not open the url.</returns>
         public static bool OpenURL(string url)
         {
-            switch (Application.platform)
-            {
-                case RuntimePlatform.Android:
-                    return OpenURLOnAndroid(url);
-
-                default:
-                    Application.OpenURL(url);
-                    return true;
-            }
+#if UNITY_ANDROID
+            return OpenURLOnAndroid(url);
+#endif
+            
+            Application.OpenURL(url);
+            return true;
         }
 
+#if UNITY_ANDROID
         private static bool OpenURLOnAndroid(string url)
         {
             using var netUtils = new AndroidJavaClass(AndroidJavaClassName);
             return netUtils.CallStatic<bool>("openURL", url);
         }
+#endif
     }
 }
