@@ -27,7 +27,8 @@ namespace UniSharper.Extensions
         public static bool OpenURL(string url)
         {
 #if UNITY_ANDROID
-            return OpenURLOnAndroid(url);
+            if (PlayerEnvironment.IsAndroidPlatform)
+                return OpenURLOnAndroid(url);
 #endif
             
             Application.OpenURL(url);
