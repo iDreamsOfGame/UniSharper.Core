@@ -21,11 +21,11 @@ namespace UniSharper
         public static void RequestStoreReview(string googlePlayReviewInAppUrl, string googlePlayReviewInBrowserUrl, string appStoreReviewUrl)
         {
 #if UNITY_ANDROID
-            if (!NetworkUtility.OpenURL(googlePlayReviewInAppUrl))
-                NetworkUtility.OpenURL(googlePlayReviewInBrowserUrl);
+            if (!UniApplication.OpenURL(googlePlayReviewInAppUrl))
+                UniApplication.OpenURL(googlePlayReviewInBrowserUrl);
 #elif UNITY_IOS
             if (!UnityEngine.iOS.Device.RequestStoreReview())
-                NetworkUtility.OpenURL(appStoreReviewUrl);
+                UniApplication.OpenURL(appStoreReviewUrl);
 #endif
         }
     }
