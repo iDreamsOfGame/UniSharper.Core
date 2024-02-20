@@ -14,7 +14,7 @@ namespace UniSharper
 #if !UNITY_EDITOR && UNITY_ANDROID
         private const string AndroidJavaClassName = "io.github.idreamsofgame.unisharper.plugin.NetUtils";
 #endif
-        
+
         /// <summary>
         /// If the internet is reachable.
         /// </summary>
@@ -30,28 +30,37 @@ namespace UniSharper
 #if !UNITY_EDITOR && UNITY_ANDROID
             return OpenURLOnAndroid(url);
 #endif
-            
+
             Application.OpenURL(url);
             return true;
         }
-        
+
         /// <summary>
         /// Quits the player application.
         /// </summary>
-        public static void Quit()
+        /// <param name="killAndroidProcess">Whether kill Android process. </param>
+        public static void Quit(bool killAndroidProcess = false)
         {
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
 #elif UNITY_ANDROID
-            try 
+            if (killAndroidProcess)
             {
-                new AndroidJavaClass("java.lang.System").CallStatic("exit", 0);
-            } 
-            catch (System.Exception e) 
-            {
-                Debug.LogWarning($"Application quit has exception {e}");
+                try 
+                {
+                    new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity").Call("finish");
+                    new AndroidJavaClass("java.lang.System").CallStatic("exit", 0);
+                } 
+                catch (System.Exception e) 
+                {
+                    Debug.LogWarning($"Application quit has exception {e}");
+                }
+                finally
+                {
+                    Application.Quit();
+                }
             }
-            finally
+            else
             {
                 Application.Quit();
             }
