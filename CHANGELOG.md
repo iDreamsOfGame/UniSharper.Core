@@ -6,6 +6,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+## [1.21.0] - 2024-02-20
+
+### Removed
+
+- Removes class **NetworkUtility**.
+
+### Added
+
+- Adds class **UniApplication**.
+- Adds method **UniApplication.Quit**.
+
+### Changed
+
+- Moves method **NetworkUtility.OpenURL** to **UniApplication.OpenURL**.
+
+
+
 ## [1.20.0] - 2023-12-28
 
 ### Changed
@@ -202,4 +219,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   
 
 ## [1.0.0] - 2020-04-21
+### Added
+
  - Initial unity project and adnroid plugin project for package distribution.

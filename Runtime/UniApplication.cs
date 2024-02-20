@@ -3,12 +3,13 @@
 
 using UnityEngine;
 
-namespace UniSharper.Extensions
+namespace UniSharper
 {
     /// <summary>
-    /// Provides utilities to handle network operation. This class cannot be inherited.
+    /// Access to application runtime data.
+    /// This class contains static methods for looking up information about and controlling the runtime data.
     /// </summary>
-    public static class NetworkUtility
+    public static class UniApplication
     {
 #if !UNITY_EDITOR && UNITY_ANDROID
         private const string AndroidJavaClassName = "io.github.idreamsofgame.unisharper.plugin.NetUtils";
@@ -32,6 +33,31 @@ namespace UniSharper.Extensions
             
             Application.OpenURL(url);
             return true;
+        }
+        
+        /// <summary>
+        /// Quits the player application.
+        /// </summary>
+        public static void Quit()
+        {
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#elif UNITY_ANDROID
+            try 
+            {
+                new AndroidJavaClass("java.lang.System").CallStatic("exit", 0);
+            } 
+            catch (System.Exception e) 
+            {
+                Debug.LogWarning($"Application quit has exception {e}");
+            }
+            finally
+            {
+                Application.Quit();
+            }
+#else
+            Application.Quit();
+#endif
         }
 
 #if !UNITY_EDITOR && UNITY_ANDROID
