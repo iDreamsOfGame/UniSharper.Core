@@ -48,7 +48,7 @@ namespace UniSharper
             {
                 try 
                 {
-                    new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity").Call("finish");
+                    new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity").Call("finishiAffinity");
                     new AndroidJavaClass("java.lang.System").CallStatic("exit", 0);
                 } 
                 catch (System.Exception e) 
