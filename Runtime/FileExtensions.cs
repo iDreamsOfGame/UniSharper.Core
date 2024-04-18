@@ -19,14 +19,44 @@ namespace UniSharper
         public const string UnitySceneFile = ".unity";
         
         /// <summary>
-        /// The extension of Unity binary file.
+        /// The extension of Unity asset file.
         /// </summary>
-        public const string UnityBinaryFile = ".bytes";
+        public const string UnityAssetFile = ".asset";
+        
+        /// <summary>
+        /// The extension of Unity binary asset file.
+        /// </summary>
+        public const string UnityBinaryAssetFile = ".bytes";
 
         /// <summary>
-        /// The extension of Unity prefab file.
+        /// The extension of Unity prefab asset file.
         /// </summary>
-        public const string UnityPrefabFile = ".prefab";
+        public const string UnityPrefabAssetFile = ".prefab";
+
+        /// <summary>
+        /// The extension of Unity AudioMixer asset file.
+        /// </summary>
+        public const string UnityAudioMixerAssetFile = ".mixer";
+
+        /// <summary>
+        /// The extension of Unity shader asset file.
+        /// </summary>
+        public const string UnityShaderAssetFile = ".shader";
+        
+        /// <summary>
+        /// The extension of Unity material asset file.
+        /// </summary>
+        public const string UnityMaterialAssetFile = ".mat";
+
+        /// <summary>
+        /// The extension of Unity sprite atlas asset file.
+        /// </summary>
+        public const string UnitySpriteAtlasAssetFile = ".spriteatlas";
+        
+        /// <summary>
+        /// The extension of text file.
+        /// </summary>
+        public const string TextFile = ".txt";
 
         /// <summary>
         /// The extension of JPG image file.
@@ -42,14 +72,39 @@ namespace UniSharper
         /// The extension of PNG image file.
         /// </summary>
         public const string PngImageFile = ".png";
+        
+        ///  <summary>
+        /// The extension of Microsoft Wave audio file.
+        /// </summary>
+        public const string WavAudioFile = ".wav";
 
         /// <summary>
-        /// The extension of old format excel file.
+        /// The extension of Free Lossless Audio Codec (FLAC) audio file.
+        /// </summary>
+        public const string FlacAudioFile = ".flac";
+        
+        /// <summary>
+        /// The extension of MPEG layer 3 audio file.
+        /// </summary>
+        public const string Mp3AudioFile = ".mp3";
+
+        /// <summary>
+        /// The extension of Ogg Vorbis audio file.
+        /// </summary>
+        public const string OggAudioFile = ".ogg";
+
+        /// <summary>
+        /// The extension of Autodesk Filmbox model file.
+        /// </summary>
+        public const string AutodeskFilmboxFile = ".fbx";
+
+        /// <summary>
+        /// The extension of old format Excel file.
         /// </summary>
         public const string ExcelFile = ".xls";
 
         /// <summary>
-        /// The extension of new format excel file.
+        /// The extension of new format Excel file.
         /// </summary>
         public const string ExcelXFile = ".xlsx";
 
