@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using ReSharp.Extensions;
 using UnityEngine;
 
 namespace UniSharper.Extensions
@@ -29,15 +30,15 @@ namespace UniSharper.Extensions
                     return default;
                 case > 2:
                 {
-                    float.TryParse(values[0], out var x);
-                    float.TryParse(values[1], out var y);
-                    float.TryParse(values[2], out var z);
+                    SingleUtility.GenericTryParse(values[0], out var x);
+                    SingleUtility.GenericTryParse(values[1], out var y);
+                    SingleUtility.GenericTryParse(values[2], out var z);
                     return new Vector3(x, y, z);
                 }
                 default:
                 {
-                    float.TryParse(values[0], out var x);
-                    float.TryParse(values[1], out var y);
+                    SingleUtility.GenericTryParse(values[0], out var x);
+                    SingleUtility.GenericTryParse(values[1], out var y);
                     return new Vector3(x, y);
                 }
             }
@@ -65,16 +66,16 @@ namespace UniSharper.Extensions
                     return false;
                 case > 2:
                 {
-                    float.TryParse(values[0], out var x);
-                    float.TryParse(values[1], out var y);
-                    float.TryParse(values[2], out var z);
+                    SingleUtility.GenericTryParse(values[0], out var x);
+                    SingleUtility.GenericTryParse(values[1], out var y);
+                    SingleUtility.GenericTryParse(values[2], out var z);
                     result = new Vector3(x, y, z);
                     break;
                 }
                 default:
                 {
-                    float.TryParse(values[0], out var x);
-                    float.TryParse(values[1], out var y);
+                    SingleUtility.GenericTryParse(values[0], out var x);
+                    SingleUtility.GenericTryParse(values[1], out var y);
                     result = new Vector3(x, y);
                     break;
                 }

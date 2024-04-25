@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ReSharp.Extensions;
 using UnityEngine;
 
 // ReSharper disable PossibleMultipleEnumeration
@@ -30,8 +31,8 @@ namespace UniSharper.Extensions
             if (values.Length < 2)
                 return default;
 
-            float.TryParse(values[0], out var x);
-            float.TryParse(values[1], out var y);
+            SingleUtility.GenericTryParse(values[0], out var x);
+            SingleUtility.GenericTryParse(values[1], out var y);
             return new Vector2(x, y);
         }
 
@@ -56,8 +57,8 @@ namespace UniSharper.Extensions
                 return false;
             }
 
-            float.TryParse(values[0], out var x);
-            float.TryParse(values[1], out var y);
+            SingleUtility.GenericTryParse(values[0], out var x);
+            SingleUtility.GenericTryParse(values[1], out var y);
             result = new Vector2(x, y);
             return true;
         }

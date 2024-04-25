@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+## [1.21.6] - 2024-04-25
+
+### Fixed
+
+- Fixed bug of **float.TryParse** in different culture return different result.
+
+
+
 ## [1.21.0] - 2024-02-20
 
 ### Removed

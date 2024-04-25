@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using ReSharp.Extensions;
 using UnityEngine;
 
 namespace UniSharper.Extensions
@@ -26,10 +27,10 @@ namespace UniSharper.Extensions
             if (values.Length < 4)
                 return default;
             
-            float.TryParse(values[0], out var x);
-            float.TryParse(values[1], out var y);
-            float.TryParse(values[2], out var z);
-            float.TryParse(values[3], out var w);
+            SingleUtility.GenericTryParse(values[0], out var x);
+            SingleUtility.GenericTryParse(values[1], out var y);
+            SingleUtility.GenericTryParse(values[2], out var z);
+            SingleUtility.GenericTryParse(values[3], out var w);
             return new Quaternion(x, y, z, w);
         }
 
@@ -54,10 +55,10 @@ namespace UniSharper.Extensions
                 return false;
             }
 
-            float.TryParse(values[0], out var x);
-            float.TryParse(values[1], out var y);
-            float.TryParse(values[2], out var z);
-            float.TryParse(values[3], out var w);
+            SingleUtility.GenericTryParse(values[0], out var x);
+            SingleUtility.GenericTryParse(values[1], out var y);
+            SingleUtility.GenericTryParse(values[2], out var z);
+            SingleUtility.GenericTryParse(values[3], out var w);
             result = new Quaternion(x, y, z, w);
             return true;
         }

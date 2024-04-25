@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using ReSharp.Extensions;
 using UnityEngine;
 
 namespace UniSharper.Extensions
@@ -29,17 +30,17 @@ namespace UniSharper.Extensions
                     return default;
                 case 3:
                 {
-                    float.TryParse(values[0], out var r);
-                    float.TryParse(values[1], out var g);
-                    float.TryParse(values[2], out var b);
+                    SingleUtility.GenericTryParse(values[0], out var r);
+                    SingleUtility.GenericTryParse(values[1], out var g);
+                    SingleUtility.GenericTryParse(values[2], out var b);
                     return new Color(r, g, b);
                 }
                 default:
                 {
-                    float.TryParse(values[0], out var r);
-                    float.TryParse(values[1], out var g);
-                    float.TryParse(values[2], out var b);
-                    float.TryParse(values[3], out var a);
+                    SingleUtility.GenericTryParse(values[0], out var r);
+                    SingleUtility.GenericTryParse(values[1], out var g);
+                    SingleUtility.GenericTryParse(values[2], out var b);
+                    SingleUtility.GenericTryParse(values[3], out var a);
                     return new Color(r, g, b, a);
                 }
             }
@@ -67,18 +68,18 @@ namespace UniSharper.Extensions
                     return false;
                 case 3:
                 {
-                    float.TryParse(values[0], out var r);
-                    float.TryParse(values[1], out var g);
-                    float.TryParse(values[2], out var b);
+                    SingleUtility.GenericTryParse(values[0], out var r);
+                    SingleUtility.GenericTryParse(values[1], out var g);
+                    SingleUtility.GenericTryParse(values[2], out var b);
                     result = new Color(r, g, b);
                     break;
                 }
                 default:
                 {
-                    float.TryParse(values[0], out var r);
-                    float.TryParse(values[1], out var g);
-                    float.TryParse(values[2], out var b);
-                    float.TryParse(values[3], out var a);
+                    SingleUtility.GenericTryParse(values[0], out var r);
+                    SingleUtility.GenericTryParse(values[1], out var g);
+                    SingleUtility.GenericTryParse(values[2], out var b);
+                    SingleUtility.GenericTryParse(values[3], out var a);
                     result = new Color(r, g, b, a);
                     break;
                 }

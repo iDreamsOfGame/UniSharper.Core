@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using ReSharp.Extensions;
 using UnityEngine;
 
 namespace UniSharper.Extensions
@@ -30,10 +31,10 @@ namespace UniSharper.Extensions
             pairs.TryGetValue("y", out var yString);
             pairs.TryGetValue("width", out var widthString);
             pairs.TryGetValue("height", out var heightString);
-            float.TryParse(xString, out var x);
-            float.TryParse(yString, out var y);
-            float.TryParse(widthString, out var width);
-            float.TryParse(heightString, out var height);
+            SingleUtility.GenericTryParse(xString, out var x);
+            SingleUtility.GenericTryParse(yString, out var y);
+            SingleUtility.GenericTryParse(widthString, out var width);
+            SingleUtility.GenericTryParse(heightString, out var height);
             return new Rect(x, y, width, height);
         }
 
@@ -62,10 +63,10 @@ namespace UniSharper.Extensions
             pairs.TryGetValue("y", out var yString);
             pairs.TryGetValue("width", out var widthString);
             pairs.TryGetValue("height", out var heightString);
-            float.TryParse(xString, out var x);
-            float.TryParse(yString, out var y);
-            float.TryParse(widthString, out var width);
-            float.TryParse(heightString, out var height);
+            SingleUtility.GenericTryParse(xString, out var x);
+            SingleUtility.GenericTryParse(yString, out var y);
+            SingleUtility.GenericTryParse(widthString, out var width);
+            SingleUtility.GenericTryParse(heightString, out var height);
             result = new Rect(x, y, width, height);
             return true;
         }

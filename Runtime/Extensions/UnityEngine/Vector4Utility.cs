@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using ReSharp.Extensions;
 using UnityEngine;
 
 namespace UniSharper.Extensions
@@ -29,23 +30,23 @@ namespace UniSharper.Extensions
                     return default;
                 case 2:
                 {
-                    float.TryParse(values[0], out var x);
-                    float.TryParse(values[1], out var y);
+                    SingleUtility.GenericTryParse(values[0].Trim(), out var x);
+                    SingleUtility.GenericTryParse(values[1].Trim(), out var y);
                     return new Vector4(x, y);
                 }
                 case 3:
                 {
-                    float.TryParse(values[0], out var x);
-                    float.TryParse(values[1], out var y);
-                    float.TryParse(values[2], out var z);
+                    SingleUtility.GenericTryParse(values[0].Trim(), out var x);
+                    SingleUtility.GenericTryParse(values[1].Trim(), out var y);
+                    SingleUtility.GenericTryParse(values[2].Trim(), out var z);
                     return new Vector4(x, y, z);
                 }
                 default:
                 {
-                    float.TryParse(values[0], out var x);
-                    float.TryParse(values[1], out var y);
-                    float.TryParse(values[2], out var z);
-                    float.TryParse(values[3], out var w);
+                    SingleUtility.GenericTryParse(values[0].Trim(), out var x);
+                    SingleUtility.GenericTryParse(values[1].Trim(), out var y);
+                    SingleUtility.GenericTryParse(values[2].Trim(), out var z);
+                    SingleUtility.GenericTryParse(values[3].Trim(), out var w);
                     return new Vector4(x, y, z, w);
                 }
             }
@@ -73,25 +74,25 @@ namespace UniSharper.Extensions
                     return false;
                 case 2:
                 {
-                    float.TryParse(values[0], out var x);
-                    float.TryParse(values[1], out var y);
+                    SingleUtility.GenericTryParse(values[0].Trim(), out var x);
+                    SingleUtility.GenericTryParse(values[1].Trim(), out var y);
                     result = new Vector4(x, y);
                     break;
                 }
                 case 3:
                 {
-                    float.TryParse(values[0], out var x);
-                    float.TryParse(values[1], out var y);
-                    float.TryParse(values[2], out var z);
+                    SingleUtility.GenericTryParse(values[0].Trim(), out var x);
+                    SingleUtility.GenericTryParse(values[1].Trim(), out var y);
+                    SingleUtility.GenericTryParse(values[2].Trim(), out var z);
                     result = new Vector4(x, y, z);
                     break;
                 }
                 default:
                 {
-                    float.TryParse(values[0], out var x);
-                    float.TryParse(values[1], out var y);
-                    float.TryParse(values[2], out var z);
-                    float.TryParse(values[3], out var w);
+                    SingleUtility.GenericTryParse(values[0].Trim(), out var x);
+                    SingleUtility.GenericTryParse(values[1].Trim(), out var y);
+                    SingleUtility.GenericTryParse(values[2].Trim(), out var z);
+                    SingleUtility.GenericTryParse(values[3].Trim(), out var w);
                     result = new Vector4(x, y, z, w);
                     break;
                 }
