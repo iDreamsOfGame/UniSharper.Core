@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.unity.2d.sprite": "1.0.0",
     "com.unity.ide.rider": "3.0.28",
     "com.unity.nuget.newtonsoft-json": "3.1.0",
     "com.unity.test-framework": "1.3.0",
