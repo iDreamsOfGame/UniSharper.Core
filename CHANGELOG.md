@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+## [1.21.7] - 2024-04-28
+
+### Changed
+
+- Improved the performance of **ParticleEffectController**.
+
+
+
 ## [1.21.6] - 2024-04-25
 
 ### Fixed

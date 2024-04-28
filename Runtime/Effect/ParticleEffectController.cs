@@ -1,7 +1,9 @@
 ﻿// Copyright (c) Jerry Lee. All rights reserved. Licensed under the MIT License.
 // See LICENSE in the project root for license information.
 
+using System;
 using UnityEngine;
+using UnityEngine.Scripting;
 
 namespace UniSharper.Effect
 {
@@ -11,44 +13,35 @@ namespace UniSharper.Effect
     [DisallowMultipleComponent]
     public class ParticleEffectController : MonoBehaviour, IParticleEffectController
     {
-        private float duration = -1f;
-
+        private Transform cachedTransform;
+        
         private ParticleSystem particleSystemRoot;
+        
+        private ParticleSystem[] particleSystems;
+        
+        private float duration = -1f;
 
         private bool started;
 
-        public Transform CachedTransform => transform;
-
-        public float Duration
+        public Transform CachedTransform
         {
             get
             {
-                if (duration < 0 && ParticleSystemRoot != null)
+                try
                 {
-                    var childParticleSystems = ParticleSystemRoot.GetComponentsInChildren<ParticleSystem>();
-                    foreach (var childParticleSystem in childParticleSystems)
-                    {
-                        var main = childParticleSystem.main;
+                    if (cachedTransform)
+                        return cachedTransform;
 
-                        if (main.loop)
-                            return -1;
-
-                        if (!childParticleSystem.emission.enabled)
-                            continue;
-
-                        var maxDuration = main.startDelayMultiplier + Mathf.Max(main.duration, main.startLifetimeMultiplier);
-                        duration = Mathf.Max(duration, maxDuration);
-                    }
+                    cachedTransform = transform;
+                    return cachedTransform;
                 }
-
-                return duration;
+                catch (Exception)
+                {
+                    return null;
+                }
             }
         }
-
-        public bool IsLoop => ParticleSystemRoot && ParticleSystemRoot.main.loop;
-
-        public ParticleEffectEvent LoopPointReached { get; private set; }
-
+        
         public ParticleSystem ParticleSystemRoot
         {
             get
@@ -56,18 +49,41 @@ namespace UniSharper.Effect
                 if (particleSystemRoot)
                     return particleSystemRoot;
                 
-                TryGetComponent(out particleSystemRoot);
-
-                if (!particleSystemRoot)
-                    particleSystemRoot = transform.GetComponentInChildren<ParticleSystem>(true);
-
+                SetParticleSystemRoot();
                 return particleSystemRoot;
             }
         }
+        
+        public ParticleSystem[] ParticleSystems
+        {
+            get
+            {
+                if (particleSystems != null)
+                    return particleSystems;
+
+                SetParticleSystems();
+                return particleSystems;
+            }
+        }
+
+        public float Duration
+        {
+            get
+            {
+                if (!IsLoop && duration < 0)
+                    SetDuration();
+
+                return duration;
+            }
+        }
+
+        public bool IsLoop { get; protected set; }
+        
+        public float PlaybackTime { get; private set; }
+
+        public ParticleEffectEvent LoopPointReached { get; private set; }
 
         public ParticleEffectEvent Paused { get; private set; }
-
-        public float PlaybackTime { get; private set; }
 
         public ParticleEffectEvent Resumed { get; private set; }
 
@@ -127,6 +143,15 @@ namespace UniSharper.Effect
         {
             InternalStop();
         }
+        
+        [Preserve]
+        public virtual void OnSpawned()
+        {
+            SetCachedTransform();
+            SetParticleSystemRoot();
+            SetParticleSystems();
+            SetDuration();
+        }
 
         protected virtual void Awake()
         {
@@ -162,6 +187,53 @@ namespace UniSharper.Effect
             }
 
             PlaybackTime = 0f;
+        }
+
+        protected virtual void SetCachedTransform()
+        {
+            if (cachedTransform)
+                return;
+            
+            cachedTransform = transform;
+        }
+        
+        protected virtual void SetParticleSystemRoot()
+        {
+            if (particleSystemRoot)
+                return;
+            
+            TryGetComponent(out particleSystemRoot);
+
+            if (!particleSystemRoot)
+                particleSystemRoot = transform.GetComponentInChildren<ParticleSystem>(true);
+        }
+
+        protected virtual void SetParticleSystems()
+        {
+            if (particleSystems != null)
+                return;
+            
+            particleSystems = GetComponentsInChildren<ParticleSystem>(true);
+        }
+
+        protected virtual void SetDuration()
+        {
+            foreach (var childParticleSystem in ParticleSystems)
+            {
+                var mainModule = childParticleSystem.main;
+
+                if (mainModule.loop)
+                {
+                    IsLoop = true;
+                    return;
+                }
+
+                if (!childParticleSystem.emission.enabled)
+                    continue;
+
+                var maxDuration = mainModule.startDelayMultiplier + Mathf.Max(mainModule.duration, mainModule.startLifetimeMultiplier);
+                duration = Mathf.Max(duration, maxDuration);
+            }
         }
 
         private void DestroyEvents()
