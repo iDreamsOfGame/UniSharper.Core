@@ -36,8 +36,6 @@ namespace UniSharper.Effect
         
         private float duration = -1f;
 
-        private bool hasInitialized;
-
         private bool hasStarted;
 
         public Transform CachedTransform
@@ -93,6 +91,8 @@ namespace UniSharper.Effect
                 return duration;
             }
         }
+        
+        public bool HasInitialized { get; protected set; }
 
         public bool IsLoop { get; protected set; }
 
@@ -110,14 +110,14 @@ namespace UniSharper.Effect
 
         public void Initialize()
         {
-            if (hasInitialized)
+            if (HasInitialized)
                 return;
 
             SetCachedTransform();
             SetParticleSystemRoot();
             SetParticleSystems();
             SetDuration();
-            hasInitialized = true;
+            HasInitialized = true;
         }
         
         public void Play()

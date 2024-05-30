@@ -31,6 +31,11 @@ namespace UniSharper.Effect
         float Duration { get; }
 
         /// <summary>
+        /// Whether this controller has initialized or not.
+        /// </summary>
+        bool HasInitialized { get; }
+
+        /// <summary>
         /// Is the particle effect looping.
         /// </summary>
         bool IsLoop { get; }
