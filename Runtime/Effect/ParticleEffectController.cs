@@ -2,8 +2,8 @@
 // See LICENSE in the project root for license information.
 
 using System;
+using UniSharper.Extensions;
 using UnityEngine;
-using UnityEngine.Scripting;
 
 namespace UniSharper.Effect
 {
@@ -13,6 +13,21 @@ namespace UniSharper.Effect
     [DisallowMultipleComponent]
     public class ParticleEffectController : MonoBehaviour, IParticleEffectController
     {
+        [SerializeField]
+        private ParticleEffectEvent loopPointReached;
+
+        [SerializeField]
+        private ParticleEffectEvent pausedEvent;
+
+        [SerializeField]
+        private ParticleEffectEvent resumedEvent;
+
+        [SerializeField]
+        private ParticleEffectEvent startedEvent;
+
+        [SerializeField]
+        private ParticleEffectEvent stoppedEvent;
+        
         private Transform cachedTransform;
         
         private ParticleSystem particleSystemRoot;
@@ -21,7 +36,9 @@ namespace UniSharper.Effect
         
         private float duration = -1f;
 
-        private bool started;
+        private bool hasInitialized;
+
+        private bool hasStarted;
 
         public Transform CachedTransform
         {
@@ -70,7 +87,7 @@ namespace UniSharper.Effect
         {
             get
             {
-                if (!IsLoop && duration < 0)
+                if (duration < 0)
                     SetDuration();
 
                 return duration;
@@ -78,33 +95,48 @@ namespace UniSharper.Effect
         }
 
         public bool IsLoop { get; protected set; }
-        
+
         public float PlaybackTime { get; private set; }
 
-        public ParticleEffectEvent LoopPointReached { get; private set; }
+        public ParticleEffectEvent LoopPointReached => loopPointReached ??= new ParticleEffectEvent();
 
-        public ParticleEffectEvent Paused { get; private set; }
+        public ParticleEffectEvent Paused => pausedEvent ??= new ParticleEffectEvent();
 
-        public ParticleEffectEvent Resumed { get; private set; }
+        public ParticleEffectEvent Resumed => resumedEvent ??= new ParticleEffectEvent();
 
-        public ParticleEffectEvent Started { get; private set; }
+        public ParticleEffectEvent Started => startedEvent ??= new ParticleEffectEvent();
 
-        public ParticleEffectEvent Stopped { get; private set; }
+        public ParticleEffectEvent Stopped => stoppedEvent ??= new ParticleEffectEvent();
 
+        public void Initialize()
+        {
+            if (hasInitialized)
+                return;
+
+            SetCachedTransform();
+            SetParticleSystemRoot();
+            SetParticleSystems();
+            SetDuration();
+            hasInitialized = true;
+        }
+        
         public void Play()
         {
-            InternalStop(false);
-
             if (!ParticleSystemRoot)
                 return;
 
+            Initialize();
+            PlaybackTime = 0;
+
+            InternalStop(false);
+
             if (!ParticleSystemRoot.isStopped) 
                 return;
-            
-            PlaybackTime = 0;
+                
             ParticleSystemRoot.Play();
+            
+            hasStarted = true;
             FireEventStarted();
-            started = true;
         }
         
         public void Pause()
@@ -143,19 +175,10 @@ namespace UniSharper.Effect
         {
             InternalStop();
         }
-        
-        [Preserve]
-        public virtual void OnSpawned()
-        {
-            SetCachedTransform();
-            SetParticleSystemRoot();
-            SetParticleSystems();
-            SetDuration();
-        }
 
         protected virtual void Awake()
         {
-            InitializeEvents();
+            Initialize();
         }
 
         protected virtual void OnDestroy()
@@ -169,24 +192,25 @@ namespace UniSharper.Effect
             if (!ParticleSystemRoot)
                 return;
 
-            if (ParticleSystemRoot.isPaused || !started)
+            if (!hasStarted || ParticleSystemRoot.isPaused || ParticleSystemRoot.isStopped)
                 return;
 
             PlaybackTime += Time.deltaTime;
 
             if (PlaybackTime < Duration)
                 return;
-
+            
+            PlaybackTime = 0;
+            
             if (IsLoop)
             {
                 FireEventLoopPointReached();
             }
             else
             {
+                hasStarted = false;
                 FireEventStopped();
             }
-
-            PlaybackTime = 0f;
         }
 
         protected virtual void SetCachedTransform()
@@ -206,6 +230,8 @@ namespace UniSharper.Effect
 
             if (!particleSystemRoot)
                 particleSystemRoot = transform.GetComponentInChildren<ParticleSystem>(true);
+
+            IsLoop = ParticleSystemRoot?.main.loop ?? false;
         }
 
         protected virtual void SetParticleSystems()
@@ -220,19 +246,7 @@ namespace UniSharper.Effect
         {
             foreach (var childParticleSystem in ParticleSystems)
             {
-                var mainModule = childParticleSystem.main;
-
-                if (mainModule.loop)
-                {
-                    IsLoop = true;
-                    return;
-                }
-
-                if (!childParticleSystem.emission.enabled)
-                    continue;
-
-                var maxDuration = mainModule.startDelayMultiplier + Mathf.Max(mainModule.duration, mainModule.startLifetimeMultiplier);
-                duration = Mathf.Max(duration, maxDuration);
+                duration = Mathf.Max(duration, childParticleSystem.GetDuration(true));
             }
         }
 
@@ -270,15 +284,6 @@ namespace UniSharper.Effect
             Stopped?.Invoke(this);
         }
 
-        private void InitializeEvents()
-        {
-            Started ??= new ParticleEffectEvent();
-            Paused ??= new ParticleEffectEvent();
-            Resumed ??= new ParticleEffectEvent();
-            Stopped ??= new ParticleEffectEvent();
-            LoopPointReached ??= new ParticleEffectEvent();
-        }
-
         private void InternalStop(bool fireStoppedEvent = true)
         {
             if (!ParticleSystemRoot)
@@ -290,7 +295,7 @@ namespace UniSharper.Effect
             if (fireStoppedEvent)
                 FireEventStopped();
 
-            started = false;
+            hasStarted = false;
         }
     }
 }
