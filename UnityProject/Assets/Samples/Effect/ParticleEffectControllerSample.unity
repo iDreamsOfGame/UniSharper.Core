@@ -229,26 +229,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 198137169315685502, guid: 65707db5500614649ab465f868c017ec,
-        type: 3}
-      propertyPath: lengthInSec
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 199838151040770390, guid: 65707db5500614649ab465f868c017ec,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 199838151040770390, guid: 65707db5500614649ab465f868c017ec,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 199838151040770390, guid: 65707db5500614649ab465f868c017ec,
-        type: 3}
-      propertyPath: m_Materials.Array.data[1]
-      value: 
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 65707db5500614649ab465f868c017ec, type: 3}
 --- !u!1 &576642323
@@ -364,6 +344,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6057c91835c614bc6b46b3dae8fb5879, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  loopPointReached:
+    m_PersistentCalls:
+      m_Calls: []
+  pausedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  resumedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  startedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  stoppedEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &1701801166
 Transform:
   m_ObjectHideFlags: 0
