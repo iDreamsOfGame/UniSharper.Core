@@ -13,6 +13,9 @@ namespace UniSharper.Effect
     [DisallowMultipleComponent]
     public class ParticleEffectController : MonoBehaviour, IParticleEffectController
     {
+        [SerializeField, Tooltip("Whether check all ParticleSystems stopped in event method Update.")]
+        private bool checkParticleSystemsStopped = true;
+        
         [SerializeField]
         private ParticleEffectEvent loopPointReached;
 
@@ -81,6 +84,12 @@ namespace UniSharper.Effect
             }
         }
 
+        public bool CheckParticleSystemsStopped
+        {
+            get => checkParticleSystemsStopped;
+            set => checkParticleSystemsStopped = value;
+        }
+
         public float Duration
         {
             get
@@ -126,15 +135,18 @@ namespace UniSharper.Effect
                 return;
 
             Initialize();
-            PlaybackTime = 0;
 
-            InternalStop(false);
-
-            if (!ParticleSystemRoot.isStopped) 
-                return;
+            if (!ParticleSystemRoot.main.playOnAwake)
+            {
+                InternalStop(false);
                 
-            ParticleSystemRoot.Play();
+                if (!ParticleSystemRoot.isStopped) 
+                    return;
+                
+                ParticleSystemRoot.Play();
+            }
             
+            PlaybackTime = 0;
             hasStarted = true;
             FireEventStarted();
         }
@@ -175,6 +187,15 @@ namespace UniSharper.Effect
         {
             InternalStop();
         }
+        
+        public void RemoveAllListeners()
+        {
+            Started?.RemoveAllListeners();
+            Paused?.RemoveAllListeners();
+            Resumed?.RemoveAllListeners();
+            Stopped?.RemoveAllListeners();
+            LoopPointReached?.RemoveAllListeners();
+        }
 
         protected virtual void Awake()
         {
@@ -184,7 +205,7 @@ namespace UniSharper.Effect
         protected virtual void OnDestroy()
         {
             StopAllCoroutines();
-            DestroyEvents();
+            RemoveAllListeners();
         }
 
         protected virtual void Update()
@@ -196,21 +217,24 @@ namespace UniSharper.Effect
                 return;
 
             PlaybackTime += Time.deltaTime;
-            
-            var allParticleSystemStopped = true;
-            foreach (var childParticleSystem in ParticleSystems)
-            {
-                if (childParticleSystem.isStopped) 
-                    continue;
-                
-                allParticleSystemStopped = false;
-                break;
-            }
 
-            if (allParticleSystemStopped)
+            if (CheckParticleSystemsStopped)
             {
-                OnParticleSystemsStopped();
-                return;
+                var allParticleSystemStopped = true;
+                foreach (var childParticleSystem in ParticleSystems)
+                {
+                    if (childParticleSystem.isStopped) 
+                        continue;
+                
+                    allParticleSystemStopped = false;
+                    break;
+                }
+
+                if (allParticleSystemStopped)
+                {
+                    OnParticleSystemsStopped();
+                    return;
+                }
             }
             
             if (PlaybackTime >= Duration)
@@ -269,15 +293,6 @@ namespace UniSharper.Effect
             }
         }
 
-        private void DestroyEvents()
-        {
-            Started?.RemoveAllListeners();
-            Paused?.RemoveAllListeners();
-            Resumed?.RemoveAllListeners();
-            Stopped?.RemoveAllListeners();
-            LoopPointReached?.RemoveAllListeners();
-        }
-
         private void FireEventLoopPointReached()
         {
             LoopPointReached?.Invoke(this);
@@ -309,7 +324,7 @@ namespace UniSharper.Effect
                 return;
 
             if (ParticleSystemRoot.isPlaying)
-                ParticleSystemRoot.Stop();
+                ParticleSystemRoot.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
 
             if (fireStoppedEvent)
                 FireEventStopped();

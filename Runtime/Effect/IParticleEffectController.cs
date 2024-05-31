@@ -26,6 +26,11 @@ namespace UniSharper.Effect
         ParticleSystem[] ParticleSystems { get; }
 
         /// <summary>
+        /// Whether check all <see cref="ParticleSystem"/>s stopped in event method <c>Update</c>.
+        /// </summary>
+        bool CheckParticleSystemsStopped { get; set; }
+
+        /// <summary>
         /// Get the duration of the <see cref="UnityEngine.ParticleSystem"/> in seconds.
         /// </summary>
         float Duration { get; }
@@ -89,5 +94,10 @@ namespace UniSharper.Effect
         /// Stops playing the particle effect.
         /// </summary>
         void Stop();
+
+        /// <summary>
+        /// Removes all listeners on events of this controller.
+        /// </summary>
+        void RemoveAllListeners();
     }
 }
