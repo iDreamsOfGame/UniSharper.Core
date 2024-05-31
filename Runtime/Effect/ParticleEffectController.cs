@@ -192,16 +192,33 @@ namespace UniSharper.Effect
             if (!ParticleSystemRoot)
                 return;
 
-            if (!hasStarted || ParticleSystemRoot.isPaused || ParticleSystemRoot.isStopped)
+            if (!hasStarted || ParticleSystemRoot.isPaused)
                 return;
 
             PlaybackTime += Time.deltaTime;
+            
+            var allParticleSystemStopped = true;
+            foreach (var childParticleSystem in ParticleSystems)
+            {
+                if (childParticleSystem.isStopped) 
+                    continue;
+                
+                allParticleSystemStopped = false;
+                break;
+            }
 
-            if (PlaybackTime < Duration)
+            if (allParticleSystemStopped)
+            {
+                OnParticleSystemsStopped();
                 return;
+            }
             
-            PlaybackTime = 0;
-            
+            if (PlaybackTime >= Duration)
+                OnParticleSystemsStopped();
+        }
+        
+        protected virtual void OnParticleSystemsStopped()
+        {
             if (IsLoop)
             {
                 FireEventLoopPointReached();
@@ -211,6 +228,8 @@ namespace UniSharper.Effect
                 hasStarted = false;
                 FireEventStopped();
             }
+            
+            PlaybackTime = 0;
         }
 
         protected virtual void SetCachedTransform()

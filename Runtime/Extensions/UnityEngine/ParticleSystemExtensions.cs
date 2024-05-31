@@ -27,7 +27,7 @@ namespace UniSharper.Extensions
                 return -1f;
 
             if (!particleSystem.main.loop && particleSystem.emission.rateOverTime.GetMinValue() <= 0)
-                return particleSystem.main.startDelay.GetMaxValue() + particleSystem.main.startLifetime.GetMaxValue();;
+                return particleSystem.main.startDelay.GetMaxValue() + particleSystem.main.startLifetime.GetMaxValue();
             
             return particleSystem.main.startDelay.GetMaxValue() + Mathf.Max(particleSystem.main.duration, particleSystem.main.startLifetime.GetMaxValue());
         }
