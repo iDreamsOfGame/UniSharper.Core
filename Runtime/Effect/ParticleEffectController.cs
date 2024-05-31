@@ -231,7 +231,7 @@ namespace UniSharper.Effect
             if (!particleSystemRoot)
                 particleSystemRoot = transform.GetComponentInChildren<ParticleSystem>(true);
 
-            IsLoop = ParticleSystemRoot?.main.loop ?? false;
+            IsLoop = particleSystemRoot?.main.loop ?? false;
         }
 
         protected virtual void SetParticleSystems()
