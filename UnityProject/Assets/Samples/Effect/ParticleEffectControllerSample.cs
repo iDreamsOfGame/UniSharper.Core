@@ -63,7 +63,7 @@ namespace UniSharper.Samples
             loopEffectController.LoopPointReached.AddListener(OnEffectLoopPointReached);
             loopEffectController.Play();
             
-            Invoke(nameof(Pause), 0.5f);
+            Invoke(nameof(Pause), 0.2f);
         }
     }
 }

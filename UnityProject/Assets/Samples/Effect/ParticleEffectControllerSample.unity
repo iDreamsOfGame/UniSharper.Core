@@ -198,6 +198,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6057c91835c614bc6b46b3dae8fb5879, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  checkParticleSystemsStopped: 1
   loopPointReached:
     m_PersistentCalls:
       m_Calls: []
@@ -417,6 +418,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6057c91835c614bc6b46b3dae8fb5879, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  checkParticleSystemsStopped: 1
   loopPointReached:
     m_PersistentCalls:
       m_Calls: []
