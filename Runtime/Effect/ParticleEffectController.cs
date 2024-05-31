@@ -108,7 +108,7 @@ namespace UniSharper.Effect
 
         public ParticleEffectEvent Stopped => stoppedEvent ??= new ParticleEffectEvent();
 
-        public void Initialize()
+        public virtual void Initialize()
         {
             if (HasInitialized)
                 return;
