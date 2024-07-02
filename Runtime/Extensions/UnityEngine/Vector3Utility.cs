@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using ReSharp.Extensions;
 using UnityEngine;
 
+// ReSharper disable MergeIntoLogicalPattern
+
 namespace UniSharper.Extensions
 {
     /// <summary>
@@ -24,23 +26,21 @@ namespace UniSharper.Extensions
                 return default;
 
             var values = StringUtility.GetStringValuesInBrackets(s);
-            switch (values.Length)
+            if (values.Length < 2)
+                return default;
+
+            if (values.Length > 2)
             {
-                case < 2:
-                    return default;
-                case > 2:
-                {
-                    SingleUtility.GenericTryParse(values[0], out var x);
-                    SingleUtility.GenericTryParse(values[1], out var y);
-                    SingleUtility.GenericTryParse(values[2], out var z);
-                    return new Vector3(x, y, z);
-                }
-                default:
-                {
-                    SingleUtility.GenericTryParse(values[0], out var x);
-                    SingleUtility.GenericTryParse(values[1], out var y);
-                    return new Vector3(x, y);
-                }
+                SingleUtility.GenericTryParse(values[0], out var x);
+                SingleUtility.GenericTryParse(values[1], out var y);
+                SingleUtility.GenericTryParse(values[2], out var z);
+                return new Vector3(x, y, z);
+            }
+            else
+            {
+                SingleUtility.GenericTryParse(values[0], out var x);
+                SingleUtility.GenericTryParse(values[1], out var y);
+                return new Vector3(x, y);
             }
         }
 
@@ -59,26 +59,24 @@ namespace UniSharper.Extensions
             }
 
             var values = StringUtility.GetStringValuesInBrackets(s);
-            switch (values.Length)
+            if (values.Length < 2)
             {
-                case < 2:
-                    result = default;
-                    return false;
-                case > 2:
-                {
-                    SingleUtility.GenericTryParse(values[0], out var x);
-                    SingleUtility.GenericTryParse(values[1], out var y);
-                    SingleUtility.GenericTryParse(values[2], out var z);
-                    result = new Vector3(x, y, z);
-                    break;
-                }
-                default:
-                {
-                    SingleUtility.GenericTryParse(values[0], out var x);
-                    SingleUtility.GenericTryParse(values[1], out var y);
-                    result = new Vector3(x, y);
-                    break;
-                }
+                result = default;
+                return false;
+            }
+
+            if (values.Length > 2)
+            {
+                SingleUtility.GenericTryParse(values[0], out var x);
+                SingleUtility.GenericTryParse(values[1], out var y);
+                SingleUtility.GenericTryParse(values[2], out var z);
+                result = new Vector3(x, y, z);
+            }
+            else
+            {
+                SingleUtility.GenericTryParse(values[0], out var x);
+                SingleUtility.GenericTryParse(values[1], out var y);
+                result = new Vector3(x, y);
             }
 
             return true;
@@ -95,7 +93,7 @@ namespace UniSharper.Extensions
             if (string.IsNullOrEmpty(s) || string.IsNullOrEmpty(arrayElementSeparator))
                 return default;
             
-            var elementStrings = s.Trim().Split(arrayElementSeparator, StringSplitOptions.RemoveEmptyEntries);
+            var elementStrings = s.Trim().Split(arrayElementSeparator.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
             if (elementStrings.Length == 0)
                 return default;
 
@@ -142,7 +140,7 @@ namespace UniSharper.Extensions
                 return false;
             }
 
-            var elementStrings = s.Trim().Split(arrayElementSeparator, StringSplitOptions.RemoveEmptyEntries);
+            var elementStrings = s.Trim().Split(arrayElementSeparator.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
             if (elementStrings.Length == 0)
             {
                 result = default;
@@ -169,7 +167,7 @@ namespace UniSharper.Extensions
         /// <returns><c>true</c> if <c>values</c> was converted successfully; otherwise, <c>false</c>. </returns>
         public static bool TryParseArray(IList<float> values, out Vector3[] result)
         {
-            if (values is not { Count: > 0 })
+            if (values == null || values.Count == 0)
             {
                 result = default;
                 return false;
@@ -196,7 +194,7 @@ namespace UniSharper.Extensions
         /// <exception cref="ArgumentOutOfRangeException"><c>t</c> is out of range. </exception>
         public static Vector3 CalculateQuadraticBezierPoint(float t, Vector3 p0, Vector3 p1, Vector3 p2)
         {
-            if (t is < 0 or > 1)
+            if (t < 0 || 1 < t)
                 throw new ArgumentOutOfRangeException(nameof(t));
 
             var f = 1 - t;
@@ -215,7 +213,7 @@ namespace UniSharper.Extensions
         /// <exception cref="ArgumentOutOfRangeException"><c>t</c> is out of range. </exception>
         public static Vector3 CalculateCubicBezierPoint(float t, Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3)
         {
-            if (t is < 0 or > 1)
+            if (t < 0 || 1 < t)
                 throw new ArgumentOutOfRangeException(nameof(t));
 
             var f = 1 - t;

@@ -8,6 +8,7 @@ using ReSharp.Extensions;
 using UnityEngine;
 
 // ReSharper disable PossibleMultipleEnumeration
+// ReSharper disable MergeIntoLogicalPattern
 // ReSharper disable MethodOverloadWithOptionalParameter
 
 namespace UniSharper.Extensions
@@ -74,7 +75,7 @@ namespace UniSharper.Extensions
             if (string.IsNullOrEmpty(s) || string.IsNullOrEmpty(arrayElementSeparator))
                 return default;
 
-            var elementStrings = s.Trim().Split(arrayElementSeparator, StringSplitOptions.RemoveEmptyEntries);
+            var elementStrings = s.Trim().Split(arrayElementSeparator.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
             if (elementStrings.Length == 0)
                 return default;
 
@@ -102,7 +103,7 @@ namespace UniSharper.Extensions
                 return false;
             }
 
-            var elementStrings = s.Trim().Split(arrayElementSeparator, StringSplitOptions.RemoveEmptyEntries);
+            var elementStrings = s.Trim().Split(arrayElementSeparator.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
             if (elementStrings.Length == 0)
             {
                 result = default;
@@ -147,7 +148,7 @@ namespace UniSharper.Extensions
         /// <returns><c>true</c> if <c>values</c> was converted successfully; otherwise, <c>false</c>. </returns>
         public static bool TryParseArray(IList<float> values, out Vector2[] result)
         {
-            if (values is not { Count: > 0 })
+            if (values == null || values.Count == 0)
             {
                 result = default;
                 return false;
@@ -215,7 +216,7 @@ namespace UniSharper.Extensions
         /// <exception cref="ArgumentOutOfRangeException"><c>t</c> is out of range. </exception>
         public static Vector2 CalculateQuadraticBezierPoint(float t, Vector2 p0, Vector2 p1, Vector2 p2)
         {
-            if (t is < 0 or > 1)
+            if (t < 0 || 1 < t)
                 throw new ArgumentOutOfRangeException(nameof(t));
 
             var f = 1 - t;
@@ -234,7 +235,7 @@ namespace UniSharper.Extensions
         /// <exception cref="ArgumentOutOfRangeException"><c>t</c> is out of range. </exception>
         public static Vector2 CalculateCubicBezierPoint(float t, Vector2 p0, Vector2 p1, Vector2 p2, Vector2 p3)
         {
-            if (t is < 0 or > 1)
+            if (t < 0 || 1 < t)
                 throw new ArgumentOutOfRangeException(nameof(t));
 
             var f = 1 - t;

@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using ReSharp.Extensions;
 
+// ReSharper disable ArrangeObjectCreationWhenTypeEvident
+
 namespace UniSharper.Threading.Event
 {
     /// <summary>
@@ -22,7 +24,7 @@ namespace UniSharper.Threading.Event
 
         private readonly Dictionary<Enum, List<Action<ThreadEvent>>> pendingRemovedListeners;
 
-        private readonly object syncRoot = new();
+        private readonly object syncRoot = new object();
 
         private bool isPending;
 
@@ -247,10 +249,8 @@ namespace UniSharper.Threading.Event
                 while (eventQueue.Count > 0)
                 {
                     var e = eventQueue.Dequeue();
-                    if (!listeners.ContainsKey(e.EventType))
+                    if (!listeners.TryGetValue(e.EventType, out var handlers))
                         continue;
-
-                    var handlers = listeners[e.EventType];
 
                     handlers.ForEach(listener =>
                     {
@@ -294,8 +294,10 @@ namespace UniSharper.Threading.Event
             if (pendingRemovedListeners == null || pendingRemovedListeners.Count == 0)
                 return;
 
-            foreach (var (eventType, actions) in pendingRemovedListeners)
+            foreach (var pair in pendingRemovedListeners)
             {
+                var eventType = pair.Key;
+                var actions = pair.Value;
                 if (actions == null || actions.Count == 0)
                     continue;
 
@@ -315,8 +317,10 @@ namespace UniSharper.Threading.Event
             if (pendingListeners == null || pendingListeners.Count == 0)
                 return;
 
-            foreach (var (eventType, actions) in pendingListeners)
+            foreach (var pair in pendingListeners)
             {
+                var eventType = pair.Key;
+                var actions = pair.Value;
                 if (actions == null || actions.Count == 0)
                     continue;
 
@@ -331,10 +335,9 @@ namespace UniSharper.Threading.Event
 
         private void RemoveNormalEventListener(Enum eventType, Action<ThreadEvent> listener)
         {
-            if (!listeners.ContainsKey(eventType))
+            if (!listeners.TryGetValue(eventType, out var list))
                 return;
 
-            var list = listeners[eventType];
             list.Remove(listener);
         }
     }

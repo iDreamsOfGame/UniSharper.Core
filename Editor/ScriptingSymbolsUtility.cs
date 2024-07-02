@@ -42,8 +42,12 @@ namespace UniSharperEditor
         public static string GetScriptingSymbols(BuildTarget buildTarget)
         {
             var buildTargetGroup = BuildPipeline.GetBuildTargetGroup(buildTarget);
+#if UNITY_2021_2_OR_NEWER
             var nameBuildTarget = NamedBuildTarget.FromBuildTargetGroup(buildTargetGroup);
             var scriptingDefineSymbols = PlayerSettings.GetScriptingDefineSymbols(nameBuildTarget);
+#else
+            var scriptingDefineSymbols = PlayerSettings.GetScriptingDefineSymbolsForGroup(buildTargetGroup);
+#endif
             return string.IsNullOrEmpty(scriptingDefineSymbols) ? string.Empty : scriptingDefineSymbols.TrimAll();
         }
         
@@ -55,8 +59,12 @@ namespace UniSharperEditor
         public static void SetScriptingSymbols(BuildTarget buildTarget, string value)
         {
             var buildTargetGroup = BuildPipeline.GetBuildTargetGroup(buildTarget);
+#if UNITY_2021_2_OR_NEWER
             var nameBuildTarget = NamedBuildTarget.FromBuildTargetGroup(buildTargetGroup);
             PlayerSettings.SetScriptingDefineSymbols(nameBuildTarget, value);
+#else
+            PlayerSettings.SetScriptingDefineSymbolsForGroup(buildTargetGroup, value);
+#endif
             AssetDatabase.SaveAssets();
         }
         
@@ -70,7 +78,7 @@ namespace UniSharperEditor
             var scriptingDefineSymbols = GetScriptingSymbols(buildTarget);
             var scriptingSymbols = string.IsNullOrEmpty(scriptingDefineSymbols) 
                 ? Array.Empty<string>() 
-                : scriptingDefineSymbols.Split(DefinesSeparator, StringSplitOptions.RemoveEmptyEntries);
+                : scriptingDefineSymbols.Split(new[] { DefinesSeparator }, StringSplitOptions.RemoveEmptyEntries);
             return new List<string>(scriptingSymbols);
         }
 
@@ -217,6 +225,7 @@ namespace UniSharperEditor
             SetScriptingSymbols(buildTarget, string.Empty);
         }
 
-        private static string ToScriptingSymbols(IReadOnlyCollection<string> defines) => defines == null || defines.Count == 0 ? string.Empty : string.Join(DefinesSeparator, defines);
+        private static string ToScriptingSymbols(IReadOnlyCollection<string> defines) => 
+            defines == null || defines.Count == 0 ? string.Empty : string.Join(DefinesSeparator.ToString(), defines);
     }
 }

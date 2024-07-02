@@ -16,8 +16,8 @@ namespace UniSharper.Rendering.DataParsers
     {
         public override Dictionary<string, Rect> ParseData(string name, string data)
         {
-            if (DataMap.ContainsKey(name)) 
-                return DataMap[name];
+            if (DataMap.TryGetValue(name, out var result)) 
+                return result;
             
             DataMap.Add(name, new Dictionary<string, Rect>());
             var jsonData = JsonConvert.DeserializeObject<TPUnityJsonData>(data);
@@ -26,9 +26,11 @@ namespace UniSharper.Rendering.DataParsers
                 
             var textureSize = jsonData.Metadata.ImageSize;
 
-            foreach (var (frameName, frameData) in jsonData.Frames)
+            foreach (var pair in jsonData.Frames)
             {
                 // Calculate mapping.
+                var frameName = pair.Key;
+                var frameData = pair.Value;
                 var scale = new Vector2(frameData.Frame.Width / textureSize.Width, frameData.Frame.Height / textureSize.Height);
                 var offset = new Vector2(frameData.Frame.X / textureSize.Width, (textureSize.Height - frameData.Frame.Y - frameData.SourceSize.Height) / textureSize.Height);
                 var rect = new Rect(offset.x, offset.y, scale.x, scale.y);

@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using ReSharp.Extensions;
 using UnityEngine;
 
+// ReSharper disable ConvertIfStatementToSwitchStatement
+
 namespace UniSharper.Extensions
 {
     /// <summary>
@@ -24,25 +26,23 @@ namespace UniSharper.Extensions
                 return default;
 
             var values = StringUtility.GetColorRgbaStringValues(s);
-            switch (values.Length)
+            if (values.Length < 3)
+                return default;
+
+            if (values.Length == 3)
             {
-                case < 3:
-                    return default;
-                case 3:
-                {
-                    SingleUtility.GenericTryParse(values[0], out var r);
-                    SingleUtility.GenericTryParse(values[1], out var g);
-                    SingleUtility.GenericTryParse(values[2], out var b);
-                    return new Color(r, g, b);
-                }
-                default:
-                {
-                    SingleUtility.GenericTryParse(values[0], out var r);
-                    SingleUtility.GenericTryParse(values[1], out var g);
-                    SingleUtility.GenericTryParse(values[2], out var b);
-                    SingleUtility.GenericTryParse(values[3], out var a);
-                    return new Color(r, g, b, a);
-                }
+                SingleUtility.GenericTryParse(values[0], out var r);
+                SingleUtility.GenericTryParse(values[1], out var g);
+                SingleUtility.GenericTryParse(values[2], out var b);
+                return new Color(r, g, b);
+            }
+            else
+            {
+                SingleUtility.GenericTryParse(values[0], out var r);
+                SingleUtility.GenericTryParse(values[1], out var g);
+                SingleUtility.GenericTryParse(values[2], out var b);
+                SingleUtility.GenericTryParse(values[3], out var a);
+                return new Color(r, g, b, a);
             }
         }
 
@@ -61,28 +61,26 @@ namespace UniSharper.Extensions
             }
 
             var values = StringUtility.GetColorRgbaStringValues(s);
-            switch (values.Length)
+            if (values.Length < 3)
             {
-                case < 3:
-                    result = default;
-                    return false;
-                case 3:
-                {
-                    SingleUtility.GenericTryParse(values[0], out var r);
-                    SingleUtility.GenericTryParse(values[1], out var g);
-                    SingleUtility.GenericTryParse(values[2], out var b);
-                    result = new Color(r, g, b);
-                    break;
-                }
-                default:
-                {
-                    SingleUtility.GenericTryParse(values[0], out var r);
-                    SingleUtility.GenericTryParse(values[1], out var g);
-                    SingleUtility.GenericTryParse(values[2], out var b);
-                    SingleUtility.GenericTryParse(values[3], out var a);
-                    result = new Color(r, g, b, a);
-                    break;
-                }
+                result = default;
+                return false;
+            }
+
+            if (values.Length == 3)
+            {
+                SingleUtility.GenericTryParse(values[0], out var r);
+                SingleUtility.GenericTryParse(values[1], out var g);
+                SingleUtility.GenericTryParse(values[2], out var b);
+                result = new Color(r, g, b);
+            }
+            else
+            {
+                SingleUtility.GenericTryParse(values[0], out var r);
+                SingleUtility.GenericTryParse(values[1], out var g);
+                SingleUtility.GenericTryParse(values[2], out var b);
+                SingleUtility.GenericTryParse(values[3], out var a);
+                result = new Color(r, g, b, a);
             }
 
             return true;
@@ -99,7 +97,7 @@ namespace UniSharper.Extensions
             if (string.IsNullOrEmpty(s) || string.IsNullOrEmpty(arrayElementSeparator))
                 return default;
             
-            var elementStrings = s.Trim().Split(arrayElementSeparator, StringSplitOptions.RemoveEmptyEntries);
+            var elementStrings = s.Trim().Split(arrayElementSeparator.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
             if (elementStrings.Length == 0)
                 return default;
 
@@ -147,7 +145,7 @@ namespace UniSharper.Extensions
                 return false;
             }
 
-            var elementStrings = s.Trim().Split(arrayElementSeparator, StringSplitOptions.RemoveEmptyEntries);
+            var elementStrings = s.Trim().Split(arrayElementSeparator.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
             if (elementStrings.Length == 0)
             {
                 result = default;
@@ -174,7 +172,7 @@ namespace UniSharper.Extensions
         /// <returns><c>true</c> if <c>values</c> was converted successfully; otherwise, <c>false</c>. </returns>
         public static bool TryParseArray(IList<float> values, out Color[] result)
         {
-            if (values is not { Count: > 0 })
+            if (values == null || values.Count == 0)
             {
                 result = default;
                 return false;

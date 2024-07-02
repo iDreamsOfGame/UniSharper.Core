@@ -3,6 +3,8 @@
 
 using UnityEngine;
 
+// ReSharper disable ArrangeObjectCreationWhenTypeEvident
+
 namespace UniSharper.Extensions
 {
     /// <summary>
@@ -10,7 +12,7 @@ namespace UniSharper.Extensions
     /// </summary>
     public static class CameraExtensions
     {
-        private static readonly Rect ScreenRect = new(0, 0, Screen.width, Screen.height);
+        private static readonly Rect ScreenRect = new Rect(0, 0, Screen.width, Screen.height);
 
         /// <summary>
         /// Captures a screenshot of the camera view into a <see cref="UnityEngine.Texture2D"/> object.

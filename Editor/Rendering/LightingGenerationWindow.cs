@@ -15,7 +15,7 @@ namespace UniSharperEditor.Rendering
     /// <seealso cref="EditorWindow"/>
     internal class LightingGenerationWindow : EditorWindow
     {
-        private readonly List<SceneAsset> scenes = new();
+        private readonly List<SceneAsset> scenes = new List<SceneAsset>();
 
         private Vector2 scrollPosition;
 

@@ -21,13 +21,20 @@ namespace UniSharperEditor
         [NotNull]
         public static string VersionCode
         {
-            get =>
-                EditorUserBuildSettings.activeBuildTarget switch
+            get
+            {
+                switch (EditorUserBuildSettings.activeBuildTarget)
                 {
-                    BuildTarget.Android => PlayerSettings.Android.bundleVersionCode.ToString(),
-                    BuildTarget.iOS => PlayerSettings.iOS.buildNumber,
-                    _ => "0"
-                };
+                    case BuildTarget.Android:
+                        return PlayerSettings.Android.bundleVersionCode.ToString();
+                    
+                    case BuildTarget.iOS:
+                        return PlayerSettings.iOS.buildNumber;
+                    
+                    default:
+                        return "0";
+                }
+            }
             set
             {
                 if (string.IsNullOrEmpty(value))
@@ -107,8 +114,10 @@ namespace UniSharperEditor
                 FileUtil.DeleteFileOrDirectory(buildFolderFullPath);
                 if (!Directory.Exists(buildFolderFullPath))
                     Directory.CreateDirectory(buildFolderFullPath);
-                
+
+#if UNITY_2021_2_OR_NEWER
                 additionalOptions |= BuildOptions.CleanBuildCache;
+#endif
             }
 
             if (buildTarget == BuildTarget.iOS)
@@ -120,6 +129,7 @@ namespace UniSharperEditor
                 if(projectExists)
                     additionalOptions |= BuildOptions.AcceptExternalModificationsToPlayer;
 
+#if UNITY_2021_2_OR_NEWER
                 if (isDevelopmentBuild)
                 {
                     additionalOptions |= BuildOptions.SymlinkSources;
@@ -129,6 +139,7 @@ namespace UniSharperEditor
                 {
                     EditorUserBuildSettings.symlinkSources = false;
                 }
+#endif
             }
 
             var result = BuildPipeline.BuildPlayer(EditorBuildSettings.scenes, locationPathName, buildTarget, additionalOptions);

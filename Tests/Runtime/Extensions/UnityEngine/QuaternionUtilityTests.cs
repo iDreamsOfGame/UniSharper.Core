@@ -16,7 +16,7 @@ namespace UniSharper.Tests
         
         private static readonly Quaternion CorrectValue = Quaternion.identity;
 
-        private static readonly Quaternion CorrectValue2 = new(0, 0, 0, 2);
+        private static readonly Quaternion CorrectValue2 = new Quaternion(0, 0, 0, 2);
         
         private static readonly float[] ValidElementValues = { 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 2.0f };
         

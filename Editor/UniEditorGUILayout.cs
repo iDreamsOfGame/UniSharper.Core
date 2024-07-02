@@ -50,29 +50,31 @@ namespace UniSharperEditor
         /// <returns>The path of the file.</returns>
         public static string FileField(GUIContent label, string filePath, string title, string directory = "", string[] filters = null, float labelWidth = 0f)
         {
-            using var scope = new FieldScope(labelWidth);
-            EditorGUILayout.LabelField(label, GUILayout.Width(EditorGUIUtility.labelWidth - 1));
-
-            var enabled = GUI.enabled;
-            GUI.enabled = false;
-            EditorGUILayout.TextField(string.Empty, filePath);
-            GUI.enabled = enabled;
-
-            if (GUILayout.Button("Browse...", Styles.BrowseButtonStyle))
+            using (new FieldScope(labelWidth))
             {
-                GUIUtility.hotControl = 0;
-                DragAndDrop.activeControlID = 0;
-                GUIUtility.keyboardControl = 0;
-                    
-                var path = UnityEditorUtility.OpenFilePanelWithFilters(title, directory, filters);
-                if (!string.IsNullOrEmpty(path))
-                {
-                    filePath = path;
-                    GUI.changed = true;
-                }
-            }
+                EditorGUILayout.LabelField(label, GUILayout.Width(EditorGUIUtility.labelWidth - 1));
 
-            return filePath;
+                var enabled = GUI.enabled;
+                GUI.enabled = false;
+                EditorGUILayout.TextField(string.Empty, filePath);
+                GUI.enabled = enabled;
+
+                if (GUILayout.Button("Browse...", Styles.BrowseButtonStyle))
+                {
+                    GUIUtility.hotControl = 0;
+                    DragAndDrop.activeControlID = 0;
+                    GUIUtility.keyboardControl = 0;
+
+                    var path = UnityEditorUtility.OpenFilePanelWithFilters(title, directory, filters);
+                    if (!string.IsNullOrEmpty(path))
+                    {
+                        filePath = path;
+                        GUI.changed = true;
+                    }
+                }
+
+                return filePath;
+            }
         }
 
         /// <summary>
@@ -87,29 +89,31 @@ namespace UniSharperEditor
         /// <returns>The path of the folder.</returns>
         public static string FolderField(GUIContent label, string folderPath, string title, string folder = "", string defaultName = "", float labelWidth = 0f)
         {
-            using var scope = new FieldScope(labelWidth);
-            EditorGUILayout.LabelField(label, GUILayout.Width(EditorGUIUtility.labelWidth - 1));
-
-            var enabled = GUI.enabled;
-            GUI.enabled = false;
-            EditorGUILayout.TextField(string.Empty, folderPath);
-            GUI.enabled = enabled;
-
-            if (GUILayout.Button("Browse...", Styles.BrowseButtonStyle))
+            using (new FieldScope(labelWidth))
             {
-                GUIUtility.hotControl = 0;
-                DragAndDrop.activeControlID = 0;
-                GUIUtility.keyboardControl = 0;
-                    
-                var path = UnityEditorUtility.OpenFolderPanel(title, folder, defaultName);
-                if (!string.IsNullOrEmpty(path))
-                {
-                    folderPath = path;
-                    GUI.changed = true;
-                }
-            }
+                EditorGUILayout.LabelField(label, GUILayout.Width(EditorGUIUtility.labelWidth - 1));
 
-            return folderPath;
+                var enabled = GUI.enabled;
+                GUI.enabled = false;
+                EditorGUILayout.TextField(string.Empty, folderPath);
+                GUI.enabled = enabled;
+
+                if (GUILayout.Button("Browse...", Styles.BrowseButtonStyle))
+                {
+                    GUIUtility.hotControl = 0;
+                    DragAndDrop.activeControlID = 0;
+                    GUIUtility.keyboardControl = 0;
+
+                    var path = UnityEditorUtility.OpenFolderPanel(title, folder, defaultName);
+                    if (!string.IsNullOrEmpty(path))
+                    {
+                        folderPath = path;
+                        GUI.changed = true;
+                    }
+                }
+
+                return folderPath;
+            }
         }
 
         /// <summary>
@@ -120,7 +124,7 @@ namespace UniSharperEditor
             /// <summary>
             /// The style of browse button.
             /// </summary>
-            public static readonly GUIStyle BrowseButtonStyle = new(EditorStyles.miniButton)
+            public static readonly GUIStyle BrowseButtonStyle = new GUIStyle(EditorStyles.miniButton)
             {
                 fixedWidth = 75,
                 fixedHeight = EditorStyles.miniButtonRight.fixedHeight

@@ -121,7 +121,7 @@ namespace UniSharper.Extensions
             // Create a temporary RenderTexture with the target size
             var renderTexture = RenderTexture.GetTemporary(targetWidth, targetHeight, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Default);
 
-            // Set the active RenderTexture to the temporary texture so we can read from it
+            // Set the active RenderTexture to the temporary texture, so we can read from it
             var previous = RenderTexture.active;
             RenderTexture.active = renderTexture;
 
@@ -130,7 +130,11 @@ namespace UniSharper.Extensions
             
             // Create new texture
             var newTexture = new Texture2D(source.width, source.height, source.format, false);
+#if UNITY_2021_3_OR_NEWER
             newTexture.Reinitialize(targetWidth, targetHeight, newTexture.format, mipmap);
+#else
+            newTexture.Resize(targetWidth, targetHeight, newTexture.format, mipmap);
+#endif
             newTexture.filterMode = filter;
 
             try

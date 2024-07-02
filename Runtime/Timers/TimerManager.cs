@@ -5,6 +5,8 @@ using System;
 using UniSharper.Patterns;
 using UnityEngine;
 
+// ReSharper disable ConvertIfStatementToNullCoalescingExpression
+
 namespace UniSharper.Timers
 {
     /// <summary>
@@ -27,7 +29,16 @@ namespace UniSharper.Timers
         /// Gets the timer list.
         /// </summary>
         /// <value>The timer list.</value>
-        private ITimerList TimerList => timerList ??= new TimerGroup();
+        private ITimerList TimerList
+        {
+            get
+            {
+                if (timerList == null)
+                    timerList = new TimerGroup();
+
+                return timerList;
+            }
+        }
 
         /// <summary>
         /// Adds an <see cref="ITimer"/> item.

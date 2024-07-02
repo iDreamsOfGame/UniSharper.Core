@@ -2,10 +2,11 @@
 // project root for license information.
 
 using System.IO;
-using System.Linq;
 using UniSharper;
 using UnityEditor;
+#if UNITY_2021_1_OR_NEWER
 using PackageInfo = UnityEditor.PackageManager.PackageInfo;
+#endif
 
 namespace UniSharperEditor
 {
@@ -35,7 +36,7 @@ namespace UniSharperEditor
         /// <returns>The physical path of the asset path that combined by an array. </returns>
         public static string GetFullPath(params string[] paths)
         {
-            if (paths is not { Length: > 0 })
+            if (paths == null || paths.Length == 0)
                 return null;
 
             var path = Path.Combine(paths);
@@ -44,14 +45,16 @@ namespace UniSharperEditor
             if (path.StartsWith(PlayerEnvironment.AssetsFolderName + Path.AltDirectorySeparatorChar))
                 return Path.Combine(Directory.GetCurrentDirectory(), path);
             
+#if UNITY_2021_1_OR_NEWER
             // Check whether the path is asset path under any package of the project. 
             if (path.StartsWith(PlayerEnvironment.PackagesFolderName + Path.AltDirectorySeparatorChar))
             {
                 var packageInfoCollection = PackageInfo.GetAllRegisteredPackages();
-                if (packageInfoCollection is { Length: > 0 })
+                if (packageInfoCollection == null || packageInfoCollection.Length == 0)
                     return (from packageInfo in packageInfoCollection where path.StartsWith(packageInfo.assetPath) 
                         select Path.Combine(path.Replace(packageInfo.assetPath, packageInfo.resolvedPath))).FirstOrDefault();
             }
+#endif
 
             return null;
         }
@@ -63,7 +66,7 @@ namespace UniSharperEditor
         /// <returns>The physical path of the asset path that combined by an array. </returns>
         public static string GetPhysicalPath(params string[] paths)
         {
-            if (paths is not { Length: > 0 })
+            if (paths == null || paths.Length == 0)
                 return null;
 
             var path = Path.Combine(paths);
@@ -74,7 +77,8 @@ namespace UniSharperEditor
                 if (!string.IsNullOrEmpty(AssetDatabase.AssetPathToGUID(path)))
                     return Path.Combine(Directory.GetCurrentDirectory(), path);
             }
-            
+
+#if UNITY_2021_1_OR_NEWER
             // Check whether the path is asset path under any package of the project. 
             if (path.StartsWith(PlayerEnvironment.PackagesFolderName + Path.AltDirectorySeparatorChar))
             {
@@ -83,6 +87,7 @@ namespace UniSharperEditor
                     return (from packageInfo in packageInfoCollection where path.StartsWith(packageInfo.assetPath) 
                         select Path.Combine(path.Replace(packageInfo.assetPath, packageInfo.resolvedPath))).FirstOrDefault();
             }
+#endif
 
             return null;
         }
@@ -107,14 +112,15 @@ namespace UniSharperEditor
             var currentDirectory = Directory.GetCurrentDirectory();
             var assetsFolderFullPath = Path.GetFullPath(PlayerEnvironment.AssetsFolderName);
             
-            // Check whether the absolute path is under the assets folder.
+            // Check whether the absolute path is under the Assets folder.
             if (path.StartsWith(assetsFolderFullPath))
             {
-                var result = path[(currentDirectory.Length + 1)..];
+                var result = path.Substring(currentDirectory.Length + 1);
                 if (!string.IsNullOrEmpty(AssetDatabase.AssetPathToGUID(result)))
                     return result;
             }
 
+#if UNITY_2021_1_OR_NEWER
             // Check whether the absolute path is under any package folder.
             var packageInfoCollection = PackageInfo.GetAllRegisteredPackages();
             if (path.StartsWith(PlayerEnvironment.PackagesFolderName + Path.AltDirectorySeparatorChar))
@@ -131,12 +137,13 @@ namespace UniSharperEditor
             if (packageInfoCollection is { Length: > 0 })
                 return (from packageInfo in packageInfoCollection where path.StartsWith(packageInfo.resolvedPath) 
                     select Path.Combine(packageInfo.assetPath, path[(packageInfo.resolvedPath.Length + 1)..])).FirstOrDefault();
+#endif
 
             return null;
         }
 
         /// <summary>
-        /// Tries get the path relative to the project <c>Assets</c> folder or any <c>Package</c> folder.
+        /// Tries to get the path relative to the project <c>Assets</c> folder or any <c>Package</c> folder.
         /// </summary>
         /// <param name="path">The absolute path need to be converted. </param>
         /// <param name="assetPath">The path relative to the project <c>Assets</c> folder or any <c>Package</c> folder. </param>
@@ -146,7 +153,7 @@ namespace UniSharperEditor
             assetPath = GetAssetPath(path);
             return !string.IsNullOrEmpty(assetPath);
         }
-
+        
         /// <summary>
         /// Gets the asset path of package.
         /// </summary>
@@ -154,6 +161,7 @@ namespace UniSharperEditor
         /// <returns>The asset path of the package. </returns>
         public static string GetPackageAssetPath(string packageName)
         {
+#if UNITY_2021_1_OR_NEWER
             if (string.IsNullOrEmpty(packageName))
                 return null;
             
@@ -161,6 +169,9 @@ namespace UniSharperEditor
             return packageInfoCollection is { Length: > 0 } 
                 ? (from packageInfo in packageInfoCollection where packageInfo.name.Equals(packageName) select packageInfo.assetPath).FirstOrDefault() 
                 : null;
+#else
+            return $"Packages://{packageName}";
+#endif
         }
 
         /// <summary>
@@ -170,6 +181,7 @@ namespace UniSharperEditor
         /// <returns>The local path of the package on disk. </returns>
         public static string GetPackageResolvedPath(string packageName)
         {
+#if UNITY_2021_1_OR_NEWER
             if (string.IsNullOrEmpty(packageName))
                 return null;
 
@@ -177,6 +189,9 @@ namespace UniSharperEditor
             return packageInfoCollection is { Length: > 0 }
                 ? (from packageInfo in packageInfoCollection where packageInfo.name.Equals(packageName) select packageInfo.resolvedPath).FirstOrDefault()
                 : null;
+#else
+            return string.Empty;
+#endif
         }
     }
 }

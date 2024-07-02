@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+## [1.22.6] - 2024-07-02
+
+### Fixed
+
+- Fixed compilation errors in Unity 2019.
+
+
+
 ## [1.22.0] - 2024-05-30
 
 ### Added

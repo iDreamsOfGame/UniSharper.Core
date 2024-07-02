@@ -69,7 +69,7 @@ namespace UniSharper.Extensions
             if (string.IsNullOrEmpty(s) || string.IsNullOrEmpty(arrayElementSeparator))
                 return default;
             
-            var elementStrings = s.Trim().Split(arrayElementSeparator, StringSplitOptions.RemoveEmptyEntries);
+            var elementStrings = s.Trim().Split(arrayElementSeparator.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
             if (elementStrings.Length == 0)
                 return default;
 
@@ -114,7 +114,7 @@ namespace UniSharper.Extensions
                 return false;
             }
 
-            var elementStrings = s.Trim().Split(arrayElementSeparator, StringSplitOptions.RemoveEmptyEntries);
+            var elementStrings = s.Trim().Split(arrayElementSeparator.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
             if (elementStrings.Length == 0)
             {
                 result = default;
@@ -141,7 +141,7 @@ namespace UniSharper.Extensions
         /// <returns><c>true</c> if <c>values</c> was converted successfully; otherwise, <c>false</c>. </returns>
         public static bool TryParseArray(IList<int> values, out RangeInt[] result)
         {
-            if (values is not { Count: > 0 })
+            if (values == null || values.Count == 0)
             {
                 result = default;
                 return false;

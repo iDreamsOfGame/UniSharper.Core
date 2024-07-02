@@ -20,8 +20,11 @@ namespace UniSharperEditor
         /// <param name="directoryPath">The directory path relative to the project folder. </param>
         public static void ShowFolderContents(string directoryPath)
         {
-            if (directoryPath[^1] == '/')
-                directoryPath = directoryPath[..^1];
+            if (string.IsNullOrEmpty(directoryPath))
+                return;
+            
+            if (directoryPath[directoryPath.Length - 1] == '/')
+                directoryPath = directoryPath.Substring(0, directoryPath.Length - 1);
             
             EditorUtility.FocusProjectWindow();
             var dirAsset = AssetDatabase.LoadAssetAtPath(directoryPath, typeof(Object));

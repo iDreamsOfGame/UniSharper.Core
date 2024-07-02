@@ -4,6 +4,8 @@
 using System.Collections.Generic;
 using UniSharper.Extensions;
 
+// ReSharper disable ConvertIfStatementToNullCoalescingAssignment
+
 namespace UniSharper.Preferences
 {
     public class PlayerPreferences<T> : IPlayerPreferences
@@ -16,13 +18,8 @@ namespace UniSharper.Preferences
             set => SetObject(PreferenceKeyListKey, value);
         }
         
-        public string Namespace { get; }
-        
-        public PlayerPreferences()
-        {
-            Namespace = typeof(T).FullName;
-        }
-        
+        public string Namespace { get; } = typeof(T).FullName;
+
         public bool GetBoolean(string key, bool defaultValue = false)
         {
             var preferenceKey = GetPreferenceKey(key);
@@ -263,7 +260,9 @@ namespace UniSharper.Preferences
             if (keyList != null && keyList.Contains(key)) 
                 return;
 
-            keyList ??= new List<string>();
+            if (keyList == null)
+                keyList = new List<string>();
+            
             keyList.Add(key);
             PreferenceKeyList = keyList;
         }

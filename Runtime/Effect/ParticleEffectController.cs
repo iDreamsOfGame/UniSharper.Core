@@ -5,6 +5,8 @@ using System;
 using UniSharper.Extensions;
 using UnityEngine;
 
+// ReSharper disable ConvertIfStatementToNullCoalescingExpression
+
 namespace UniSharper.Effect
 {
     /// <summary>
@@ -17,7 +19,7 @@ namespace UniSharper.Effect
         private bool checkParticleSystemsStopped = true;
         
         [SerializeField]
-        private ParticleEffectEvent loopPointReached;
+        private ParticleEffectEvent startedEvent;
 
         [SerializeField]
         private ParticleEffectEvent pausedEvent;
@@ -26,10 +28,10 @@ namespace UniSharper.Effect
         private ParticleEffectEvent resumedEvent;
 
         [SerializeField]
-        private ParticleEffectEvent startedEvent;
-
-        [SerializeField]
         private ParticleEffectEvent stoppedEvent;
+        
+        [SerializeField]
+        private ParticleEffectEvent loopPointReached;
         
         private Transform cachedTransform;
         
@@ -106,16 +108,61 @@ namespace UniSharper.Effect
         public bool IsLoop { get; protected set; }
 
         public float PlaybackTime { get; private set; }
+        
+        public ParticleEffectEvent Started
+        {
+            get
+            {
+                if (startedEvent == null)
+                    startedEvent = new ParticleEffectEvent();
 
-        public ParticleEffectEvent LoopPointReached => loopPointReached ??= new ParticleEffectEvent();
+                return startedEvent;
+            }
+        }
 
-        public ParticleEffectEvent Paused => pausedEvent ??= new ParticleEffectEvent();
+        public ParticleEffectEvent Paused
+        {
+            get
+            {
+                if (pausedEvent == null)
+                    pausedEvent = new ParticleEffectEvent();
 
-        public ParticleEffectEvent Resumed => resumedEvent ??= new ParticleEffectEvent();
+                return pausedEvent;
+            }
+        }
 
-        public ParticleEffectEvent Started => startedEvent ??= new ParticleEffectEvent();
+        public ParticleEffectEvent Resumed
+        {
+            get
+            {
+                if (resumedEvent == null)
+                    resumedEvent = new ParticleEffectEvent();
 
-        public ParticleEffectEvent Stopped => stoppedEvent ??= new ParticleEffectEvent();
+                return resumedEvent;
+            }
+        }
+
+        public ParticleEffectEvent Stopped
+        {
+            get
+            {
+                if (stoppedEvent == null)
+                    stoppedEvent = new ParticleEffectEvent();
+
+                return stoppedEvent;
+            }
+        }
+
+        public ParticleEffectEvent LoopPointReached
+        {
+            get
+            {
+                if (loopPointReached == null)
+                    loopPointReached = new ParticleEffectEvent();
+
+                return loopPointReached;
+            }
+        }
 
         public virtual void Initialize()
         {

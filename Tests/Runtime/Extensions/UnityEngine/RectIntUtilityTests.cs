@@ -14,9 +14,9 @@ namespace UniSharper.Tests
 
         private const string InvalidElementsString = "1.0)(2";
 
-        private static readonly RectInt CorrectValue = new(1, 1, 100, 100);
+        private static readonly RectInt CorrectValue = new RectInt(1, 1, 100, 100);
         
-        private static readonly RectInt CorrectValue2 = new(2, 2, 200, 200);
+        private static readonly RectInt CorrectValue2 = new RectInt(2, 2, 200, 200);
         
         private static readonly int[] ValidElementValues = { 1, 1, 100, 100, 2, 2, 200, 200 };
         

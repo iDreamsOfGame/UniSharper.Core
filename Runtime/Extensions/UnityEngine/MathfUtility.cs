@@ -20,40 +20,25 @@ namespace UniSharper.Extensions
         public static float ClampAngle(float angle, float min, float max)
         {
             angle = NormalizeAngle(angle);
-
-            switch (angle)
-            {
-                case > 180:
-                    angle -= 360;
-                    break;
-                case < -180:
-                    angle += 360;
-                    break;
-            }
+            if (angle > 180)
+                angle -= 360;
+            
+            if (angle < -180)
+                angle += 360;
 
             min = NormalizeAngle(min);
-
-            switch (min)
-            {
-                case > 180:
-                    min -= 360;
-                    break;
-                case < -180:
-                    min += 360;
-                    break;
-            }
+            if (min > 180)
+                min -= 360;
+            
+            if (min < -180)
+                min += 360;
 
             max = NormalizeAngle(max);
-
-            switch (max)
-            {
-                case > 180:
-                    max -= 360;
-                    break;
-                case < -180:
-                    max += 360;
-                    break;
-            }
+            if (max > 180)
+                max -= 360;
+            
+            if (max < -180)
+                max += 360;
 
             return Mathf.Clamp(angle, min, max);
         }

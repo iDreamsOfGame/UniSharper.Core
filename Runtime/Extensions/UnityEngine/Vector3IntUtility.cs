@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+// ReSharper disable ConvertIfStatementToSwitchStatement
+
 namespace UniSharper.Extensions
 {
     public static class Vector3IntUtility
@@ -20,23 +22,21 @@ namespace UniSharper.Extensions
                 return default;
 
             var values = StringUtility.GetStringValuesInBrackets(s);
-            switch (values.Length)
+            if (values.Length < 2)
+                return default;
+            
+            if (values.Length > 2)
             {
-                case < 2:
-                    return default;
-                case > 2:
-                {
-                    int.TryParse(values[0], out var x);
-                    int.TryParse(values[1], out var y);
-                    int.TryParse(values[2], out var z);
-                    return new Vector3Int(x, y, z);
-                }
-                default:
-                {
-                    int.TryParse(values[0], out var x);
-                    int.TryParse(values[1], out var y);
-                    return new Vector3Int(x, y);
-                }
+                int.TryParse(values[0], out var x);
+                int.TryParse(values[1], out var y);
+                int.TryParse(values[2], out var z);
+                return new Vector3Int(x, y, z);
+            }
+            else
+            {
+                int.TryParse(values[0], out var x);
+                int.TryParse(values[1], out var y);
+                return new Vector3Int(x, y, 0);
             }
         }
 
@@ -55,26 +55,24 @@ namespace UniSharper.Extensions
             }
 
             var values = StringUtility.GetStringValuesInBrackets(s);
-            switch (values.Length)
+            if (values.Length < 2)
             {
-                case < 2:
-                    result = default;
-                    return false;
-                case > 2:
-                {
-                    int.TryParse(values[0], out var x);
-                    int.TryParse(values[1], out var y);
-                    int.TryParse(values[2], out var z);
-                    result = new Vector3Int(x, y, z);
-                    break;
-                }
-                default:
-                {
-                    int.TryParse(values[0], out var x);
-                    int.TryParse(values[1], out var y);
-                    result = new Vector3Int(x, y);
-                    break;
-                }
+                result = default;
+                return false;
+            }
+
+            if (values.Length > 2)
+            {
+                int.TryParse(values[0], out var x);
+                int.TryParse(values[1], out var y);
+                int.TryParse(values[2], out var z);
+                result = new Vector3Int(x, y, z);
+            }
+            else
+            {
+                int.TryParse(values[0], out var x);
+                int.TryParse(values[1], out var y);
+                result = new Vector3Int(x, y, 0);
             }
 
             return true;
@@ -91,7 +89,7 @@ namespace UniSharper.Extensions
             if (string.IsNullOrEmpty(s) || string.IsNullOrEmpty(arrayElementSeparator))
                 return default;
             
-            var elementStrings = s.Trim().Split(arrayElementSeparator, StringSplitOptions.RemoveEmptyEntries);
+            var elementStrings = s.Trim().Split(arrayElementSeparator.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
             if (elementStrings.Length == 0)
                 return default;
 
@@ -137,7 +135,7 @@ namespace UniSharper.Extensions
                 return false;
             }
 
-            var elementStrings = s.Trim().Split(arrayElementSeparator, StringSplitOptions.RemoveEmptyEntries);
+            var elementStrings = s.Trim().Split(arrayElementSeparator.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
             if (elementStrings.Length == 0)
             {
                 result = default;
@@ -164,7 +162,7 @@ namespace UniSharper.Extensions
         /// <returns><c>true</c> if <c>values</c> was converted successfully; otherwise, <c>false</c>. </returns>
         public static bool TryParseArray(IList<int> values, out Vector3Int[] result)
         {
-            if (values is not { Count: > 0 })
+            if (values == null || values.Count == 0)
             {
                 result = default;
                 return false;

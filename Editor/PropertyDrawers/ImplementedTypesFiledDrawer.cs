@@ -24,7 +24,8 @@ namespace UniSharperEditor
             if (interfaceType == null)
                 return Array.Empty<string>();
             
-            interfaceTypeImplementedTypeNamesMap ??= new Dictionary<Type, string[]>();
+            if (interfaceTypeImplementedTypeNamesMap == null)
+                interfaceTypeImplementedTypeNamesMap = new Dictionary<Type, string[]>();
 
             if (interfaceTypeImplementedTypeNamesMap.TryGetValue(interfaceType, out var list))
                 return list;
@@ -50,7 +51,7 @@ namespace UniSharperEditor
                     return typeName;
 
                 var segments = typeName.Split('.');
-                return segments[^1];
+                return segments[segments.Length - 1];
             }).ToArray();
         }
 

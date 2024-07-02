@@ -49,11 +49,11 @@ namespace UniSharper.Effect
         /// Get the playback position of the <see cref="UnityEngine.ParticleSystem"/> in seconds.
         /// </summary>
         float PlaybackTime { get; }
-
+        
         /// <summary>
-        /// Invoked when the time of <see cref="UnityEngine.ParticleSystem"/> reaches the playback time.
+        /// Invoked immediately after Play is called.
         /// </summary>
-        ParticleEffectEvent LoopPointReached { get; }
+        ParticleEffectEvent Started { get; }
 
         /// <summary>
         /// Invoked immediately after Pause is called.
@@ -66,14 +66,14 @@ namespace UniSharper.Effect
         ParticleEffectEvent Resumed { get; }
 
         /// <summary>
-        /// Invoked immediately after Play is called.
-        /// </summary>
-        ParticleEffectEvent Started { get; }
-
-        /// <summary>
         /// Invoked when the time of <see cref="UnityEngine.ParticleSystem"/> stopped.
         /// </summary>
         ParticleEffectEvent Stopped { get; }
+        
+        /// <summary>
+        /// Invoked when the time of <see cref="UnityEngine.ParticleSystem"/> reaches the playback time.
+        /// </summary>
+        ParticleEffectEvent LoopPointReached { get; }
 
         /// <summary>
         /// Starts the particle effect.

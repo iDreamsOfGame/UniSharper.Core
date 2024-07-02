@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
+// ReSharper disable UseNegatedPatternMatching
+
 namespace UniSharper.Extensions
 {
     /// <summary>
@@ -23,7 +25,8 @@ namespace UniSharper.Extensions
         /// <param name="serializer">The calling serializer.</param>
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            if (value is not Dictionary<TKey, TValue> dictionary)
+            var dictionary = value as Dictionary<TKey, TValue>;
+            if (dictionary == null)
                 return;
 
             writer.WriteStartObject();

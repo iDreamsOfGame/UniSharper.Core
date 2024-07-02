@@ -95,7 +95,9 @@ namespace UniSharperEditor
             SearchOption searchOption = SearchOption.TopDirectoryOnly,
             bool withExtension = false)
         {
-            directoryFileNamesMap ??= new Dictionary<string, string[]>();
+            if (directoryFileNamesMap == null)
+                directoryFileNamesMap = new Dictionary<string, string[]>();
+            
             var key = $"{property.serializedObject.GetHashCode()}.{property.propertyPath}.{Path.Combine(dirPath, searchPattern)}";
 
             if (!directoryFileNamesMap.ContainsKey(key) && Directory.Exists(dirPath))

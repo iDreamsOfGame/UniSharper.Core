@@ -40,7 +40,7 @@ namespace UniSharper.Extensions
             
             foreach (var pair in pairs)
             {
-                var kvString = pair.Split(keyValueSeparator, StringSplitOptions.RemoveEmptyEntries);
+                var kvString = pair.Split(keyValueSeparator.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
                 if (kvString.Length != 2) 
                     continue;
                 
@@ -65,7 +65,7 @@ namespace UniSharper.Extensions
                 return Array.Empty<string>();
             
             value = value.Trim('(', ')');
-            return value.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+            return value.Split(separator.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
         }
     }
 }

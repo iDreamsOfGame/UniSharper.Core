@@ -17,7 +17,7 @@ namespace UniSharper
         /// <returns>The asset path of the path that combined by an array. </returns>
         public static string GetAssetPath(params string[] paths)
         {
-            if (paths is not { Length: > 0 })
+            if (paths == null || paths.Length == 0)
                 return null;
 
             var path = Path.Combine(paths);

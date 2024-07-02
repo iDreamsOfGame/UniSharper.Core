@@ -21,8 +21,8 @@ namespace UniSharperEditor.Extensions
         }
         
         [MenuItem("Assets/Clean Missing Scripts", true)]
-        private static bool CleanMissingScriptsValidator() => Selection.gameObjects is { Length: > 0 };
-        
+        private static bool CleanMissingScriptsValidator() => Selection.gameObjects != null && Selection.gameObjects.Length > 0;
+
         [MenuItem("Assets/Clean Missing Scripts")]
         private static void CleanMissingScripts()
         {

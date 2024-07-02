@@ -18,7 +18,7 @@ namespace UniSharper.Tests
         
         private static readonly Vector3Int CorrectValue = Vector3Int.one;
 
-        private static readonly Vector3Int CorrectValue2 = new(1, 1);
+        private static readonly Vector3Int CorrectValue2 = new Vector3Int(1, 1, 0);
         
         private static readonly int[] ValidElementValues = { 1, 1, 1, 2, 2, 2 };
         
