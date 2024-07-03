@@ -2,6 +2,7 @@
 // project root for license information.
 
 using System.IO;
+using System.Linq;
 using UniSharper;
 using UnityEditor;
 #if UNITY_2021_1_OR_NEWER
@@ -60,7 +61,7 @@ namespace UniSharperEditor
         }
 
         /// <summary>
-        /// Gets the physical path of the asset path that combined by an array. The asset must be include in project, otherwise return <c>null</c>.
+        /// Gets the physical path of the asset path that combined by an array. The asset must be included in project, otherwise return <c>null</c>.
         /// </summary>
         /// <param name="paths">An array of parts of the path. </param>
         /// <returns>The physical path of the asset path that combined by an array. </returns>
@@ -83,7 +84,7 @@ namespace UniSharperEditor
             if (path.StartsWith(PlayerEnvironment.PackagesFolderName + Path.AltDirectorySeparatorChar))
             {
                 var packageInfoCollection = PackageInfo.GetAllRegisteredPackages();
-                if (packageInfoCollection is { Length: > 0 })
+                if (packageInfoCollection != null && packageInfoCollection.Length > 0)
                     return (from packageInfo in packageInfoCollection where path.StartsWith(packageInfo.assetPath) 
                         select Path.Combine(path.Replace(packageInfo.assetPath, packageInfo.resolvedPath))).FirstOrDefault();
             }
@@ -134,9 +135,9 @@ namespace UniSharperEditor
                 }
             }
             
-            if (packageInfoCollection is { Length: > 0 })
+            if (packageInfoCollection != null && packageInfoCollection.Length > 0)
                 return (from packageInfo in packageInfoCollection where path.StartsWith(packageInfo.resolvedPath) 
-                    select Path.Combine(packageInfo.assetPath, path[(packageInfo.resolvedPath.Length + 1)..])).FirstOrDefault();
+                    select Path.Combine(packageInfo.assetPath, path.Substring(packageInfo.resolvedPath.Length + 1))).FirstOrDefault();
 #endif
 
             return null;
@@ -166,7 +167,7 @@ namespace UniSharperEditor
                 return null;
             
             var packageInfoCollection = PackageInfo.GetAllRegisteredPackages();
-            return packageInfoCollection is { Length: > 0 } 
+            return packageInfoCollection != null && packageInfoCollection.Length > 0
                 ? (from packageInfo in packageInfoCollection where packageInfo.name.Equals(packageName) select packageInfo.assetPath).FirstOrDefault() 
                 : null;
 #else
@@ -186,7 +187,7 @@ namespace UniSharperEditor
                 return null;
 
             var packageInfoCollection = PackageInfo.GetAllRegisteredPackages();
-            return packageInfoCollection is { Length: > 0 }
+            return packageInfoCollection != null && packageInfoCollection.Length > 0
                 ? (from packageInfo in packageInfoCollection where packageInfo.name.Equals(packageName) select packageInfo.resolvedPath).FirstOrDefault()
                 : null;
 #else
