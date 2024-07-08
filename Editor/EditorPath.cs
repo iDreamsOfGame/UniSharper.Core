@@ -51,7 +51,7 @@ namespace UniSharperEditor
             if (path.StartsWith(PlayerEnvironment.PackagesFolderName + Path.AltDirectorySeparatorChar))
             {
                 var packageInfoCollection = PackageInfo.GetAllRegisteredPackages();
-                if (packageInfoCollection == null || packageInfoCollection.Length == 0)
+                if (packageInfoCollection != null && packageInfoCollection.Length > 0)
                     return (from packageInfo in packageInfoCollection where path.StartsWith(packageInfo.assetPath) 
                         select Path.Combine(path.Replace(packageInfo.assetPath, packageInfo.resolvedPath))).FirstOrDefault();
             }
