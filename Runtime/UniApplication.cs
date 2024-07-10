@@ -11,7 +11,7 @@ namespace UniSharper
     /// </summary>
     public static class UniApplication
     {
-#if !UNITY_EDITOR && UNITY_ANDROID
+#if !UNITY_EDITOR && UNITY_ANDROID && !UNITY_INSTANT_GAME
         private const string AndroidJavaClassName = "io.github.idreamsofgame.unisharper.plugin.NetUtils";
 #endif
 
@@ -24,10 +24,10 @@ namespace UniSharper
         /// Opens the URL specified.
         /// </summary>
         /// <param name="url">The URL to open.</param>
-        /// <returns><c>true</c>, If can open the url; <c>false</c> can not open the url.</returns>
+        /// <returns><c>true</c>, can open the url; <c>false</c> can not open the url.</returns>
         public static bool OpenURL(string url)
         {
-#if !UNITY_EDITOR && UNITY_ANDROID
+#if !UNITY_EDITOR && UNITY_ANDROID && !UNITY_INSTANT_GAME
             return OpenURLOnAndroid(url);
 #endif
 
@@ -43,7 +43,7 @@ namespace UniSharper
         {
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
-#elif UNITY_ANDROID
+#elif UNITY_ANDROID && !UNITY_INSTANT_GAME
             if (killAndroidProcess)
             {
                 try 
@@ -69,11 +69,13 @@ namespace UniSharper
 #endif
         }
 
-#if !UNITY_EDITOR && UNITY_ANDROID
+#if !UNITY_EDITOR && UNITY_ANDROID && !UNITY_INSTANT_GAME
         private static bool OpenURLOnAndroid(string url)
         {
-            using var netUtils = new AndroidJavaClass(AndroidJavaClassName);
-            return netUtils.CallStatic<bool>("openURL", url);
+            using (var netUtils = new AndroidJavaClass(AndroidJavaClassName))
+            {
+                return netUtils.CallStatic<bool>("openURL", url);
+            }
         }
 #endif
     }

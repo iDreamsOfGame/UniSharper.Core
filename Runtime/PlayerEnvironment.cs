@@ -31,7 +31,7 @@ namespace UniSharper
         /// <value>The newline string defined for windows.</value>
         public const string WindowsNewLine = "\r\n";
 
-#if !UNITY_EDITOR && UNITY_ANDROID
+#if !UNITY_EDITOR && UNITY_ANDROID && !UNITY_INSTANT_GAME
         private const string AndroidDeviceInfoClassFullPath = "io.github.idreamsofgame.unisharper.plugin.DeviceInfo";
 #endif
 
@@ -50,7 +50,7 @@ namespace UniSharper
         /// <summary>
         /// Gets a value indicating whether the runtime platform is iOS.
         /// </summary>
-        /// <value><c>true</c> if the runtime platform is iOS is ios platform; otherwise, <c>false</c>.</value>
+        /// <value><c>true</c> if the runtime platform is iOS platform; otherwise, <c>false</c>.</value>
         public static bool IsiOSPlatform => Application.platform == RuntimePlatform.IPhonePlayer;
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace UniSharper
         {
             get
             {
-#if !UNITY_EDITOR && UNITY_ANDROID
+#if !UNITY_EDITOR && UNITY_ANDROID && !UNITY_INSTANT_GAME
                 return GetAndroidDeviceIdentifier();
 #endif
                 
@@ -94,7 +94,7 @@ namespace UniSharper
         {
             get
             {
-#if !UNITY_EDITOR && UNITY_ANDROID
+#if !UNITY_EDITOR && UNITY_ANDROID && !UNITY_INSTANT_GAME
                 var os = SystemInfo.operatingSystem;
                 var sections = os.Split(' ');
 
@@ -117,7 +117,7 @@ namespace UniSharper
         {
             get
             {
-#if !UNITY_EDITOR && UNITY_ANDROID
+#if !UNITY_EDITOR && UNITY_ANDROID && !UNITY_INSTANT_GAME
                 return GetAndroidCountryCode();
 #endif
                 
@@ -125,20 +125,24 @@ namespace UniSharper
             }
         }
 
-#if !UNITY_EDITOR && UNITY_ANDROID
+#if !UNITY_EDITOR && UNITY_ANDROID && !UNITY_INSTANT_GAME
         private static string GetAndroidDeviceIdentifier()
         {
-            using var deviceInfo = new AndroidJavaClass(AndroidDeviceInfoClassFullPath);
-            const string methodName = "getUniqueDeviceIdentifier";
-            var uniqueDeviceIdentifier = deviceInfo.CallStatic<string>(methodName);
-            return CryptoUtility.Md5HashEncrypt(uniqueDeviceIdentifier);
+            using (var deviceInfo = new AndroidJavaClass(AndroidDeviceInfoClassFullPath))
+            {
+                const string methodName = "getUniqueDeviceIdentifier";
+                var uniqueDeviceIdentifier = deviceInfo.CallStatic<string>(methodName);
+                return CryptoUtility.Md5HashEncrypt(uniqueDeviceIdentifier);
+            }
         }
 
         private static string GetAndroidCountryCode()
         {
-            using var deviceInfo = new AndroidJavaClass(AndroidDeviceInfoClassFullPath);
-            const string methodName = "getCountryCode";
-            return deviceInfo.CallStatic<string>(methodName);
+            using (var deviceInfo = new AndroidJavaClass(AndroidDeviceInfoClassFullPath))
+            {
+                const string methodName = "getCountryCode";
+                return deviceInfo.CallStatic<string>(methodName);
+            }
         }
 #endif
     }
