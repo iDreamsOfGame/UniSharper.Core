@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+## [1.23.0] - 2024-08-15
+
+### Added
+
+- Added class **Navigator** including properties and methods to access WebGL navigator object.
+
+
+
 ## [1.22.6] - 2024-07-02
 
 ### Fixed
