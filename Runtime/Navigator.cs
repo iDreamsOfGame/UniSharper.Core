@@ -1,7 +1,6 @@
 // Copyright (c) Jerry Lee. All rights reserved. Licensed under the MIT License.
 // See LICENSE in the project root for license information.
 
-using System.Linq;
 #if !UNITY_EDITOR
 using System.Runtime.InteropServices;
 #endif
@@ -25,7 +24,7 @@ namespace UniSharper
         /// <summary>
         /// The user agent string for the current browser.
         /// </summary>
-        public string UserAgent
+        public static string UserAgent
         {
             get
             {
@@ -40,7 +39,7 @@ namespace UniSharper
         /// <summary>
         /// Detects if it is a mobile platform.
         /// </summary>
-        public bool IsMobile
+        public static bool IsMobile
         {
             get
             {
