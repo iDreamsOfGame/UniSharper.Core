@@ -3,6 +3,7 @@
 
 // ReSharper disable RedundantUsingDirective
 
+using System;
 using System.Globalization;
 using ReSharp.Security.Cryptography;
 using UnityEngine;
@@ -71,6 +72,8 @@ namespace UniSharper
         /// <value><c>true</c> if the runtime platform is Windows Unity Editor; otherwise, <c>false</c>.</value>
         public static bool IsWindowsEditorPlatform => Application.platform == RuntimePlatform.WindowsEditor;
 
+        private static string deviceIdentifierOnWebGL;
+
         /// <summary>
         /// Gets a unique device identifier. It is guaranteed to be unique for every device (Read Only).
         /// </summary>
@@ -81,9 +84,17 @@ namespace UniSharper
             {
 #if !UNITY_EDITOR && UNITY_ANDROID && !UNITY_INSTANT_GAME
                 return GetAndroidDeviceIdentifier();
-#endif
-                
+#elif UNITY_WEBGL || WEIXINMINIGAME
+                if (string.IsNullOrEmpty(deviceIdentifierOnWebGL))
+                {
+                    deviceIdentifierOnWebGL = CryptoUtility.Md5HashEncrypt($"{Guid.NewGuid():N}-{SystemInfo.deviceName}-{SystemInfo.deviceModel}-"
+                                                                           + $"{SystemInfo.deviceType}-{SystemInfo.graphicsDeviceType}-{SystemInfo.graphicsDeviceID}");
+                }
+
+                return deviceIdentifierOnWebGL;
+#else
                 return SystemInfo.deviceUniqueIdentifier;
+#endif
             }
         }
 
