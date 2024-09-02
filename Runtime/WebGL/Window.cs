@@ -1,3 +1,10 @@
+// Copyright (c) Jerry Lee. All rights reserved. Licensed under the MIT License.
+// See LICENSE in the project root for license information.
+
+#if !UNITY_EDITOR
+using System.Runtime.InteropServices;
+#endif
+
 #if UNITY_WEBGL
 namespace UniSharper.WebGL
 {
