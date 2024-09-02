@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+## [1.24.0] - 2024-09-02
+
+### Added
+
+- Added class **Window** including properties and methods to access WebGL window object.
+
+
+
 ## [1.23.0] - 2024-08-15
 
 ### Added

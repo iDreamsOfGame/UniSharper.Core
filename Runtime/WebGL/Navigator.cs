@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 #endif
 
 #if UNITY_WEBGL
-namespace UniSharper
+namespace UniSharper.WebGL
 {
     /// <summary>
     /// Provides access to WebGL navigator object.
@@ -22,7 +22,7 @@ namespace UniSharper
 #endif
 
         /// <summary>
-        /// The user agent string for the current browser.
+        /// Gets the user agent string for the current browser.
         /// </summary>
         public static string UserAgent
         {
