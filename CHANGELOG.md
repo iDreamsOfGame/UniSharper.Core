@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+## [1.24.3] - 2024-09-12
+
+### Added
+
+- Added properties **Width** and **Height** to class **DisplayScreen**.
+
+
+
 ## [1.24.0] - 2024-09-02
 
 ### Added

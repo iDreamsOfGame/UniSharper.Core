@@ -10,7 +10,49 @@ namespace UniSharper
     /// </summary>
     public sealed class DisplayScreen
     {
+        private static int screenWidth;
+
+        private static int screenHeight;
+        
         private static Rect safeArea;
+
+        /// <summary>
+        /// The current width of the screen window in pixels.
+        /// </summary>
+        public static int Width
+        {
+            get
+            {
+                if (screenWidth == 0)
+                {
+#if UNITY_2021_1_OR_NEWER
+                    return UnityEngine.Device.Screen.width;
+#else
+                    return  Screen.width;
+#endif
+                }
+
+                return screenWidth;
+            }
+        }
+
+        
+        public static int Height
+        {
+            get
+            {
+                if (screenHeight == 0)
+                {
+#if UNITY_2021_1_OR_NEWER
+                    return UnityEngine.Device.Screen.height;
+#else
+                    return  Screen.height;
+#endif
+                }
+
+                return screenHeight;
+            }
+        }
 
         /// <summary>
         /// The safe area of the screen in pixels,  or the specific safe area you set.
@@ -43,7 +85,7 @@ namespace UniSharper
                 var x = SafeArea.x;
                 var y = SafeArea.y + SafeArea.height;
                 var width = SafeArea.width;
-                var height = Screen.height - y;
+                var height = Height - y;
                 return new Rect(x, y, width, height);
             }
         }
@@ -87,7 +129,7 @@ namespace UniSharper
             {
                 var x = SafeArea.x + SafeArea.width;
                 const float y = 0f;
-                var width = Screen.width - x;
+                var width = Width - x;
                 var height = SafeArea.height;
                 return new Rect(x, y, width, height);
             }
