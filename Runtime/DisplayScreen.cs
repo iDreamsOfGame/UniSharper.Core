@@ -17,10 +17,22 @@ namespace UniSharper
         /// </summary>
         public static Rect SafeArea
         {
-            get => safeArea == Rect.zero ? Screen.safeArea : safeArea;
+            get
+            {
+                if (safeArea == Rect.zero)
+                {
+#if UNITY_2021_1_OR_NEWER
+                    return UnityEngine.Device.Screen.safeArea;
+#else
+                    return Screen.safeArea;
+#endif
+                }
+                
+                return safeArea;
+            }
             set => safeArea = value;
         }
-        
+
         /// <summary>
         /// The notch area on the top of display screen.
         /// </summary>
