@@ -29,15 +29,6 @@
       },
       "url": "https://packages.unity.cn"
     },
-    "com.unity.ide.visualstudio": {
-      "version": "2.0.22",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {
-        "com.unity.test-framework": "1.1.9"
-      },
-      "url": "https://packages.unity.cn"
-    },
     "com.unity.nuget.newtonsoft-json": {
       "version": "3.2.1",
       "depth": 0,
@@ -66,7 +57,7 @@
       }
     },
     "io.github.idreamsofgame.resharp.core": {
-      "version": "1.4.9",
+      "version": "1.5.0",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
