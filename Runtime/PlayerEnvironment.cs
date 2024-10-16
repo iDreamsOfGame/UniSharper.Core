@@ -37,6 +37,11 @@ namespace UniSharper
 #endif
 
         /// <summary>
+        /// Gets a value that indicates whether the current process is a 64-bit process.
+        /// </summary>
+        public static bool Is64BitProcess => IntPtr.Size == 8;
+
+        /// <summary>
         /// Gets a value indicating whether the runtime platform is Android.
         /// </summary>
         /// <value><c>true</c> if the runtime platform is Android; otherwise, <c>false</c>.</value>
