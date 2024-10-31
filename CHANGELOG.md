@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+## [1.24.7] - 2024-10-31
+
+### Added
+
+- Implements extension method **TrySetActive** for **GameObject**.
+
+
+
 ## [1.24.5] - 2024-10-16
 
 ### Changed

@@ -13,6 +13,26 @@ namespace UniSharper.Extensions
     public static class GameObjectExtensions
     {
         /// <summary>
+        /// Tries to activate/deactivate the GameObject, depending on the given true or false value.
+        /// </summary>
+        /// <param name="gameObject">The <see cref="GameObject"/> instance.</param>
+        /// <param name="value">Activate or deactivate the object, where true activates the <see cref="GameObject"/> and false deactivates the <see cref="GameObject"/>. </param>
+        /// <returns><c>true</c> if the <see cref="GameObject"/> set active successfully; otherwise, <c>false</c>.</returns>
+        public static bool TrySetActive(this GameObject gameObject, bool value)
+        {
+            if (!gameObject)
+                return false;
+
+            if (!gameObject.activeSelf == value)
+            {
+                gameObject.SetActive(value);
+                return true;
+            }
+
+            return false;
+        }
+        
+        /// <summary>
         /// Copies all components values of the specific <see cref="GameObject"/> to the other <see cref="GameObject"/>.
         /// </summary>
         /// <param name="gameObject">The original <see cref="GameObject"/>.</param>
