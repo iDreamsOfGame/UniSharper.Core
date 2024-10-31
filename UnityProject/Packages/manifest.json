@@ -2,7 +2,7 @@
   "dependencies": {
     "com.cysharp.csprojmodifier": "1.2.1",
     "com.unity.2d.sprite": "1.0.0",
-    "com.unity.ide.rider": "3.0.31",
+    "com.unity.ide.rider": "3.0.34",
     "com.unity.nuget.newtonsoft-json": "3.2.1",
     "com.unity.test-framework": "1.3.0",
     "com.unity.ugui": "1.0.0",
