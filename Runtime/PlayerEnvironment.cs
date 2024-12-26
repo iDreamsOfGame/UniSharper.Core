@@ -7,6 +7,9 @@ using System;
 using System.Globalization;
 using ReSharp.Security.Cryptography;
 using UnityEngine;
+using UnityEngine.Device;
+using Application = UnityEngine.Device.Application;
+using SystemInfo = UnityEngine.Device.SystemInfo;
 
 namespace UniSharper
 {
@@ -137,7 +140,7 @@ namespace UniSharper
                 return GetAndroidCountryCode();
 #endif
                 
-                return RegionInfo.CurrentRegion.Name;
+                return RegionInfo.CurrentRegion.TwoLetterISORegionName;
             }
         }
 
