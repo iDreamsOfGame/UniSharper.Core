@@ -51,12 +51,6 @@ namespace UniSharper
         public static bool IsAndroidPlatform => Application.platform == RuntimePlatform.Android;
 
         /// <summary>
-        /// Gets a value indicating whether the runtime platform is Unity Editor.
-        /// </summary>
-        /// <value><c>true</c> if the runtime platform is Unity Editor; otherwise, <c>false</c>.</value>
-        public static bool IsEditorPlatform => IsWindowsEditorPlatform || IsMacOSXEditorPlatform || IsLinuxEditorPlatform;
-
-        /// <summary>
         /// Gets a value indicating whether the runtime platform is iOS.
         /// </summary>
         /// <value><c>true</c> if the runtime platform is iOS platform; otherwise, <c>false</c>.</value>
@@ -66,19 +60,19 @@ namespace UniSharper
         /// Gets a value indicating whether the runtime platform is Linux Unity Editor.
         /// </summary>
         /// <value><c>true</c> if the runtime platform is Linux Unity Editor; otherwise, <c>false</c>.</value>
-        public static bool IsLinuxEditorPlatform => Application.platform == RuntimePlatform.LinuxEditor;
+        public static bool IsLinuxEditor => UnityEngine.Application.platform == RuntimePlatform.LinuxEditor;
 
         /// <summary>
         /// Gets a value indicating whether the runtime platform is Mac OS X Unity Editor.
         /// </summary>
         /// <value><c>true</c> if the runtime platform is Mac OS X Unity Editor; otherwise, <c>false</c>.</value>
-        public static bool IsMacOSXEditorPlatform => Application.platform == RuntimePlatform.OSXEditor;
+        public static bool IsMacOSXEditor => UnityEngine.Application.platform == RuntimePlatform.OSXEditor;
 
         /// <summary>
         /// Gets a value indicating whether the runtime platform is Windows Unity Editor.
         /// </summary>
         /// <value><c>true</c> if the runtime platform is Windows Unity Editor; otherwise, <c>false</c>.</value>
-        public static bool IsWindowsEditorPlatform => Application.platform == RuntimePlatform.WindowsEditor;
+        public static bool IsWindowsEditor => UnityEngine.Application.platform == RuntimePlatform.WindowsEditor;
 
         private static string deviceIdentifierOnWebGL;
 

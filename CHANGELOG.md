@@ -6,6 +6,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+## [1.24.9] - 2025-01-22
+
+### Changed
+
+- Removed property **PlayerEnvironment.IsEditorPlatform**.
+- Rename property **PlayerEnvironment.IsLinuxEditorPlatform** to **PlayerEnvironment.IsLinuxEditor**.
+- Rename property **PlayerEnvironment.IsMacOSXEditorPlatform** to **PlayerEnvironment.IsMacOSXEditor**.
+- Rename property **PlayerEnvironment.IsWindowsEditorPlatform** to **PlayerEnvironment.IsWindowsEditor**.
+
+
+
 ## [1.24.7] - 2024-10-31
 
 ### Added
