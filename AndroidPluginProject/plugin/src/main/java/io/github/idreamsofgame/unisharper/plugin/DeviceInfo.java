@@ -20,12 +20,13 @@ public final class DeviceInfo {
 
         @SuppressLint("HardwareIds")
         String androidID = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+        @SuppressLint("HardwareIds")
         String serialNumber = Build.SERIAL;
         return androidID + "-" + serialNumber;
     }
 
     /**
-     * Gets the contry code of this Android device.
+     * Gets the country code of this Android device.
      *
      * @return The country/region code, which should either be the empty string, an uppercase ISO 3166 2-letter code, or a UN M.49 3-digit code.
      */
