@@ -1,6 +1,7 @@
 // Copyright (c) Jerry Lee. All rights reserved. Licensed under the MIT License.
 // See LICENSE in the project root for license information.
 
+#if UNITY_AUDIO_MODULE
 using System;
 using System.Collections;
 using UnityEngine;
@@ -118,3 +119,4 @@ namespace UniSharper.Audio
         }
     }
 }
+#endif

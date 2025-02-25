@@ -35,7 +35,7 @@ namespace UniSharper
         /// <value>The newline string defined for windows.</value>
         public const string WindowsNewLine = "\r\n";
 
-#if !UNITY_EDITOR && UNITY_ANDROID && !UNITY_INSTANT_GAME
+#if !UNITY_EDITOR && UNITY_ANDROID && UNITY_ANDROID_JNI_MODULE
         private const string AndroidDeviceInfoClassFullPath = "io.github.idreamsofgame.unisharper.plugin.DeviceInfo";
 #endif
 
@@ -84,7 +84,7 @@ namespace UniSharper
         {
             get
             {
-#if !UNITY_EDITOR && UNITY_ANDROID && !UNITY_INSTANT_GAME
+#if !UNITY_EDITOR && UNITY_ANDROID && UNITY_ANDROID_JNI_MODULE
                 return GetAndroidDeviceIdentifier();
 #elif UNITY_WEBGL || WEIXINMINIGAME
                 if (string.IsNullOrEmpty(deviceIdentifierOnWebGL))
@@ -107,7 +107,7 @@ namespace UniSharper
         {
             get
             {
-#if !UNITY_EDITOR && UNITY_ANDROID && !UNITY_INSTANT_GAME
+#if !UNITY_EDITOR && UNITY_ANDROID && UNITY_ANDROID_JNI_MODULE
                 var os = SystemInfo.operatingSystem;
                 var sections = os.Split(' ');
 
@@ -130,7 +130,7 @@ namespace UniSharper
         {
             get
             {
-#if !UNITY_EDITOR && UNITY_ANDROID && !UNITY_INSTANT_GAME
+#if !UNITY_EDITOR && UNITY_ANDROID && UNITY_ANDROID_JNI_MODULE
                 return GetAndroidCountryCode();
 #endif
                 
@@ -138,7 +138,7 @@ namespace UniSharper
             }
         }
 
-#if !UNITY_EDITOR && UNITY_ANDROID && !UNITY_INSTANT_GAME
+#if !UNITY_EDITOR && UNITY_ANDROID && UNITY_ANDROID_JNI_MODULE
         private static string GetAndroidDeviceIdentifier()
         {
             using (var deviceInfo = new AndroidJavaClass(AndroidDeviceInfoClassFullPath))

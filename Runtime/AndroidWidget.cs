@@ -14,7 +14,7 @@ namespace UniSharper
     /// </summary>
     public sealed class AndroidWidget
     {
-#if !UNITY_EDITOR && UNITY_ANDROID && !UNITY_INSTANT_GAME
+#if !UNITY_EDITOR && UNITY_ANDROID && UNITY_ANDROID_JNI_MODULE
         private const string AndroidWidgetUtilClassFullPath = "io.github.idreamsofgame.unisharper.plugin.WidgetUtil";
 #endif
 
@@ -28,7 +28,7 @@ namespace UniSharper
             if (string.IsNullOrEmpty(message))
                 return;
 
-#if !UNITY_EDITOR && UNITY_ANDROID && !UNITY_INSTANT_GAME
+#if !UNITY_EDITOR && UNITY_ANDROID && UNITY_ANDROID_JNI_MODULE
             using (var widgetUtil = new AndroidJavaClass(AndroidWidgetUtilClassFullPath))
             {
                 const string methodName = "showToast";
