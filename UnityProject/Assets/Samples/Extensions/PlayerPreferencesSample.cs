@@ -54,7 +54,7 @@ namespace UniSharper.Samples
 
         private void Awake()
         {
-            playerPreferences = new PlayerPreferences<PlayerPreferencesSample>();
+            playerPreferences = new UniPlayerPreferences<PlayerPreferencesSample>();
             Debug.Log($"PlayerPreferences.Namespace={playerPreferences.Namespace}");
             
             playerPreferences.DeletePreferences();
