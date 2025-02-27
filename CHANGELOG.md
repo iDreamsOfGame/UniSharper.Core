@@ -6,6 +6,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+## [1.25.0] - 2025-02-27
+
+### Changed
+
+- Rename class **PlayerPreferences** to **UniPlayerPreferences**.
+
+
+
+### Added
+
+- Adds abstract class **PlayerPreferences**.
+
+
+
 ## [1.24.9] - 2025-01-22
 
 ### Changed

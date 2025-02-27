@@ -4,7 +4,7 @@
 namespace UniSharper.Preferences
 {
     /// <summary>
-    /// This class provides methods to get or save player preferences data identified by <c>key</c> contains <c>Namespace</c>.
+    /// This interface provides methods to get or save player preferences data identified by <c>key</c> contains <c>Namespace</c>.
     /// </summary>
     public interface IPlayerPreferences
     {
