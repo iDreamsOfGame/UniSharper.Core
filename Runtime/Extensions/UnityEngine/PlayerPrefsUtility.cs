@@ -433,7 +433,7 @@ namespace UniSharper.Extensions
         /// <param name="defaultValue">The default value will be returned if the preference data doesn't exist.</param>
         /// <typeparam name="T">The type definition of object.</typeparam>
         /// <returns>The preference value corresponding to the <c>key</c>.</returns>
-        public static T GetObject<T>(string key, T defaultValue = default) where T : class
+        public static T GetObject<T>(string key, T defaultValue = null) where T : class
         {
             if (!IsValidKeyForAccessingPreferenceData(key))
                 return defaultValue;
