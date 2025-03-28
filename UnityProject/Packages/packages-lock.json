@@ -14,7 +14,7 @@
       "url": "https://packages.unity.cn"
     },
     "com.unity.ide.rider": {
-      "version": "3.0.34",
+      "version": "3.0.35",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -50,7 +50,7 @@
       }
     },
     "io.github.idreamsofgame.resharp.core": {
-      "version": "1.5.1",
+      "version": "1.5.2",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
