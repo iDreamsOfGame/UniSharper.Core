@@ -41,32 +41,51 @@ namespace UniSharper
         /// <param name="killAndroidProcess">Whether kill Android process. </param>
         public static void Quit(bool killAndroidProcess = false)
         {
-#if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
-#elif UNITY_ANDROID && UNITY_ANDROID_JNI_MODULE
-            if (killAndroidProcess)
+            if (Application.isEditor)
             {
-                try 
+#if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+#endif
+            }
+            else
+            {
+                if (Application.platform == RuntimePlatform.Android)
                 {
-                    new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity").Call("finishiAffinity");
-                    new AndroidJavaClass("java.lang.System").CallStatic("exit", 0);
-                } 
-                catch (System.Exception e) 
-                {
-                    Debug.LogWarning($"Application quit has exception {e}");
+#if UNITY_ANDROID_JNI_MODULE
+                    try
+                    {
+                        using var unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+                        var activity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
+
+                        if (killAndroidProcess)
+                        {
+                            activity.Call("finishAffinity");
+                            using var system = new AndroidJavaClass("java.lang.System");
+                            system.CallStatic("exit", 0);
+                        }
+                        else
+                        {
+                            activity.Call<bool>("moveTaskToBack", true);
+                            activity.Call("finishAffinity");
+                        }
+                    }
+                    catch (System.Exception e)
+                    {
+                        Debug.LogWarning($"Application quit has exception {e}");
+                    }
+                    finally
+                    {
+                        Application.Quit();
+                    }
+#else
+                    Application.Quit();
+#endif
                 }
-                finally
+                else
                 {
                     Application.Quit();
                 }
             }
-            else
-            {
-                Application.Quit();
-            }
-#else
-            Application.Quit();
-#endif
         }
 
 #if !UNITY_EDITOR && UNITY_ANDROID && UNITY_ANDROID_JNI_MODULE
