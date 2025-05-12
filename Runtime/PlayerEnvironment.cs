@@ -23,12 +23,12 @@ namespace UniSharper
         /// The folder name of <c>Assets</c>.
         /// </summary>
         public const string AssetsFolderName = "Assets";
-        
+
         /// <summary>
         /// The folder name of <c>Packages</c>.
         /// </summary>
         public const string PackagesFolderName = "Packages";
-        
+
         /// <summary>
         /// Gets the newline string defined for windows.
         /// </summary>
@@ -36,6 +36,8 @@ namespace UniSharper
         public const string WindowsNewLine = "\r\n";
 
 #if !UNITY_EDITOR && UNITY_ANDROID && UNITY_ANDROID_JNI_MODULE
+        private const string AndroidBuildClassFullPath = "android.os.Build";
+
         private const string AndroidDeviceInfoClassFullPath = "io.github.idreamsofgame.unisharper.plugin.DeviceInfo";
 #endif
 
@@ -101,6 +103,29 @@ namespace UniSharper
         }
 
         /// <summary>
+        /// Gets the hardware serial number, if available.
+        /// </summary>
+        public static string SerialNumber
+        {
+            get
+            {
+#if !UNITY_EDITOR && UNITY_ANDROID && UNITY_ANDROID_JNI_MODULE
+                try
+                {
+                    using var build = new AndroidJavaClass(AndroidBuildClassFullPath);
+                    return AndroidSdkInt >= 26 ? build.CallStatic<string>("getSerial") : build.GetStatic<string>("SERIAL");
+                }
+                catch (Exception e)
+                {
+                    Debug.LogWarning(e.ToString());
+                }
+#else
+                return UniqueDeviceIdentifier;
+#endif
+            }
+        }
+
+        /// <summary>
         /// Gets the SDK version of the software currently running on Android.
         /// </summary>
         public static int AndroidSdkInt
@@ -121,7 +146,7 @@ namespace UniSharper
                     return sdkInt;
                 }
 #endif
-                
+
                 return 0;
             }
         }
@@ -133,7 +158,7 @@ namespace UniSharper
 #if !UNITY_EDITOR && UNITY_ANDROID && UNITY_ANDROID_JNI_MODULE
                 return GetAndroidCountryCode();
 #endif
-                
+
                 return RegionInfo.CurrentRegion.TwoLetterISORegionName;
             }
         }

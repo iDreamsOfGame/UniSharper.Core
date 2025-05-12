@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+## [1.25.3] - 2025-02-27
+
+### Added
+
+- Adds property **PlayerEnvironment.SerialNumber** to get the hardware serial number.
+
+
+
 ## [1.25.0] - 2025-02-27
 
 ### Changed
