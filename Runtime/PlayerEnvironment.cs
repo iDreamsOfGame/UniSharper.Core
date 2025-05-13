@@ -118,6 +118,7 @@ namespace UniSharper
                 catch (Exception e)
                 {
                     Debug.LogWarning(e.ToString());
+                    return null;
                 }
 #else
                 return UniqueDeviceIdentifier;
