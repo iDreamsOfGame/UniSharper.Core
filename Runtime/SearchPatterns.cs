@@ -117,5 +117,25 @@ namespace UniSharper
         /// The search pattern of database files.
         /// </summary>
         public const string DatabaseFiles = "*" + FileExtensions.DatabaseFile;
+        
+        /// <summary>
+        /// The search pattern of Mac OS X desktop services store files.
+        /// </summary>
+        public const string MacOSXDesktopServicesStoreFiles = "*" + FileExtensions.MacOSXDesktopServicesStoreFile;
+        
+        /// <summary>
+        /// The search pattern of Xcode assets files.
+        /// </summary>
+        public const string XcodeAssetsFiles = "*" + FileExtensions.XcodeAssetsFile;
+        
+        /// <summary>
+        /// The search pattern of Xcode universal framework files.
+        /// </summary>
+        public const string XcodeUniversalFrameworkFiles = "*" + FileExtensions.XcodeUniversalFrameworkFile;
+        
+        /// <summary>
+        /// The search pattern of Xcode framework files.
+        /// </summary>
+        public const string XcodeFrameworkFiles = "*" + FileExtensions.XcodeFrameworkFile;
     }
 }

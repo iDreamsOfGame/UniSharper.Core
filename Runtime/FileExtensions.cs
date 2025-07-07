@@ -117,5 +117,25 @@ namespace UniSharper
         /// The extension of database file.
         /// </summary>
         public const string DatabaseFile = ".db";
+
+        /// <summary>
+        /// The extension of Mac OS X desktop services store file.
+        /// </summary>
+        public const string MacOSXDesktopServicesStoreFile = ".DS_Store";
+
+        /// <summary>
+        /// The extension of Xcode assets file.
+        /// </summary>
+        public const string XcodeAssetsFile = ".xcassets";
+        
+        /// <summary>
+        /// The extension of Xcode universal framework file.
+        /// </summary>
+        public const string XcodeUniversalFrameworkFile = ".framework";
+
+        /// <summary>
+        /// The extension of Xcode framework file.
+        /// </summary>
+        public const string XcodeFrameworkFile = ".xcframework";
     }
 }
