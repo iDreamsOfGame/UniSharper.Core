@@ -21,9 +21,9 @@ namespace UniSharper.Preferences
             set => SetObject(PreferenceKeyListKey, value);
         }
 
-        public abstract TObject GetObject<TObject>(string key, TObject defaultValue = null) where TObject : class;
+        public abstract TObject GetObject<TObject>(string key, TObject defaultValue = default);
 
-        public abstract void SetObject<TObject>(string key, TObject value, bool saveImmediately = false) where TObject : class;
+        public abstract void SetObject<TObject>(string key, TObject value, bool saveImmediately = false);
         
         protected string GetPreferenceKey(string key) => string.IsNullOrEmpty(key) ? null : $"{Namespace}.{key}";
         

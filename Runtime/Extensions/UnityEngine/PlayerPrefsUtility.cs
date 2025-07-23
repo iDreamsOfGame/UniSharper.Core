@@ -433,7 +433,7 @@ namespace UniSharper.Extensions
         /// <param name="defaultValue">The default value will be returned if the preference data doesn't exist.</param>
         /// <typeparam name="T">The type definition of object.</typeparam>
         /// <returns>The preference value corresponding to the <c>key</c>.</returns>
-        public static T GetObject<T>(string key, T defaultValue = null) where T : class
+        public static T GetObject<T>(string key, T defaultValue = default)
         {
             if (!IsValidKeyForAccessingPreferenceData(key))
                 return defaultValue;
@@ -460,7 +460,7 @@ namespace UniSharper.Extensions
         /// <param name="value">The preference value to be saved. </param>
         /// <param name="saveImmediately"><c>true</c> write preference data into file immediately. </param>
         /// <typeparam name="T">The type definition of object. </typeparam>
-        public static void SetObject<T>(string key, T value, bool saveImmediately = false) where T : class
+        public static void SetObject<T>(string key, T value, bool saveImmediately = false)
         {
             if (!IsValidKeyForStoringPreferenceData(key))
                 return;

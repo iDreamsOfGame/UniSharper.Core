@@ -192,13 +192,13 @@ namespace UniSharper.Preferences
             AddPreferenceKey(preferenceKey);
         }
 
-        public override TObject GetObject<TObject>(string key, TObject defaultValue = null) where TObject : class
+        public override TObject GetObject<TObject>(string key, TObject defaultValue = default)
         {
             var preferenceKey = GetPreferenceKey(key);
             return PlayerPrefsUtility.GetObject(preferenceKey, defaultValue);
         }
 
-        public override void SetObject<TObject>(string key, TObject value, bool saveImmediately = false) where TObject : class
+        public override void SetObject<TObject>(string key, TObject value, bool saveImmediately = false)
         {
             var preferenceKey = GetPreferenceKey(key);
             PlayerPrefsUtility.SetObject(preferenceKey, value, saveImmediately);

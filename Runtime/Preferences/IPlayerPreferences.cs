@@ -66,9 +66,9 @@ namespace UniSharper.Preferences
 
         void SetString(string key, string value, bool saveImmediately = false);
 
-        TObject GetObject<TObject>(string key, TObject defaultValue = default) where TObject : class;
+        TObject GetObject<TObject>(string key, TObject defaultValue = default);
 
-        void SetObject<TObject>(string key, TObject value, bool saveImmediately = false) where TObject : class;
+        void SetObject<TObject>(string key, TObject value, bool saveImmediately = false);
 
         bool HasPreference(string key);
 

@@ -16,9 +16,9 @@ namespace UniSharperEditor.iOS.Xcode.Extensions
     public static class PBXProjectExtensions
     {
         /// <summary>
-        /// Adds a new directory reference to the list of known files as "Create groups".
+        /// Adds a new directory reference to the list of known files as "Create groups" for UnityMain target.
         /// </summary>
-        /// <param name="pbxProject"></param>
+        /// <param name="pbxProject">The Xcode project. </param>
         /// <param name="realPath">The physical path to the folder on the filesystem. </param>
         /// <param name="projectPath">The project path to the folder. </param>
         /// <param name="filesExclusive">The exclusive files list. </param>
@@ -30,7 +30,25 @@ namespace UniSharperEditor.iOS.Xcode.Extensions
             string[] dirsExclusive = null)
         {
             var targetGuid = pbxProject.GetUnityMainTargetGuid();
-
+            pbxProject.CreateGroup(targetGuid, realPath, projectPath, filesExclusive, dirsExclusive);
+        }
+        
+        /// <summary>
+        /// Adds a new directory reference to the list of known files as "Create groups" for the specified target.
+        /// </summary>
+        /// <param name="pbxProject">The Xcode project. </param>
+        /// <param name="targetGuid">The GUID of the target as returned by <see cref="PBXProject.TargetGuidByName"/>. </param>
+        /// <param name="realPath">The physical path to the folder on the filesystem. </param>
+        /// <param name="projectPath">The project path to the folder. </param>
+        /// <param name="filesExclusive">The exclusive files list. </param>
+        /// <param name="dirsExclusive">The exclusive directories list. </param>
+        public static void CreateGroup(this PBXProject pbxProject,
+            string targetGuid,
+            string realPath,
+            string projectPath,
+            string[] filesExclusive = null,
+            string[] dirsExclusive = null)
+        {
             // Adds file references. 
             var files = Directory.GetFiles(realPath);
             foreach (var file in files)
@@ -68,20 +86,30 @@ namespace UniSharperEditor.iOS.Xcode.Extensions
                 }
                 else
                 {
-                    pbxProject.CreateGroup(subDirRealPath, subDirProjectPath, filesExclusive, dirsExclusive);
+                    pbxProject.CreateGroup(targetGuid, subDirRealPath, subDirProjectPath, filesExclusive, dirsExclusive);
                 }
             }
         }
-        
+
         /// <summary>
-        /// Removes a group reference from the Xcode project.
+        /// Removes a group reference from the UnityMain target in Xcode project.
         /// </summary>
-        /// <param name="pbxProject"></param>
+        /// <param name="pbxProject">The Xcode project. </param>
         /// <param name="realPath">The physical path to the folder on the filesystem of the group. </param>
         public static void RemoveGroup(this PBXProject pbxProject, string realPath)
         {
             var targetGuid = pbxProject.GetUnityMainTargetGuid();
-            
+            pbxProject.RemoveGroup(targetGuid, realPath);
+        }
+        
+        /// <summary>
+        /// Removes a group reference from the specified target in Xcode project.
+        /// </summary>
+        /// <param name="pbxProject">The Xcode project. </param>
+        /// <param name="targetGuid">The GUID of the target as returned by <see cref="PBXProject.TargetGuidByName"/>. </param>
+        /// <param name="realPath">The physical path to the folder on the filesystem of the group. </param>
+        public static void RemoveGroup(this PBXProject pbxProject, string targetGuid, string realPath)
+        {
             // 移除文件引用
             var files = Directory.GetFiles(realPath);
             foreach (var file in files)
@@ -93,8 +121,8 @@ namespace UniSharperEditor.iOS.Xcode.Extensions
                 if (string.IsNullOrEmpty(fileGuid))
                     continue;
                 
-                pbxProject.RemoveFile(fileGuid);
                 pbxProject.RemoveFileFromBuild(targetGuid, fileGuid);
+                pbxProject.RemoveFile(fileGuid);
             }
             
             // 移除文件夹引用
@@ -107,8 +135,8 @@ namespace UniSharperEditor.iOS.Xcode.Extensions
                     if (string.IsNullOrEmpty(fileGuid)) 
                         continue;
                     
-                    pbxProject.RemoveFile(fileGuid);
                     pbxProject.RemoveFileFromBuild(targetGuid, fileGuid);
+                    pbxProject.RemoveFile(fileGuid);
                 }
                 else if (subDirRealPath.EndsWith(FileExtensions.XcodeUniversalFrameworkFile) || subDirRealPath.EndsWith(FileExtensions.XcodeFrameworkFile))
                 {
@@ -118,7 +146,7 @@ namespace UniSharperEditor.iOS.Xcode.Extensions
                 }
                 else
                 {
-                    pbxProject.RemoveGroup(subDirRealPath);
+                    pbxProject.RemoveGroup(targetGuid, subDirRealPath);
                 }
             }
         }
