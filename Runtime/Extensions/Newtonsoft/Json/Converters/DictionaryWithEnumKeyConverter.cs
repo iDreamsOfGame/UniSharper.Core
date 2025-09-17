@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using UnityEngine.Scripting;
 
 // ReSharper disable UseNegatedPatternMatching
 
@@ -17,29 +18,20 @@ namespace UniSharper.Extensions
     /// <typeparam name="TValue">The type definition of value in <see cref="Dictionary{TKey,TValue}"/></typeparam>
     public class DictionaryWithEnumKeyConverter<TKey, TValue> : JsonConverter where TKey : Enum
     {
-        /// <summary>
-        /// Writes the JSON representation of the object.
-        /// </summary>
-        /// <param name="writer">The <see cref="T:Newtonsoft.Json.JsonWriter" /> to write to.</param>
-        /// <param name="value">The value.</param>
-        /// <param name="serializer">The calling serializer.</param>
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        [Preserve]
+        public DictionaryWithEnumKeyConverter()
         {
-            var dictionary = value as Dictionary<TKey, TValue>;
-            if (dictionary == null)
-                return;
-
-            writer.WriteStartObject();
-
-            foreach (var pair in dictionary)
-            {
-                writer.WritePropertyName(Convert.ToInt32(pair.Key).ToString());
-                serializer.Serialize(writer, pair.Value);
-            }
-
-            writer.WriteEndObject();
         }
-
+        
+        /// <summary>
+        /// Determines whether this instance can convert the specified object type.
+        /// </summary>
+        /// <param name="objectType">Type of the object.</param>
+        /// <returns>
+        /// 	<c>true</c> if this instance can convert the specified object type; otherwise, <c>false</c>.
+        /// </returns>
+        public override bool CanConvert(Type objectType) => typeof(IDictionary<TKey, TValue>) == objectType;
+        
         /// <summary>
         /// Reads the JSON representation of the object.
         /// </summary>
@@ -66,14 +58,28 @@ namespace UniSharper.Extensions
 
             return result;
         }
-
+        
         /// <summary>
-        /// Determines whether this instance can convert the specified object type.
+        /// Writes the JSON representation of the object.
         /// </summary>
-        /// <param name="objectType">Type of the object.</param>
-        /// <returns>
-        /// 	<c>true</c> if this instance can convert the specified object type; otherwise, <c>false</c>.
-        /// </returns>
-        public override bool CanConvert(Type objectType) => typeof(IDictionary<TKey, TValue>) == objectType;
+        /// <param name="writer">The <see cref="T:Newtonsoft.Json.JsonWriter" /> to write to.</param>
+        /// <param name="value">The value.</param>
+        /// <param name="serializer">The calling serializer.</param>
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        {
+            var dictionary = value as Dictionary<TKey, TValue>;
+            if (dictionary == null)
+                return;
+
+            writer.WriteStartObject();
+
+            foreach (var pair in dictionary)
+            {
+                writer.WritePropertyName(Convert.ToInt32(pair.Key).ToString());
+                serializer.Serialize(writer, pair.Value);
+            }
+
+            writer.WriteEndObject();
+        }
     }
 }
