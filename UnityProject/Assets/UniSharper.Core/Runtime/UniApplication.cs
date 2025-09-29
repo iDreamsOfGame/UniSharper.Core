@@ -12,7 +12,9 @@ namespace UniSharper
     public static class UniApplication
     {
 #if !UNITY_EDITOR && UNITY_ANDROID && UNITY_ANDROID_JNI_MODULE
-        private const string AndroidJavaClassName = "io.github.idreamsofgame.unisharper.plugin.NetUtils";
+        privat const string AppUtilsAndroidJavaClassName = "io.github.idreamsofgame.unisharper.plugin.AppUtils";
+
+        private const string NetUtilsAndroidJavaClassName = "io.github.idreamsofgame.unisharper.plugin.NetUtils";
 #endif
 
         /// <summary>
@@ -51,23 +53,11 @@ namespace UniSharper
             {
                 if (Application.platform == RuntimePlatform.Android)
                 {
-#if UNITY_ANDROID_JNI_MODULE
+#if !UNITY_EDITOR && UNITY_ANDROID && UNITY_ANDROID_JNI_MODULE
                     try
                     {
-                        using var unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
-                        var activity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
-
-                        if (killAndroidProcess)
-                        {
-                            activity.Call("finishAffinity");
-                            using var system = new AndroidJavaClass("java.lang.System");
-                            system.CallStatic("exit", 0);
-                        }
-                        else
-                        {
-                            activity.Call<bool>("moveTaskToBack", true);
-                            activity.Call("finishAffinity");
-                        }
+                        using (var appUtils = new AndroidJavaClass(AppUtilsAndroidJavaClassName));
+                        appUtils.CallStatic<bool>("quit", killAndroidProcess);
                     }
                     catch (System.Exception e)
                     {
@@ -88,13 +78,29 @@ namespace UniSharper
             }
         }
 
+        /// <summary>
+        /// Restarts the application.
+        /// </summary>
+        public static void Restart()
+        {
+            if (Application.isEditor)
+            {
+                Debug.LogWarning("Can not restart app on editor!");
+            }
+            else
+            {
+#if !UNITY_EDITOR && UNITY_ANDROID && UNITY_ANDROID_JNI_MODULE
+                using (var appUtils = new AndroidJavaClass(AppUtilsAndroidJavaClassName));
+                appUtils.CallStatic("restart");
+#endif
+            }
+        }
+
 #if !UNITY_EDITOR && UNITY_ANDROID && UNITY_ANDROID_JNI_MODULE
         private static bool OpenURLOnAndroid(string url)
         {
-            using (var netUtils = new AndroidJavaClass(AndroidJavaClassName))
-            {
-                return netUtils.CallStatic<bool>("openURL", url);
-            }
+            using (var netUtils = new AndroidJavaClass(NetUtilsAndroidJavaClassName));
+            return netUtils.CallStatic<bool>("openURL", url);
         }
 #endif
     }
