@@ -1,0 +1,25 @@
+﻿// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel blendTextureOverlay
+
+// Create a RenderTexture with enableRandomWrite flag and set it
+// with cs.SetTexture
+RWTexture2D<float4> canvas;
+Texture2D source;
+Texture2D overlay;
+uint2 overlay_dimensions;
+uint2 overlay_position;
+
+[numthreads(8,8,1)]
+void blendTextureOverlay(uint3 thread_id : SV_DispatchThreadID)
+{
+    const float4 clear_color = float4(0, 0, 0, 0);
+    uint2 overlay_pixel_position = thread_id.xy - overlay_position.xy;
+    float4 overlay_color = clear_color;
+
+    if(overlay_pixel_position.x <= overlay_dimensions.x && overlay_pixel_position.y <= overlay_dimensions.y) 
+    {
+        overlay_color = overlay[overlay_pixel_position];
+    }
+
+    canvas[thread_id.xy] = source[thread_id.xy].rgba + overlay_color;
+}

@@ -1,0 +1,30 @@
+{
+    "name": "Unity.UniSharper",
+    "rootNamespace": "UniSharper",
+    "references": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "com.unity.modules.audio",
+            "expression": "",
+            "define": "UNITY_AUDIO_MODULE"
+        },
+        {
+            "name": "com.unity.modules.particlesystem",
+            "expression": "",
+            "define": "UNITY_PARTICLE_SYSTEM_MODULE"
+        },
+        {
+            "name": "com.unity.modules.androidjni",
+            "expression": "",
+            "define": "UNITY_ANDROID_JNI_MODULE"
+        }
+    ],
+    "noEngineReferences": false
+}
