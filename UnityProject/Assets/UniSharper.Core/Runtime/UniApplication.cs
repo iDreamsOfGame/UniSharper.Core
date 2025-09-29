@@ -56,7 +56,7 @@ namespace UniSharper
 #if !UNITY_EDITOR && UNITY_ANDROID && UNITY_ANDROID_JNI_MODULE
                     try
                     {
-                        using (var appUtils = new AndroidJavaClass(AppUtilsAndroidJavaClassName));
+                        using var appUtils = new AndroidJavaClass(AppUtilsAndroidJavaClassName);
                         appUtils.CallStatic<bool>("quit", killAndroidProcess);
                     }
                     catch (System.Exception e)
@@ -90,7 +90,7 @@ namespace UniSharper
             else
             {
 #if !UNITY_EDITOR && UNITY_ANDROID && UNITY_ANDROID_JNI_MODULE
-                using (var appUtils = new AndroidJavaClass(AppUtilsAndroidJavaClassName));
+                using var appUtils = new AndroidJavaClass(AppUtilsAndroidJavaClassName);
                 appUtils.CallStatic("restart");
 #endif
             }
@@ -99,7 +99,7 @@ namespace UniSharper
 #if !UNITY_EDITOR && UNITY_ANDROID && UNITY_ANDROID_JNI_MODULE
         private static bool OpenURLOnAndroid(string url)
         {
-            using (var netUtils = new AndroidJavaClass(NetUtilsAndroidJavaClassName));
+            using var netUtils = new AndroidJavaClass(NetUtilsAndroidJavaClassName);
             return netUtils.CallStatic<bool>("openURL", url);
         }
 #endif
