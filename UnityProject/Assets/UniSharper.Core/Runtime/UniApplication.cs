@@ -38,6 +38,42 @@ namespace UniSharper
         }
 
         /// <summary>
+        /// Shows the loading dialog.
+        /// </summary>
+        public static void ShowLoadingDialog(string title = "", string message = "Loading...")
+        {
+#if !UNITY_EDITOR && UNITY_ANDROID && UNITY_ANDROID_JNI_MODULE
+            try
+            { 
+                using var appUtils = new AndroidJavaClass(AppUtilsAndroidJavaClassName); 
+                appUtils.CallStatic("showLoadingDialog", title, message);
+            } 
+            catch (System.Exception e) 
+            { 
+                Debug.LogWarning($"Show loading dialog has exception {e}"); 
+            }
+#endif
+        }
+
+        /// <summary>
+        /// Hides the loading dialog.
+        /// </summary>
+        public static void HideLoadingDialog()
+        {
+#if !UNITY_EDITOR && UNITY_ANDROID && UNITY_ANDROID_JNI_MODULE
+            try
+            { 
+                using var appUtils = new AndroidJavaClass(AppUtilsAndroidJavaClassName); 
+                appUtils.CallStatic("hideLoadingDialog");
+            } 
+            catch (System.Exception e) 
+            { 
+                Debug.LogWarning($"Hide loading dialog has exception {e}"); 
+            }
+#endif
+        }
+
+        /// <summary>
         /// Quits the player application.
         /// </summary>
         /// <param name="killAndroidProcess">Whether kill Android process. </param>
@@ -57,7 +93,7 @@ namespace UniSharper
                     try
                     {
                         using var appUtils = new AndroidJavaClass(AppUtilsAndroidJavaClassName);
-                        appUtils.CallStatic<bool>("quit", killAndroidProcess);
+                        appUtils.CallStatic("quit", killAndroidProcess);
                     }
                     catch (System.Exception e)
                     {

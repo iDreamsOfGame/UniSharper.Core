@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+## [1.25.13] - 2025-09-29
+
+### Added
+
+- Adds methods **UniApplication.ShowLoadingDialog** and **UniApplication.HideLoadingDialog**.
+
+
+
 ## [1.25.10] - 2025-09-29
 
 ### Added
