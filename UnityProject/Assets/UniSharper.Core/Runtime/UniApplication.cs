@@ -12,7 +12,7 @@ namespace UniSharper
     public static class UniApplication
     {
 #if !UNITY_EDITOR && UNITY_ANDROID && UNITY_ANDROID_JNI_MODULE
-        privat const string AppUtilsAndroidJavaClassName = "io.github.idreamsofgame.unisharper.plugin.AppUtils";
+        private const string AppUtilsAndroidJavaClassName = "io.github.idreamsofgame.unisharper.plugin.AppUtils";
 
         private const string NetUtilsAndroidJavaClassName = "io.github.idreamsofgame.unisharper.plugin.NetUtils";
 #endif
