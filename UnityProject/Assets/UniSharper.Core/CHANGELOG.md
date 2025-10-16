@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+## [1.26.0] - 2025-10-16
+
+### Added
+
+- Adds editor utility class **UniPackageUtility**.
+
+
+
 ## [1.25.13] - 2025-09-29
 
 ### Added
