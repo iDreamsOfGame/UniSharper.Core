@@ -12,13 +12,13 @@ namespace UniSharper.Patterns
     /// </summary>
     /// <typeparam name="T">The type of the class.</typeparam>
     /// <seealso cref="MonoBehaviour"/>
-    public abstract class SingletonMonoBehaviour<T> : MonoBehaviour where T : MonoBehaviour
+    public abstract class SingletonMonoBehaviour<T> : MonoBehaviour where T : SingletonMonoBehaviour<T>
     {
-        private static bool instantiated;
-
-        private static bool destroyed;
-
         private static T instance;
+        
+        private bool instantiated;
+
+        private bool destroyed;
 
         /// <summary>
         /// Gets or sets the singleton instance.
@@ -28,13 +28,15 @@ namespace UniSharper.Patterns
         {
             get
             {
-                if (destroyed)
+                if (instance && instance.destroyed)
                 {
-                    Debug.LogWarning($"SingletonMonoBehaviour<{typeof(T)}> already destroyed. Return null.");
+                    if (instance.CanShowLog)
+                        Debug.LogWarning($"SingletonMonoBehaviour<{typeof(T)}> already destroyed. Return null.");
+                    
                     return null;
                 }
 
-                if (instance && instantiated)
+                if (instance && instance.instantiated)
                     return instance;
 
                 var foundObjects = FindObjectsOfType<T>();
@@ -47,7 +49,8 @@ namespace UniSharper.Patterns
                     if (foundObjects.Length == 1)
                         return instance;
 
-                    Debug.LogWarning($"There are more than one instance of MonoBehaviourSingleton of type {typeof(T)}. Keeping the first. Destroying the others.");
+                    if (instance && instance.CanShowLog)
+                        Debug.LogWarning($"There are more than one instance of MonoBehaviourSingleton of type {typeof(T)}. Keeping the first. Destroying the others.");
 
                     for (int i = 1, length = foundObjects.Length; i < length; ++i)
                     {
@@ -64,14 +67,12 @@ namespace UniSharper.Patterns
 
                 return instance;
             }
-
             private set
             {
                 if (!Application.isPlaying || !value)
                     return;
 
                 instance = value;
-                instantiated = value;
 
                 if (instance.transform.root == instance.transform)
                 {
@@ -82,6 +83,19 @@ namespace UniSharper.Patterns
                     DontDestroyOnLoad(instance.transform.root);
                 }
             }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether to show log.
+        /// </summary>
+        protected virtual bool CanShowLog => true;
+
+        /// <summary>
+        /// Called when an enabled script instance is being loaded.
+        /// </summary>
+        protected virtual void Awake()
+        {
+            instantiated = true;
         }
 
         /// <summary>

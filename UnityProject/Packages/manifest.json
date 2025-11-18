@@ -9,8 +9,11 @@
     "jillejr.newtonsoft.json-for-unity.converters": "1.6.3",
     "com.unity.modules.androidjni": "1.0.0",
     "com.unity.modules.audio": "1.0.0",
+    "com.unity.modules.imageconversion": "1.0.0",
     "com.unity.modules.imgui": "1.0.0",
     "com.unity.modules.particlesystem": "1.0.0",
+    "com.unity.modules.physics": "1.0.0",
+    "com.unity.modules.physics2d": "1.0.0",
     "com.unity.modules.ui": "1.0.0",
     "com.unity.modules.uielements": "1.0.0",
     "com.unity.modules.unitywebrequest": "1.0.0"
