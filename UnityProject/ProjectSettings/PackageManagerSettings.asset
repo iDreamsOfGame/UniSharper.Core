@@ -30,7 +30,6 @@ MonoBehaviour:
     m_Name: package.openupm.com
     m_Url: https://package.openupm.com
     m_Scopes:
-    - com.cysharp.csprojmodifier
     - com.openupm
     - io.github.idreamsofgame.resharp.core
     - jillejr.newtonsoft.json-for-unity.converters
