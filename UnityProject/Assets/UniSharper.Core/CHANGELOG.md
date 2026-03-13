@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+## [1.26.4] - 2026-03-13
+
+### Changed
+
+- Adds method **ScreenRectToViewportRect** and **ViewportRectToWorldRect** to class **CameraExtensions**.
+
+
+
 ## [1.26.0] - 2025-10-16
 
 ### Added

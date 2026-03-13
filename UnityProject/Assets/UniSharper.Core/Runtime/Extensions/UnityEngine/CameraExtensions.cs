@@ -12,7 +12,49 @@ namespace UniSharper.Extensions
     /// </summary>
     public static class CameraExtensions
     {
-        private static readonly Rect ScreenRect = new Rect(0, 0, Screen.width, Screen.height);
+        private static readonly Rect FullScreenRect = new Rect(0, 0, DisplayScreen.Width, DisplayScreen.Height);
+
+        /// <summary>
+        /// Converts a rectangle in screen coordinates to a rectangle in viewport coordinates.
+        /// </summary>
+        /// <param name="camera">The <see cref="UnityEngine.Camera"/> object. </param>
+        /// <param name="screenRect">A rectangle in screen coordinates. </param>
+        /// <returns>The rectangle in viewport coordinates. </returns>
+        public static Rect ScreenRectToViewportRect(this Camera camera, Rect screenRect)
+        {
+            var viewportX = screenRect.x / FullScreenRect.width;
+            var viewportY = screenRect.y / FullScreenRect.height;
+            var viewportWidth = screenRect.width / FullScreenRect.width;
+            var viewportHeight = screenRect.height / FullScreenRect.height;
+            return new Rect(viewportX, viewportY, viewportWidth, viewportHeight);
+        }
+
+        /// <summary>
+        /// Converts a rectangle in viewport coordinates to a rectangle in world coordinates.
+        /// </summary>
+        /// <param name="camera">The <see cref="UnityEngine.Camera"/> object. </param>
+        /// <param name="viewportRect">A rectangle in viewport coordinates. </param>
+        /// <returns>The rectangle in world coordinates. </returns>
+        public static Rect ViewportRectToWorldRect(this Camera camera, Rect viewportRect)
+        {
+            var corners = new[] {
+                new Vector3(viewportRect.x, viewportRect.y, 0),                 // Bottom Left
+                new Vector3(viewportRect.x, viewportRect.yMax, 0),              // Top Left
+                new Vector3(viewportRect.xMax, viewportRect.y, 0),              // Bottom Right
+                new Vector3(viewportRect.xMax, viewportRect.yMax, 0)             // Top Right
+            };
+            
+            for (var i = 0; i < 4; i++)
+            {
+                corners[i] = camera.ViewportToWorldPoint(corners[i]);
+            }
+
+            var worldX = corners[0].x;
+            var worldY = corners[0].y;
+            var worldWidth = corners[2].x - worldX;
+            var worldHeight = corners[1].y - worldY;
+            return new Rect(worldX, worldY, worldWidth, worldHeight);
+        }
 
         /// <summary>
         /// Captures a screenshot of the camera view into a <see cref="UnityEngine.Texture2D"/> object.
@@ -27,7 +69,7 @@ namespace UniSharper.Extensions
             int depth = 0,
             RenderTextureFormat renderTextureFormat = RenderTextureFormat.ARGB32,
             TextureFormat screenshotTextureFormat = TextureFormat.RGBA32) =>
-            camera.CaptureScreenshotTexture(ScreenRect, depth, renderTextureFormat, screenshotTextureFormat);
+            camera.CaptureScreenshotTexture(FullScreenRect, depth, renderTextureFormat, screenshotTextureFormat);
 
         /// <summary>
         /// Captures a screenshot of the camera view in the rectangle area into a <see cref="UnityEngine.Texture2D"/> object.
@@ -45,7 +87,7 @@ namespace UniSharper.Extensions
             RenderTextureFormat renderTextureFormat = RenderTextureFormat.ARGB32,
             TextureFormat screenshotTextureFormat = TextureFormat.RGBA32)
         {
-            var canvas = new RenderTexture((int)ScreenRect.width, (int)ScreenRect.height, depth, renderTextureFormat)
+            var canvas = new RenderTexture((int)FullScreenRect.width, (int)FullScreenRect.height, depth, renderTextureFormat)
             {
                 antiAliasing = 1,
                 filterMode = FilterMode.Bilinear,
