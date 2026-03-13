@@ -110,8 +110,10 @@ namespace UniSharper.Threading
         /// <returns>An enumerator that can be used to iterate through the collection.</returns>
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
+            
             synchronizedObjects = new List<IThreadSynchronizedObject>();
             addedObjects = new Queue<IThreadSynchronizedObject>();
             removedObjects = new Queue<IThreadSynchronizedObject>();

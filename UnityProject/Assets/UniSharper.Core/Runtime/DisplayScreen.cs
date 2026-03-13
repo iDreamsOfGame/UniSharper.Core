@@ -134,5 +134,19 @@ namespace UniSharper
                 return new Rect(x, y, width, height);
             }
         }
+        
+        /// <summary>
+        /// Converts a rectangle in screen coordinates to a rectangle in viewport coordinates.
+        /// </summary>
+        /// <param name="screenRect">A rectangle in screen coordinates. </param>
+        /// <returns>The rectangle in viewport coordinates. </returns>
+        public static Rect ScreenRectToViewportRect(Rect screenRect)
+        {
+            var viewportX = screenRect.x / Width;
+            var viewportY = screenRect.y / Height;
+            var viewportWidth = screenRect.width / Width;
+            var viewportHeight = screenRect.height / Height;
+            return new Rect(viewportX, viewportY, viewportWidth, viewportHeight);
+        }
     }
 }

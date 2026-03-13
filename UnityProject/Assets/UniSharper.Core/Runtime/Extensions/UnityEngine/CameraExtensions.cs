@@ -15,21 +15,6 @@ namespace UniSharper.Extensions
         private static readonly Rect FullScreenRect = new Rect(0, 0, DisplayScreen.Width, DisplayScreen.Height);
 
         /// <summary>
-        /// Converts a rectangle in screen coordinates to a rectangle in viewport coordinates.
-        /// </summary>
-        /// <param name="camera">The <see cref="UnityEngine.Camera"/> object. </param>
-        /// <param name="screenRect">A rectangle in screen coordinates. </param>
-        /// <returns>The rectangle in viewport coordinates. </returns>
-        public static Rect ScreenRectToViewportRect(this Camera camera, Rect screenRect)
-        {
-            var viewportX = screenRect.x / FullScreenRect.width;
-            var viewportY = screenRect.y / FullScreenRect.height;
-            var viewportWidth = screenRect.width / FullScreenRect.width;
-            var viewportHeight = screenRect.height / FullScreenRect.height;
-            return new Rect(viewportX, viewportY, viewportWidth, viewportHeight);
-        }
-
-        /// <summary>
         /// Converts a rectangle in viewport coordinates to a rectangle in world coordinates.
         /// </summary>
         /// <param name="camera">The <see cref="UnityEngine.Camera"/> object. </param>

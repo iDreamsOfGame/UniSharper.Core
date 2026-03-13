@@ -53,8 +53,10 @@ namespace UniSharper.Threading
             }
         }
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
+            
             executionQueue = new ConcurrentQueue<Action>();
             executionWithParametersQueue = new ConcurrentQueue<Action<object[]>>();
             methodParameterMap = new ConcurrentDictionary<Action<object[]>, object[]>();
