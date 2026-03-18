@@ -26,7 +26,7 @@ namespace UniSharper.Threading
         /// </summary>
         public static void Initialize()
         {
-            Instance.InternalInitialize();
+            Instance?.InternalInitialize();
         }
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace UniSharper.Threading
         /// <param name="method">The method without parameters in other thread to be executed. </param>
         public static void Invoke(Action method)
         {
-            Instance.executionQueue.Enqueue(method);
+            Instance?.executionQueue.Enqueue(method);
         }
 
         /// <summary>
@@ -45,6 +45,9 @@ namespace UniSharper.Threading
         /// <param name="parameters">The parameters of method. </param>
         public static void Invoke(Action<object[]> method, params object[] parameters)
         {
+            if (!Instance)
+                return;
+            
             Instance.executionWithParametersQueue.Enqueue(method);
 
             if (parameters != null)

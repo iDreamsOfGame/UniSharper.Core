@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Jerry Lee. All rights reserved. Licensed under the MIT License.
 // See LICENSE in the project root for license information.
 
+using System.Threading;
 using UnityEngine;
 
 // ReSharper disable StaticMemberInGenericType
@@ -14,6 +15,8 @@ namespace UniSharper.Patterns
     /// <seealso cref="MonoBehaviour"/>
     public abstract class SingletonMonoBehaviour<T> : MonoBehaviour where T : SingletonMonoBehaviour<T>
     {
+        private static readonly int MainThreadId = Thread.CurrentThread.ManagedThreadId;
+        
         private static T instance;
         
         private bool instantiated;
@@ -39,7 +42,16 @@ namespace UniSharper.Patterns
                 if (instance && instance.instantiated)
                     return instance;
 
-                var foundObjects = FindObjectsOfType<T>();
+                // If current running thread is not main thread, return instance.
+                if (Thread.CurrentThread.ManagedThreadId != MainThreadId)
+                {
+                    if (instance && instance.CanShowLog)
+                        Debug.LogWarning($"Current running thread is not main thread ({Thread.CurrentThread.ManagedThreadId})!");
+                    
+                    return instance;
+                }
+                    
+                var foundObjects = FindObjectsByType<T>(FindObjectsInactive.Exclude, FindObjectsSortMode.InstanceID);
 
                 if (foundObjects.Length > 0)
                 {
@@ -88,7 +100,7 @@ namespace UniSharper.Patterns
         /// <summary>
         /// Gets a value indicating whether to show log.
         /// </summary>
-        protected virtual bool CanShowLog => true;
+        protected virtual bool CanShowLog => false;
 
         /// <summary>
         /// Called when an enabled script instance is being loaded.

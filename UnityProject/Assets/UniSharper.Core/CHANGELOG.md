@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+## [1.26.6] - 2026-03-18
+
+### Fixed
+
+- Fixed a critical bug of **SingletonMonoBehaviour\<T\>** that could cause application crashes.
+
+
+
 ## [1.26.5] - 2026-03-13
 
 ### Changed
