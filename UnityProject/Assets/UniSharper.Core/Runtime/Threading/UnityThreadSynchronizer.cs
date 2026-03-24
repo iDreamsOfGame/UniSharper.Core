@@ -9,9 +9,9 @@ namespace UniSharper.Threading
 {
     /// <summary>
     /// A <see cref="UnityThreadSynchronizer"/> representing a <see cref="UnityEngine.MonoBehaviour"/> to
-    /// synchronize data between child threads and main threads. Implements the <see
+    /// synchronize data between child threads and main threads. Implements <see
     /// cref="UniSharper.Patterns.SingletonMonoBehaviour{UniSharper.Threading.Synchronizer}"/>
-    /// Implements the <see cref="System.Collections.Generic.ICollection{UniSharper.Threading.ISynchronizedObject}"/>
+    /// and <see cref="System.Collections.Generic.ICollection{UniSharper.Threading.ISynchronizedObject}"/>
     /// </summary>
     /// <seealso cref="UniSharper.Patterns.SingletonMonoBehaviour{UniSharper.Threading.Synchronizer}"/>
     /// <seealso cref="System.Collections.Generic.ICollection{UniSharper.Threading.ISynchronizedObject}"/>
@@ -95,7 +95,7 @@ namespace UniSharper.Threading
         /// <param name="item">The object to remove from the <see cref="UnityThreadSynchronizer"/>.</param>
         /// <returns>
         /// <c>true</c> if <paramref name="item"/> was successfully removed from the <see
-        /// cref="UnityThreadSynchronizer"/>; otherwise, <c>false</c>. This method also returns <c>false</c> if
+        /// cref="UnityThreadSynchronizer"/> otherwise, <c>false</c>. This method also returns <c>false</c> if
         /// <paramref name="item"/> is not found in the original <see cref="UnityThreadSynchronizer"/>.
         /// </returns>
         public bool Remove(IThreadSynchronizedObject item)

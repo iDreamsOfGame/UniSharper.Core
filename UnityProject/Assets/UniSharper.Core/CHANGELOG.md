@@ -6,6 +6,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+## [1.27.0] - 2026-03-24
+
+### Added
+
+- Adds editor class **MonoScriptMetadataFixer** to fix the <u>[bug](https://youtrack.jetbrains.com/projects/RIDER/issues/RIDER-104713/Scripts-created-in-Rider-create-incomplete-.meta-file)</u> that Jetbrains IDE **Rider** created incomplete metadata of **MonoScript** asset.
+
+
+
+
 ## [1.26.6] - 2026-03-18
 
 ### Fixed
@@ -234,7 +243,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Adds **DisplayScreen** to access display screen information.
 - Adds **MobileDevice** to implement mobile specific function.
 - Adds some extension functions and utility classes.
-- Adds **MissingScriptsCleaner** to clear missing scripts on **GameObject**.
+- Adds **MissingMonoScriptCleaner** to clear missing scripts on **GameObject**.
 - Adds editor feature **Copy Path in Hierarchy**.
 
 

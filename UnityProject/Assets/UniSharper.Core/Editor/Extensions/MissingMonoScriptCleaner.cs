@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace UniSharperEditor.Extensions
 {
-    internal static class MissingScriptsCleaner
+    internal static class MissingMonoScriptCleaner
     {
         [MenuItem("GameObject/Clean Missing Scripts", true)]
         private static bool CleanMissingScriptsOnActiveGameObjectValidator() => Selection.activeGameObject;
@@ -21,16 +21,15 @@ namespace UniSharperEditor.Extensions
         }
         
         [MenuItem("Assets/Clean Missing Scripts", true)]
-        private static bool CleanMissingScriptsValidator() => Selection.gameObjects != null && Selection.gameObjects.Length > 0;
+        private static bool CleanMissingScriptsValidator() => Selection.GetFiltered<GameObject>(SelectionMode.Assets) is { Length: > 0 };
 
-        [MenuItem("Assets/Clean Missing Scripts")]
+        [MenuItem("Assets/Clean Missing Scripts", false, 101)]
         private static void CleanMissingScripts()
         {
-            var gameObjects = Selection.gameObjects;
-
-            foreach (var gameObject in gameObjects)
+            var selectedGameObjects = Selection.GetFiltered<GameObject>(SelectionMode.Assets);
+            foreach (var selectedGameObject in selectedGameObjects)
             {
-                RemoveMonoBehavioursWithMissingScript(gameObject);
+                RemoveMonoBehavioursWithMissingScript(selectedGameObject);
             }
         }
 
