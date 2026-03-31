@@ -5,7 +5,8 @@
 
 using System;
 using System.Globalization;
-using ReSharp.Security.Cryptography;
+using System.Security.Cryptography;
+using System.Text;
 using UnityEngine;
 using UnityEngine.Device;
 using Application = UnityEngine.Device.Application;
@@ -76,7 +77,9 @@ namespace UniSharper
         /// <value><c>true</c> if the runtime platform is Windows Unity Editor; otherwise, <c>false</c>.</value>
         public static bool IsWindowsEditor => UnityEngine.Application.platform == RuntimePlatform.WindowsEditor;
 
+#if UNITY_WEBGL || WEIXINMINIGAME
         private static string deviceIdentifierOnWebGL;
+#endif
 
         /// <summary>
         /// Gets a unique device identifier. It is guaranteed to be unique for every device (Read Only).
@@ -91,7 +94,7 @@ namespace UniSharper
 #elif UNITY_WEBGL || WEIXINMINIGAME
                 if (string.IsNullOrEmpty(deviceIdentifierOnWebGL))
                 {
-                    deviceIdentifierOnWebGL = CryptoUtility.Md5HashEncrypt($"{Guid.NewGuid():N}-{SystemInfo.deviceName}-{SystemInfo.deviceModel}-"
+                    deviceIdentifierOnWebGL = GenerateMd5HexString($"{Guid.NewGuid():N}-{SystemInfo.deviceName}-{SystemInfo.deviceModel}-"
                                                                            + $"{SystemInfo.deviceType}-{SystemInfo.graphicsDeviceType}-{SystemInfo.graphicsDeviceID}");
                 }
 
@@ -171,7 +174,7 @@ namespace UniSharper
             {
                 const string methodName = "getUniqueDeviceIdentifier";
                 var uniqueDeviceIdentifier = deviceInfo.CallStatic<string>(methodName);
-                return CryptoUtility.Md5HashEncrypt(uniqueDeviceIdentifier);
+                return GenerateMd5HexString(uniqueDeviceIdentifier);
             }
         }
 
@@ -184,5 +187,12 @@ namespace UniSharper
             }
         }
 #endif
+
+        private static string GenerateMd5HexString(string plainText)
+        {
+            using var md5 = MD5.Create();
+            var hashData = md5.ComputeHash(Encoding.UTF8.GetBytes(plainText));
+            return BitConverter.ToString(hashData).Replace("-", string.Empty).ToLower();
+        }
     }
 }

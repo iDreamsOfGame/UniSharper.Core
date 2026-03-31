@@ -6,6 +6,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+## [1.28.0] - 2026-03-31
+
+### Changed
+
+- Updates dependency **ReSharp.Core** version to 2.0.0.
+- Adds method **PlayerEnvironment.GenerateMd5HexString** to replace method **CryptoUtility.Md5HashEncrypt**.
+
+
+
 ## [1.27.0] - 2026-03-24
 
 ### Added
