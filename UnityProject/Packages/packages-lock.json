@@ -56,9 +56,25 @@
       "dependencies": {},
       "url": "https://package.openupm.com"
     },
+    "io.github.idreamsofgame.resharp.security.cryptography": {
+      "version": "1.1.0",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "org.nuget.bouncycastle.cryptography": "2.6.2"
+      },
+      "url": "https://package.openupm.com"
+    },
     "jillejr.newtonsoft.json-for-unity.converters": {
       "version": "1.6.3",
       "depth": 0,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://package.openupm.com"
+    },
+    "org.nuget.bouncycastle.cryptography": {
+      "version": "2.6.2",
+      "depth": 1,
       "source": "registry",
       "dependencies": {},
       "url": "https://package.openupm.com"

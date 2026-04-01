@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+## [1.28.1] - 2026-04-02
+
+### Changed
+
+- Adds dependency **ReSharp.Security.Cryptography**.
+
+
+
 ## [1.28.0] - 2026-03-31
 
 ### Changed

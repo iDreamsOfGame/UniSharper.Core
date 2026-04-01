@@ -7,6 +7,7 @@ using System;
 using System.Globalization;
 using System.Security.Cryptography;
 using System.Text;
+using ReSharp.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.Device;
 using Application = UnityEngine.Device.Application;
@@ -94,7 +95,7 @@ namespace UniSharper
 #elif UNITY_WEBGL || WEIXINMINIGAME
                 if (string.IsNullOrEmpty(deviceIdentifierOnWebGL))
                 {
-                    deviceIdentifierOnWebGL = GenerateMd5HexString($"{Guid.NewGuid():N}-{SystemInfo.deviceName}-{SystemInfo.deviceModel}-"
+                    deviceIdentifierOnWebGL = ComputeHashToHexString($"{Guid.NewGuid():N}-{SystemInfo.deviceName}-{SystemInfo.deviceModel}-"
                                                                            + $"{SystemInfo.deviceType}-{SystemInfo.graphicsDeviceType}-{SystemInfo.graphicsDeviceID}");
                 }
 
@@ -174,7 +175,7 @@ namespace UniSharper
             {
                 const string methodName = "getUniqueDeviceIdentifier";
                 var uniqueDeviceIdentifier = deviceInfo.CallStatic<string>(methodName);
-                return GenerateMd5HexString(uniqueDeviceIdentifier);
+                return ComputeHashToHexString(uniqueDeviceIdentifier);
             }
         }
 
@@ -188,11 +189,6 @@ namespace UniSharper
         }
 #endif
 
-        private static string GenerateMd5HexString(string plainText)
-        {
-            using var md5 = MD5.Create();
-            var hashData = md5.ComputeHash(Encoding.UTF8.GetBytes(plainText));
-            return BitConverter.ToString(hashData).Replace("-", string.Empty).ToLower();
-        }
+        private static string ComputeHashToHexString(string plainText) => Md5CryptoUtility.ComputeHashToHexString(plainText, null, false);
     }
 }
