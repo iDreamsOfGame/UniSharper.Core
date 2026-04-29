@@ -24,21 +24,18 @@ namespace UniSharperEditor
             if (interfaceType == null)
                 return Array.Empty<string>();
             
-            if (interfaceTypeImplementedTypeNamesMap == null)
-                interfaceTypeImplementedTypeNamesMap = new Dictionary<Type, string[]>();
-
+            interfaceTypeImplementedTypeNamesMap ??= new Dictionary<Type, string[]>();
             if (interfaceTypeImplementedTypeNamesMap.TryGetValue(interfaceType, out var list))
                 return list;
             
             var assembly = interfaceType.Assembly;
-            var allTypes = searchAllAssemblies ? AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes()) 
+            var allTypes = searchAllAssemblies 
+                ? AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes())
                 : assembly.GetTypes();
-            list = allTypes.Where(x => interfaceType.IsAssignableFrom(x) && !x.IsInterface && !x.IsAbstract)
-                .Select(x => $"{x.FullName}, {assembly.GetName().Name}").ToArray();
+            list = allTypes.Where(type => interfaceType.IsAssignableFrom(type) && !type.IsInterface && !type.IsAbstract)
+                .Select(type => $"{type.FullName}, {type.Assembly.GetName().Name}").ToArray();
             
-            if(!interfaceTypeImplementedTypeNamesMap.ContainsKey(interfaceType))
-                interfaceTypeImplementedTypeNamesMap.Add(interfaceType, list);
-            
+            interfaceTypeImplementedTypeNamesMap.TryAdd(interfaceType, list);
             return list;
         }
 
@@ -51,7 +48,7 @@ namespace UniSharperEditor
                     return typeName;
 
                 var segments = typeName.Split('.');
-                return segments[segments.Length - 1];
+                return segments[^1];
             }).ToArray();
         }
 

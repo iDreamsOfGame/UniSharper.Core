@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+## [1.28.2] - 2026-04-29
+
+### Fixed
+
+- Fixed the bug of **ImplementedTypesFiledDrawer** that Unity Editor GUI display incorrect information on **ImplementedTypesFiledAttribute.SearchAllAssemblies** is **true**.
+
+
+
 ## [1.28.1] - 2026-04-02
 
 ### Changed
