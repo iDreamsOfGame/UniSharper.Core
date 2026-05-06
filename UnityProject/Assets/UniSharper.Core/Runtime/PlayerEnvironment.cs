@@ -92,7 +92,7 @@ namespace UniSharper
             {
 #if !UNITY_EDITOR && UNITY_ANDROID && UNITY_ANDROID_JNI_MODULE
                 return GetAndroidDeviceIdentifier();
-#elif UNITY_WEBGL || WEIXINMINIGAME
+#elif !UNITY_EDITOR && (UNITY_WEBGL || WEIXINMINIGAME)
                 if (string.IsNullOrEmpty(deviceIdentifierOnWebGL))
                 {
                     deviceIdentifierOnWebGL = ComputeHashToHexString($"{Guid.NewGuid():N}-{SystemInfo.deviceName}-{SystemInfo.deviceModel}-"
