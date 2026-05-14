@@ -6,6 +6,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+## [1.28.4] - 2026-05-14
+
+### Changed
+
+- Package **io.github.idreamsofgame.resharp.core** has been upgraded to **2.0.1**.
+
+
+
+### Added
+
+- Adds some methods to class **RandomUtility**.
+
+
+
 ## [1.28.3] - 2026-05-06
 
 ### Fixed

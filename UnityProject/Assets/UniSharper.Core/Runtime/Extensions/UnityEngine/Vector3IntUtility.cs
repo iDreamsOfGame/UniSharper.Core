@@ -87,11 +87,11 @@ namespace UniSharper.Extensions
         public static Vector3Int[] ParseArray(string s, string arrayElementSeparator = "|")
         {
             if (string.IsNullOrEmpty(s) || string.IsNullOrEmpty(arrayElementSeparator))
-                return default;
+                return Array.Empty<Vector3Int>();
             
             var elementStrings = s.Trim().Split(arrayElementSeparator.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
             if (elementStrings.Length == 0)
-                return default;
+                return Array.Empty<Vector3Int>();
 
             var result = new Vector3Int[elementStrings.Length];
             for (var i = 0; i < result.Length; i++)
@@ -131,14 +131,14 @@ namespace UniSharper.Extensions
         {
             if (string.IsNullOrEmpty(s) || string.IsNullOrEmpty(arrayElementSeparator))
             {
-                result = default;
+                result = Array.Empty<Vector3Int>();
                 return false;
             }
 
             var elementStrings = s.Trim().Split(arrayElementSeparator.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
             if (elementStrings.Length == 0)
             {
-                result = default;
+                result = Array.Empty<Vector3Int>();
                 return false;
             }
 
@@ -164,13 +164,13 @@ namespace UniSharper.Extensions
         {
             if (values == null || values.Count == 0)
             {
-                result = default;
+                result = Array.Empty<Vector3Int>();
                 return false;
             }
 
             if (values.Count % 3 != 0)
             {
-                result = default;
+                result = Array.Empty<Vector3Int>();
                 return false;
             }
 

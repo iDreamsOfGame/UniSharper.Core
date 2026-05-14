@@ -79,11 +79,11 @@ namespace UniSharper.Extensions
         public static RectInt[] ParseArray(string s, string arrayElementSeparator = "|")
         {
             if (string.IsNullOrEmpty(s) || string.IsNullOrEmpty(arrayElementSeparator))
-                return default;
+                return Array.Empty<RectInt>();
             
             var elementStrings = s.Trim().Split(arrayElementSeparator.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
             if (elementStrings.Length == 0)
-                return default;
+                return Array.Empty<RectInt>();
 
             var result = new RectInt[elementStrings.Length];
             for (var i = 0; i < result.Length; i++)
@@ -124,14 +124,14 @@ namespace UniSharper.Extensions
         {
             if (string.IsNullOrEmpty(s) || string.IsNullOrEmpty(arrayElementSeparator))
             {
-                result = default;
+                result = Array.Empty<RectInt>();
                 return false;
             }
 
             var elementStrings = s.Trim().Split(arrayElementSeparator.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
             if (elementStrings.Length == 0)
             {
-                result = default;
+                result = Array.Empty<RectInt>();
                 return false;
             }
 
@@ -157,13 +157,13 @@ namespace UniSharper.Extensions
         {
             if (values == null || values.Count == 0)
             {
-                result = default;
+                result = Array.Empty<RectInt>();
                 return false;
             }
 
             if (values.Count % 4 != 0)
             {
-                result = default;
+                result = Array.Empty<RectInt>();
                 return false;
             }
 

@@ -73,11 +73,11 @@ namespace UniSharper.Extensions
         public static Vector2[] ParseArray(string s, string arrayElementSeparator = "|")
         {
             if (string.IsNullOrEmpty(s) || string.IsNullOrEmpty(arrayElementSeparator))
-                return default;
+                return Array.Empty<Vector2>();
 
             var elementStrings = s.Trim().Split(arrayElementSeparator.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
             if (elementStrings.Length == 0)
-                return default;
+                return Array.Empty<Vector2>();
 
             var result = new Vector2[elementStrings.Length];
             for (var i = 0; i < result.Length; i++)
@@ -99,14 +99,14 @@ namespace UniSharper.Extensions
         {
             if (string.IsNullOrEmpty(s) || string.IsNullOrEmpty(arrayElementSeparator))
             {
-                result = default;
+                result = Array.Empty<Vector2>();
                 return false;
             }
 
             var elementStrings = s.Trim().Split(arrayElementSeparator.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
             if (elementStrings.Length == 0)
             {
-                result = default;
+                result = Array.Empty<Vector2>();
                 return false;
             }
 
@@ -150,13 +150,13 @@ namespace UniSharper.Extensions
         {
             if (values == null || values.Count == 0)
             {
-                result = default;
+                result = Array.Empty<Vector2>();
                 return false;
             }
 
             if (values.Count % 2 != 0)
             {
-                result = default;
+                result = Array.Empty<Vector2>();
                 return false;
             }
 

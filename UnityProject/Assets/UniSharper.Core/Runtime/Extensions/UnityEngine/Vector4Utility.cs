@@ -66,33 +66,37 @@ namespace UniSharper.Extensions
             }
 
             var values = StringUtility.GetStringValuesInBrackets(s);
-            if (values.Length < 2)
+            switch (values.Length)
             {
-                result = default;
-                return false;
-            }
-
-            if (values.Length == 2)
-            {
-                SingleUtility.GenericTryParse(values[0].Trim(), out var x);
-                SingleUtility.GenericTryParse(values[1].Trim(), out var y);
-                result = new Vector4(x, y);
-            }
-
-            if (values.Length == 3)
-            {
-                SingleUtility.GenericTryParse(values[0].Trim(), out var x);
-                SingleUtility.GenericTryParse(values[1].Trim(), out var y);
-                SingleUtility.GenericTryParse(values[2].Trim(), out var z);
-                result = new Vector4(x, y, z);
-            }
-            else
-            {
-                SingleUtility.GenericTryParse(values[0].Trim(), out var x);
-                SingleUtility.GenericTryParse(values[1].Trim(), out var y);
-                SingleUtility.GenericTryParse(values[2].Trim(), out var z);
-                SingleUtility.GenericTryParse(values[3].Trim(), out var w);
-                result = new Vector4(x, y, z, w);
+                case < 2:
+                {
+                    result = default;
+                    return false;
+                }
+                case 2:
+                {
+                    SingleUtility.GenericTryParse(values[0].Trim(), out var x);
+                    SingleUtility.GenericTryParse(values[1].Trim(), out var y);
+                    result = new Vector4(x, y);
+                    break;
+                }
+                case 3:
+                {
+                    SingleUtility.GenericTryParse(values[0].Trim(), out var x);
+                    SingleUtility.GenericTryParse(values[1].Trim(), out var y);
+                    SingleUtility.GenericTryParse(values[2].Trim(), out var z);
+                    result = new Vector4(x, y, z);
+                    break;
+                }
+                default:
+                {
+                    SingleUtility.GenericTryParse(values[0].Trim(), out var x);
+                    SingleUtility.GenericTryParse(values[1].Trim(), out var y);
+                    SingleUtility.GenericTryParse(values[2].Trim(), out var z);
+                    SingleUtility.GenericTryParse(values[3].Trim(), out var w);
+                    result = new Vector4(x, y, z, w);
+                    break;
+                }
             }
 
             return true;
@@ -107,11 +111,11 @@ namespace UniSharper.Extensions
         public static Vector4[] ParseArray(string s, string arrayElementSeparator = "|")
         {
             if (string.IsNullOrEmpty(s) || string.IsNullOrEmpty(arrayElementSeparator))
-                return default;
+                return Array.Empty<Vector4>();
             
             var elementStrings = s.Trim().Split(arrayElementSeparator.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
             if (elementStrings.Length == 0)
-                return default;
+                return Array.Empty<Vector4>();
 
             var result = new Vector4[elementStrings.Length];
             for (var i = 0; i < result.Length; i++)
@@ -153,14 +157,14 @@ namespace UniSharper.Extensions
         {
             if (string.IsNullOrEmpty(s) || string.IsNullOrEmpty(arrayElementSeparator))
             {
-                result = default;
+                result = Array.Empty<Vector4>();
                 return false;
             }
 
             var elementStrings = s.Trim().Split(arrayElementSeparator.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
             if (elementStrings.Length == 0)
             {
-                result = default;
+                result = Array.Empty<Vector4>();
                 return false;
             }
 
@@ -186,13 +190,13 @@ namespace UniSharper.Extensions
         {
             if (values == null || values.Count == 0)
             {
-                result = default;
+                result = Array.Empty<Vector4>();
                 return false;
             }
 
             if (values.Count % 4 != 0)
             {
-                result = default;
+                result = Array.Empty<Vector4>();
                 return false;
             }
 
