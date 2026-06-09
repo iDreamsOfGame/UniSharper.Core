@@ -1,12 +1,10 @@
 {
-    "name": "Unity.UniSharper.Editor",
-    "rootNamespace": "UniSharperEditor",
+    "name": "UniSharper.Samples",
+    "rootNamespace": "UniSharper.Samples",
     "references": [
-        "Unity.UniSharper"
+        "UniSharper"
     ],
-    "includePlatforms": [
-        "Editor"
-    ],
+    "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
