@@ -1,4 +1,3 @@
-using Newtonsoft.Json;
 using UniSharper.Preferences;
 using UnityEngine;
 
@@ -6,17 +5,15 @@ namespace UniSharper.Samples
 {
     internal class PlayerPreferencesSample : MonoBehaviour
     {
-        private class PreferenceSampleObject
+        public class PreferenceSampleObject
         {
-            [JsonProperty("int")]
             public int IntValue { get; set; }
 
-            [JsonProperty("string")]
             public string StringValue { get; set; }
 
             public override string ToString()
             {
-                return $"{{ IntValue={IntValue}, StringValue={StringValue} }}";
+                return $"{{ IntValue={IntValue}, StringValue=\"{StringValue}\" }}";
             }
         }
         
@@ -55,8 +52,6 @@ namespace UniSharper.Samples
         private void Awake()
         {
             playerPreferences = new UniPlayerPreferences<PlayerPreferencesSample>();
-            Debug.Log($"PlayerPreferences.Namespace={playerPreferences.Namespace}");
-            
             playerPreferences.DeletePreferences();
             
             BoolSample(BooleanPrefKey, true);

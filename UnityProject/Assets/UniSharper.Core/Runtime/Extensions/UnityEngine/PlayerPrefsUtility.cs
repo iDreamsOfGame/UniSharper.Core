@@ -2,7 +2,7 @@
 // See LICENSE in the project root for license information.
 
 using System;
-using Newtonsoft.Json;
+using LitJson;
 using UnityEngine;
 
 namespace UniSharper.Extensions
@@ -443,7 +443,7 @@ namespace UniSharper.Extensions
             
             try
             {
-                result = JsonConvert.DeserializeObject<T>(value);
+                result = JsonMapper.ToObject<T>(value);
             }
             catch (Exception e)
             {
@@ -469,7 +469,7 @@ namespace UniSharper.Extensions
 
             try
             {
-                result = JsonConvert.SerializeObject(value);
+                result = JsonMapper.ToJson(value);
             }
             catch (Exception e)
             {

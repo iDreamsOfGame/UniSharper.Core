@@ -6,6 +6,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+## [2.0.0] - 2026-06-30
+
+### Changed
+
+- Removes package dependency **com.unity.nuget.newtonsoft-json**.
+- Removes package dependency **jillejr.newtonsoft.json-for-unity.converters**.
+- Removes **TextureTilingRenderer**.
+- Removes **LightingGenerationWindow** editor window.
+- Adds package dependency **io.github.idreamsofgame.unilitjson**.
+
+
+
 ## [1.29.0] - 2026-06-09
 
 ### Changed

@@ -6,7 +6,7 @@ using UniSharper.Patterns;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace UniSharper.Rendering.PostProcessing
+namespace UniSharper.Effect.Feedback
 {
     /// <summary>
     /// This class implements camera shake effect.

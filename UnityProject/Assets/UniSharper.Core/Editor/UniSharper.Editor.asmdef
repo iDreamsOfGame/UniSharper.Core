@@ -2,6 +2,7 @@
     "name": "UniSharper.Editor",
     "rootNamespace": "UniSharperEditor",
     "references": [
+        "UniLitJson",
         "UniSharper"
     ],
     "includePlatforms": [

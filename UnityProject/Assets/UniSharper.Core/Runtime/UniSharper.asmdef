@@ -1,7 +1,9 @@
 {
     "name": "UniSharper",
     "rootNamespace": "UniSharper",
-    "references": [],
+    "references": [
+        "UniLitJson"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

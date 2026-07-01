@@ -1,4 +1,4 @@
-using UniSharper.Rendering.PostProcessing;
+using UniSharper.Effect.Feedback;
 using UnityEngine;
 
 namespace UniSharper.Samples
