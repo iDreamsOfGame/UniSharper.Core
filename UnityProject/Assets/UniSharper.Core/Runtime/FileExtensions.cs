@@ -6,7 +6,7 @@ namespace UniSharper
     /// <summary>
     /// The collection of file extension constant.
     /// </summary>
-    public sealed class FileExtensions
+    public static class FileExtensions
     {
         /// <summary>
         /// The extension of Unity meta file.
@@ -99,14 +99,14 @@ namespace UniSharper
         public const string AutodeskFilmboxFile = ".fbx";
 
         /// <summary>
-        /// The extension of old format Excel file.
+        /// The extension of <c>Excel<</c> old spreadsheet format file.
         /// </summary>
-        public const string ExcelFile = ".xls";
+        public const string ExcelSpreadsheetFile = ".xls";
 
         /// <summary>
-        /// The extension of new format Excel file.
+        /// The extension of <c>Excel<</c> new workbook format file.
         /// </summary>
-        public const string ExcelXFile = ".xlsx";
+        public const string ExcelWorkbookFile = ".xlsx";
 
         /// <summary>
         /// The extension of C Sharp script file.

@@ -6,6 +6,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+## [2.0.1] - 2026-08-31
+
+### Changed
+
+- **FileExtensions.ExcelFile** renamed to **FileExtensions.ExcelSpreadsheetFile**.
+- **FileExtensions.ExcelXFile** renamed to **FileExtensions.ExcelWorkbookFile**.
+- **SearchPatterns.ExcelFiles** renamed to **SearchPatterns.ExcelSpreadsheetFiles**.
+- **SearchPatterns.ExcelXFiles** renamed to **SearchPatterns.ExcelWorkbookFiles**.
+
+
+
 ## [2.0.0] - 2026-06-30
 
 ### Changed

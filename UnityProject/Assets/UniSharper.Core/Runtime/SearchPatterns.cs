@@ -6,7 +6,7 @@ namespace UniSharper
     /// <summary>
     /// The collection of search pattern constant.
     /// </summary>
-    public sealed class SearchPatterns
+    public static class SearchPatterns
     {
         /// <summary>
         /// The search pattern of Unity meta files.
@@ -99,14 +99,14 @@ namespace UniSharper
         public const string AutodeskFilmboxFiles = "*" + FileExtensions.AutodeskFilmboxFile;
 
         /// <summary>
-        /// The search pattern of old format Excel files.
+        /// The search pattern of <c>Excel<</c> old spreadsheet format files.
         /// </summary>
-        public const string ExcelFiles = "*" + FileExtensions.ExcelFile;
+        public const string ExcelSpreadsheetFiles = "*" + FileExtensions.ExcelSpreadsheetFile;
 
         /// <summary>
-        /// The search pattern of new format Excel files.
+        /// The search pattern of <c>Excel<</c> new workbook format file.
         /// </summary>
-        public const string ExcelXFiles = "*" + FileExtensions.ExcelXFile;
+        public const string ExcelWorkbookFiles = "*" + FileExtensions.ExcelWorkbookFile;
 
         /// <summary>
         /// The search pattern of C Sharp script files.
