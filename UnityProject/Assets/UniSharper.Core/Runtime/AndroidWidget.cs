@@ -15,7 +15,7 @@ namespace UniSharper
     public sealed class AndroidWidget
     {
 #if !UNITY_EDITOR && UNITY_ANDROID && UNITY_ANDROID_JNI_MODULE
-        private const string AndroidWidgetUtilClassFullPath = "io.github.idreamsofgame.unisharper.plugin.WidgetUtil";
+        private const string AndroidWidgetUtilClassFullPath = "io.github.idreamsofgame.unisharper.plugin.WidgetUtils";
 #endif
 
         /// <summary>
