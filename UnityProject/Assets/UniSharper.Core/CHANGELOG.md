@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+## [2.0.7] - 2026-11-02
+
+### Changed
+
+- Dependency package **io.github.idreamsofgame.resharp.core** has been upgraded to **2.2.0**.
+
+
+
 ## [2.0.3] - 2026-09-02
 
 ### Changed
