@@ -2,7 +2,7 @@
 // See LICENSE in the project root for license information.
 
 using System;
-using LitJson;
+using UniLitJson;
 using UnityEngine;
 
 namespace UniSharper.Extensions

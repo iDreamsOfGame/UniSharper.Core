@@ -2,7 +2,7 @@
     "name": "io.github.idreamsofgame.unisharper.core",
     "displayName": "UniSharper",
     "description": "UniSharper.Core is a unity package that contains scripts, plugins and assets for general unity application development.",
-    "version": "2.0.8",
+    "version": "2.0.9",
     "unity": "2021.3",
     "author": {
         "name": "iDreamsOfGame",
@@ -12,7 +12,7 @@
     "dependencies": {
         "io.github.idreamsofgame.resharp.core": "2.2.1",
         "io.github.idreamsofgame.resharp.security.cryptography": "1.2.0",
-        "io.github.idreamsofgame.unilitjson": "0.19.0"
+        "io.github.idreamsofgame.unilitjson": "0.19.1"
     },
     "publishConfig": {
         "registry": "https://package.openupm.com"

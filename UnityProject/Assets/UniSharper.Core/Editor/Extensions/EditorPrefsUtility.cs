@@ -2,7 +2,7 @@
 // project root for license information.
 
 using System;
-using LitJson;
+using UniLitJson;
 using UnityEditor;
 using UnityEngine;
 
