@@ -27,6 +27,16 @@ namespace UniSharper
         /// The extension of Unity binary asset file.
         /// </summary>
         public const string UnityBinaryAssetFile = ".bytes";
+        
+        /// <summary>
+        /// The extension of Unity assembly definition asset file.
+        /// </summary>
+        public const string UnityAssemblyDefinitionAssetFile = ".asmdef";
+        
+        /// <summary>
+        /// The extension of Unity assembly definition reference asset file.
+        /// </summary>
+        public const string UnityAssemblyDefinitionReferenceAssetFile = ".asmref";
 
         /// <summary>
         /// The extension of Unity prefab asset file.
@@ -54,9 +64,34 @@ namespace UniSharper
         public const string UnitySpriteAtlasAssetFile = ".spriteatlas";
         
         /// <summary>
+        /// The extension of Unity sprite atlas v2 asset file.
+        /// </summary>
+        public const string UnitySpriteAtlasV2AssetFile = ".spriteatlasv2";
+        
+        /// <summary>
         /// The extension of text file.
         /// </summary>
         public const string TextFile = ".txt";
+        
+        /// <summary>
+        /// The extension of JSON file.
+        /// </summary>
+        public const string JsonFile = ".json";
+        
+        /// <summary>
+        /// The extension of hash file.
+        /// </summary>
+        public const string HashFile = ".hash";
+        
+        /// <summary>
+        /// The extension of binary data file.
+        /// </summary>
+        public const string BinaryDataFile = ".bin";
+        
+        /// <summary>
+        /// The extension of data file.
+        /// </summary>
+        public const string DataFile = ".dat";
 
         /// <summary>
         /// The extension of JPG image file.
@@ -112,6 +147,11 @@ namespace UniSharper
         /// The extension of C Sharp script file.
         /// </summary>
         public const string CSharpScriptFile = ".cs";
+        
+        /// <summary>
+        /// The extension of assembly file.
+        /// </summary>
+        public const string AssemblyFile = ".dll";
 
         /// <summary>
         /// The extension of database file.

@@ -27,6 +27,16 @@ namespace UniSharper
         /// The search pattern of Unity binary asset files.
         /// </summary>
         public const string UnityBinaryAssetFiles = "*" + FileExtensions.UnityBinaryAssetFile;
+        
+        /// <summary>
+        /// The search pattern of Unity assembly definition files.
+        /// </summary>
+        public const string UnityAssemblyDefinitionAssetFiles = "*" + FileExtensions.UnityAssemblyDefinitionAssetFile;
+        
+        /// <summary>
+        /// The search pattern of Unity assembly definition reference files.
+        /// </summary>
+        public const string UnityAssemblyDefinitionReferenceAssetFiles = "*" + FileExtensions.UnityAssemblyDefinitionReferenceAssetFile;
 
         /// <summary>
         /// The search pattern of Unity prefab asset files.
@@ -54,9 +64,34 @@ namespace UniSharper
         public const string UnitySpriteAtlasAssetFiles = "*" + FileExtensions.UnitySpriteAtlasAssetFile;
         
         /// <summary>
+        /// The search pattern of Unity sprite atlas v2 asset files.
+        /// </summary>
+        public const string UnitySpriteAtlasV2AssetFiles = "*" + FileExtensions.UnitySpriteAtlasV2AssetFile;
+        
+        /// <summary>
         /// The search pattern of text files.
         /// </summary>
         public const string TextFiles = "*" + FileExtensions.TextFile;
+        
+        /// <summary>
+        /// The search pattern of JSON files.
+        /// </summary>
+        public const string JsonFiles = "*" + FileExtensions.JsonFile;
+        
+        /// <summary>
+        /// The search pattern of hash files.
+        /// </summary>
+        public const string HashFiles = "*" + FileExtensions.HashFile;
+        
+        /// <summary>
+        /// The search pattern of binary data files.
+        /// </summary>
+        public const string BinaryDataFiles = "*" + FileExtensions.BinaryDataFile;
+        
+        /// <summary>
+        /// The search pattern of data files.
+        /// </summary>
+        public const string DataFiles = "*" + FileExtensions.DataFile;
         
         /// <summary>
         /// The search pattern of JPG image files.
@@ -112,6 +147,11 @@ namespace UniSharper
         /// The search pattern of C Sharp script files.
         /// </summary>
         public const string CSharpScriptFiles = "*" + FileExtensions.CSharpScriptFile;
+        
+        /// <summary>
+        /// The search pattern of assembly files.
+        /// </summary>
+        public const string AssemblyFiles = "*" + FileExtensions.AssemblyFile;
         
         /// <summary>
         /// The search pattern of database files.

@@ -6,6 +6,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+## [2.0.10] - 2026-11-17
+
+### Changed
+
+- Added constant **FileExtensions.UnityAssemblyDefinitionAssetFile**.
+- Added constant **FileExtensions.UnityAssemblyDefinitionReferenceAssetFile**.
+- Added constant **FileExtensions.UnitySpriteAtlasV2AssetFile**.
+- Added constant **FileExtensions.JsonFile**.
+- Added constant **FileExtensions.HashFile**.
+- Added constant **FileExtensions.BinaryDataFile**.
+- Added constant **FileExtensions.DataFile**.
+- Added constant **FileExtensions.AssemblyFile**.
+- Added constant **SearchPatterns.UnityAssemblyDefinitionAssetFiles**.
+- Added constant **SearchPatterns.UnityAssemblyDefinitionReferenceAssetFiles**.
+- Added constant **SearchPatterns.UnitySpriteAtlasV2AssetFiles**.
+- Added constant **SearchPatterns.JsonFiles**.
+- Added constant **SearchPatterns.HashFiles**.
+- Added constant **SearchPatterns.BinaryDataFiles**.
+- Added constant **SearchPatterns.DataFiles**.
+- Added constant **SearchPatterns.AssemblyFiles**.
+
+
+
 ## [2.0.9] - 2026-11-09
 
 ### Changed
