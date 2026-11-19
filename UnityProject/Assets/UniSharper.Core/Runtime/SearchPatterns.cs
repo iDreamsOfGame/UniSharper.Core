@@ -69,6 +69,11 @@ namespace UniSharper
         public const string UnitySpriteAtlasV2AssetFiles = "*" + FileExtensions.UnitySpriteAtlasV2AssetFile;
         
         /// <summary>
+        /// The search pattern of Unity Sentis model asset files.
+        /// </summary>
+        public const string UnitySentisModelAssetFiles = "*" + FileExtensions.UnitySentisModelAssetFile;
+        
+        /// <summary>
         /// The search pattern of text files.
         /// </summary>
         public const string TextFiles = "*" + FileExtensions.TextFile;
@@ -177,5 +182,10 @@ namespace UniSharper
         /// The search pattern of Xcode framework files.
         /// </summary>
         public const string XcodeFrameworkFiles = "*" + FileExtensions.XcodeFrameworkFile;
+        
+        /// <summary>
+        /// The search pattern of Open Neural Network Exchange files.
+        /// </summary>
+        public const string OpenNeuralNetworkExchangeFiles = "*" + FileExtensions.OpenNeuralNetworkExchangeFile;
     }
 }

@@ -43,7 +43,7 @@
       }
     },
     "io.github.idreamsofgame.resharp.core": {
-      "version": "2.2.1",
+      "version": "2.3.0",
       "depth": 0,
       "source": "registry",
       "dependencies": {},

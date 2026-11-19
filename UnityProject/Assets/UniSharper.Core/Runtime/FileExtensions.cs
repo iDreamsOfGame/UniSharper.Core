@@ -69,6 +69,11 @@ namespace UniSharper
         public const string UnitySpriteAtlasV2AssetFile = ".spriteatlasv2";
         
         /// <summary>
+        /// The extension of Unity Sentis model asset file.
+        /// </summary>
+        public const string UnitySentisModelAssetFile = ".sentis";
+        
+        /// <summary>
         /// The extension of text file.
         /// </summary>
         public const string TextFile = ".txt";
@@ -177,5 +182,10 @@ namespace UniSharper
         /// The extension of Xcode framework file.
         /// </summary>
         public const string XcodeFrameworkFile = ".xcframework";
+        
+        /// <summary>
+        /// The extension of Open Neural Network Exchange file.
+        /// </summary>
+        public const string OpenNeuralNetworkExchangeFile = ".onnx";
     }
 }
